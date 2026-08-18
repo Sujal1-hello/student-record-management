@@ -9,6 +9,12 @@
 
     <h2>Students</h2>
 
+    @if (session('success'))
+        <p>
+            {{ session('success') }}
+        </p>
+    @endif
+
     <a href="{{ route('students.create') }}">Add New Student</a>
 
     <br><br>
@@ -18,8 +24,19 @@
         <div>
 
             <p>
-                {{ $student->name }}
-                - {{ $student->email }}
+                <strong>Name:</strong> {{ $student->name }}
+            </p>
+
+            <p>
+                <strong>Email:</strong> {{ $student->email }}
+            </p>
+
+            <p>
+                <strong>Phone:</strong> {{ $student->phone ?? 'N/A' }}
+            </p>
+
+            <p>
+                <strong>Course:</strong> {{ $student->course }}
             </p>
 
             <!-- View Student -->

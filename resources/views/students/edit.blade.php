@@ -8,6 +8,17 @@
     <h1>Student Management System</h1>
 
     <h2>Edit Student</h2>
+    @if ($errors->any())
+    <div>
+        <strong>Please fix the following errors:</strong>
+
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <form action="{{ route('students.update', $student->id) }}" method="POST">
 

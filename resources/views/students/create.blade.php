@@ -9,6 +9,18 @@
 
     <h2>Add Student</h2>
 
+    @if ($errors->any())
+    <div>
+        <strong>Please fix the following errors:</strong>
+
+            <ul>
+                 @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+           </ul>
+       </div>
+     @endif
+
     <form action="{{ route('students.store') }}" method="POST">
 
         @csrf
