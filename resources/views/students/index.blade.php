@@ -2,81 +2,210 @@
 <html>
 <head>
     <title>Students</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-bottom: 5px;
+            color: #222;
+        }
+
+        h2 {
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .add-button {
+            display: inline-block;
+            background-color: #2563eb;
+            color: white;
+            padding: 10px 16px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+
+        .add-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .success {
+            background-color: #dcfce7;
+            color: #166534;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            text-align: left;
+            padding: 14px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .view {
+            color: #2563eb;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .edit {
+            color: #16a34a;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .delete-button {
+            background-color: #dc2626;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #b91c1c;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+    </style>
 </head>
+
 <body>
+
+<div class="container">
 
     <h1>Student Management System</h1>
 
     <h2>Students</h2>
 
     @if (session('success'))
-        <p>
+        <div class="success">
             {{ session('success') }}
-        </p>
+        </div>
     @endif
 
-    <a href="{{ route('students.create') }}">Add New Student</a>
+    <a href="{{ route('students.create') }}" class="add-button">
+        + Add New Student
+    </a>
 
-    <br><br>
+    @if ($students->count())
 
-    @forelse($students as $student)
+        <table>
 
-        <div>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Course</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
 
-            <p>
-                <strong>Name:</strong> {{ $student->name }}
-            </p>
+            <tbody>
 
-            <p>
-                <strong>Email:</strong> {{ $student->email }}
-            </p>
+                @foreach($students as $student)
 
-            <p>
-                <strong>Phone:</strong> {{ $student->phone ?? 'N/A' }}
-            </p>
+                    <tr>
 
-            <p>
-                <strong>Course:</strong> {{ $student->course }}
-            </p>
+                        <td>
+                            {{ $student->name }}
+                        </td>
 
-            <!-- View Student -->
-            <a href="{{ route('students.show', $student->id) }}">
-                View
-            </a>
+                        <td>
+                            {{ $student->email }}
+                        </td>
 
-            &nbsp;
+                        <td>
+                            {{ $student->phone ?? 'N/A' }}
+                        </td>
 
-            <!-- Edit Student -->
-            <a href="{{ route('students.edit', $student->id) }}">
-                Edit
-            </a>
+                        <td>
+                            {{ $student->course }}
+                        </td>
 
-            &nbsp;
+                        <td>
 
-            <!-- Delete Student -->
-            <form action="{{ route('students.destroy', $student->id) }}"
-                  method="POST"
-                  style="display: inline;">
+                            <a href="{{ route('students.show', $student->id) }}"
+                               class="view">
+                                View
+                            </a>
 
-                @csrf
-                @method('DELETE')
+                            <a href="{{ route('students.edit', $student->id) }}"
+                               class="edit">
+                                Edit
+                            </a>
 
-                <button type="submit"
-                        onclick="return confirm('Are you sure you want to delete this student?')">
-                    Delete
-                </button>
+                            <form action="{{ route('students.destroy', $student->id) }}"
+                                  method="POST"
+                                  style="display: inline;">
 
-            </form>
+                                @csrf
+                                @method('DELETE')
 
+                                <button type="submit"
+                                        class="delete-button"
+                                        onclick="return confirm('Are you sure you want to delete this student?')">
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                @endforeach
+
+            </tbody>
+
+        </table>
+
+    @else
+
+        <div class="empty">
+            No students found.
         </div>
 
-        <hr>
+    @endif
 
-    @empty
-
-        <p>No students found.</p>
-
-    @endforelse
+</div>
 
 </body>
 </html>
