@@ -40,6 +40,54 @@
             margin-bottom: 25px;
         }
 
+        .search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.search-box select {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: white;
+    min-width: 180px;
+}
+
+.search-button {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #1d4ed8;
+}
+
+.clear-button {
+    background-color: #6b7280;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.clear-button:hover {
+    background-color: #4b5563;
+}
+
         .add-button:hover {
             background-color: #1d4ed8;
         }
@@ -98,11 +146,20 @@
             background-color: #b91c1c;
         }
 
-        .empty {
-            text-align: center;
-            padding: 30px;
-            color: #777;
-        }
+       .empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #777;
+}
+
+.empty h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.empty p {
+    margin-bottom: 20px;
+}
     </style>
 </head>
 
@@ -123,6 +180,40 @@
     <a href="{{ route('students.create') }}" class="add-button">
         + Add New Student
     </a>
+
+    <form action="{{ route('students.index') }}" method="GET" class="search-box">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search by name, email, phone or course..."
+        value="{{ $search ?? '' }}"
+    >
+
+    <select name="course">
+        <option value="">All Courses</option>
+
+        @foreach ($courses as $courseOption)
+            <option
+                value="{{ $courseOption }}"
+                {{ ($course ?? '') == $courseOption ? 'selected' : '' }}
+            >
+                {{ $courseOption }}
+            </option>
+        @endforeach
+    </select>
+
+    <button type="submit" class="search-button">
+        Search
+    </button>
+
+    @if (!empty($search) || !empty($course))
+        <a href="{{ route('students.index') }}" class="clear-button">
+            Clear
+        </a>
+    @endif
+
+</form>
 
     @if ($students->count())
 
@@ -197,13 +288,39 @@
 
         </table>
 
-    @else
+  @else
 
-        <div class="empty">
-            No students found.
-        </div>
+    <div class="empty">
 
-    @endif
+        @if (!empty($search) || !empty($course))
+
+            <h3>No students found</h3>
+
+            <p>
+                No students match your current search or filter.
+            </p>
+
+            <a href="{{ route('students.index') }}" class="clear-button">
+                Clear Search
+            </a>
+
+        @else
+
+            <h3>No students available</h3>
+
+            <p>
+                You haven't added any students yet.
+            </p>
+
+            <a href="{{ route('students.create') }}" class="add-button">
+                + Add Your First Student
+            </a>
+
+        @endif
+
+    </div>
+
+@endif
 
 </div>
 

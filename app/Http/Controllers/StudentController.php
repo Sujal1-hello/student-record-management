@@ -10,12 +10,36 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $students = Student::all();
+public function index(Request $request)
+{
+    $search = $request->input('search');
+    $course = $request->input('course');
 
-        return view('students.index', compact('students'));
-    }
+    $students = Student::when($search, function ($query, $search) {
+        $query->where(function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%")
+                  ->orWhere('course', 'like', "%{$search}%");
+        });
+    })
+    ->when($course, function ($query, $course) {
+        $query->where('course', $course);
+    })
+    ->get();
+
+    $courses = Student::select('course')
+        ->distinct()
+        ->orderBy('course')
+        ->pluck('course');
+
+    return view('students.index', compact(
+        'students',
+        'search',
+        'course',
+        'courses'
+    ));
+}
 
     /**
      * Show the form for creating a new resource.
