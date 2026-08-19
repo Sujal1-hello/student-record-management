@@ -26,7 +26,8 @@ public function index(Request $request)
     ->when($course, function ($query, $course) {
         $query->where('course', $course);
     })
-    ->get();
+    ->paginate(10)
+    ->withQueryString();
 
     $courses = Student::select('course')
         ->distinct()

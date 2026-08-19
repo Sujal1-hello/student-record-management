@@ -160,6 +160,60 @@
 .empty p {
     margin-bottom: 20px;
 }
+
+.student-count {
+    margin-bottom: 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+.pagination {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination nav {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination svg {
+    width: 20px;
+    height: 20px;
+}
+
+.pagination a,
+.pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    height: 38px;
+    margin: 0 3px;
+    padding: 0 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #2563eb;
+    background-color: white;
+}
+
+.pagination a:hover {
+    background-color: #eff6ff;
+}
+
+.pagination span[aria-current="page"] {
+    background-color: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+.pagination span[aria-disabled="true"] {
+    color: #999;
+    background-color: #f3f4f6;
+}
+
     </style>
 </head>
 
@@ -215,7 +269,14 @@
 
 </form>
 
-    @if ($students->count())
+   @if ($students->count())
+
+    <div class="student-count">
+        Showing {{ $students->firstItem() }}–{{ $students->lastItem() }}
+        of {{ $students->total() }} students
+    </div>
+
+    <table>
 
         <table>
 
@@ -287,6 +348,10 @@
             </tbody>
 
         </table>
+
+        <div class="pagination">
+            {{ $students->links() }}
+        </div>
 
   @else
 
