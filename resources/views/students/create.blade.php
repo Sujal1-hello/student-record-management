@@ -116,6 +116,8 @@
                 type="text"
                 name="name"
                 value="{{ old('name') }}"
+                required
+                maxlength="255"
             >
         </div>
 
@@ -126,6 +128,7 @@
                 type="email"
                 name="email"
                 value="{{ old('email') }}"
+                required
             >
         </div>
 
@@ -136,6 +139,7 @@
                 type="text"
                 name="phone"
                 value="{{ old('phone') }}"
+                maxlength="20"
             >
         </div>
 
@@ -146,6 +150,8 @@
                 type="text"
                 name="course"
                 value="{{ old('course') }}"
+                required
+                maxlength="255"
             >
         </div>
 

@@ -15,18 +15,19 @@ class StudentController extends Controller
         $search = $request->input('search');
         $course = $request->input('course');
 
-       $students = Student::when($search, function ($query, $search) {
+        $students = Student::when($search, function ($query, $search) {
 
-    $query->where(function ($query) use ($search) {
+            $query->where(function ($query) use ($search) {
 
-        $query->where('student_id', 'like', "%{$search}%")
-              ->orWhere('name', 'like', "%{$search}%")
-              ->orWhere('email', 'like', "%{$search}%")
-              ->orWhere('phone', 'like', "%{$search}%")
-              ->orWhere('course', 'like', "%{$search}%");
+                $query->where('student_id', 'like', "%{$search}%")
+                    ->orWhere('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('course', 'like', "%{$search}%");
 
-    });
-})
+            });
+
+        })
             ->when($course, function ($query, $course) {
                 $query->where('course', $course);
             })
@@ -82,7 +83,12 @@ class StudentController extends Controller
             $nextNumber = 1;
         }
 
-        $validated['student_id'] = 'STU' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+        $validated['student_id'] = 'STU' . str_pad(
+            $nextNumber,
+            3,
+            '0',
+            STR_PAD_LEFT
+        );
 
         Student::create($validated);
 
