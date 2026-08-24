@@ -22,11 +22,33 @@
 
         h1 {
             margin-bottom: 5px;
+            color: #222;
         }
 
         h2 {
             color: #555;
             margin-bottom: 25px;
+        }
+
+        .student-id {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1d4ed8;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .student-id span {
+            display: block;
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .student-id strong {
+            font-size: 20px;
         }
 
         .error {
@@ -80,6 +102,10 @@
             color: #2563eb;
             text-decoration: none;
         }
+
+        .back:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -90,6 +116,11 @@
     <h1>Student Management System</h1>
 
     <h2>Edit Student</h2>
+
+    <div class="student-id">
+        <span>Student ID</span>
+        <strong>{{ $student->student_id }}</strong>
+    </div>
 
     @if ($errors->any())
         <div class="error">
@@ -117,6 +148,8 @@
                 type="text"
                 name="name"
                 value="{{ old('name', $student->name) }}"
+                required
+                maxlength="255"
             >
         </div>
 
@@ -127,6 +160,7 @@
                 type="email"
                 name="email"
                 value="{{ old('email', $student->email) }}"
+                required
             >
         </div>
 
@@ -137,6 +171,7 @@
                 type="text"
                 name="phone"
                 value="{{ old('phone', $student->phone) }}"
+                maxlength="20"
             >
         </div>
 
@@ -147,6 +182,8 @@
                 type="text"
                 name="course"
                 value="{{ old('course', $student->course) }}"
+                required
+                maxlength="255"
             >
         </div>
 

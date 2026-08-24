@@ -12,7 +12,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: auto;
             background: white;
             padding: 30px;
@@ -22,6 +22,7 @@
 
         h1 {
             margin-bottom: 5px;
+            color: #222;
         }
 
         h2 {
@@ -29,20 +30,57 @@
             margin-bottom: 25px;
         }
 
+        .student-id {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1d4ed8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .student-id span {
+            display: block;
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        .student-id strong {
+            font-size: 24px;
+        }
+
         .student-info {
             border: 1px solid #ddd;
             border-radius: 8px;
-            padding: 20px;
+            overflow: hidden;
         }
 
-        .student-info p {
-            padding: 10px 0;
-            margin: 0;
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 14px 18px;
             border-bottom: 1px solid #eee;
         }
 
-        .student-info p:last-child {
+        .info-row:last-child {
             border-bottom: none;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .value {
+            color: #222;
+            text-align: right;
+        }
+
+        .actions {
+            margin-top: 25px;
         }
 
         .edit-button {
@@ -52,7 +90,10 @@
             padding: 10px 16px;
             border-radius: 6px;
             text-decoration: none;
-            margin-top: 20px;
+        }
+
+        .edit-button:hover {
+            background-color: #15803d;
         }
 
         .back {
@@ -60,6 +101,10 @@
             margin-top: 20px;
             color: #2563eb;
             text-decoration: none;
+        }
+
+        .back:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -72,36 +117,43 @@
 
     <h2>Student Details</h2>
 
+    <div class="student-id">
+        <span>Student ID</span>
+        <strong>{{ $student->student_id }}</strong>
+    </div>
+
     <div class="student-info">
 
-        <p>
-            <strong>Name:</strong>
-            {{ $student->name }}
-        </p>
+        <div class="info-row">
+            <span class="label">Name</span>
+            <span class="value">{{ $student->name }}</span>
+        </div>
 
-        <p>
-            <strong>Email:</strong>
-            {{ $student->email }}
-        </p>
+        <div class="info-row">
+            <span class="label">Email</span>
+            <span class="value">{{ $student->email }}</span>
+        </div>
 
-        <p>
-            <strong>Phone:</strong>
-            {{ $student->phone ?? 'N/A' }}
-        </p>
+        <div class="info-row">
+            <span class="label">Phone</span>
+            <span class="value">{{ $student->phone ?? 'N/A' }}</span>
+        </div>
 
-        <p>
-            <strong>Course:</strong>
-            {{ $student->course }}
-        </p>
+        <div class="info-row">
+            <span class="label">Course</span>
+            <span class="value">{{ $student->course }}</span>
+        </div>
 
     </div>
 
-    <a href="{{ route('students.edit', $student->id) }}"
-       class="edit-button">
-        Edit Student
-    </a>
+    <div class="actions">
 
-    <br>
+        <a href="{{ route('students.edit', $student->id) }}"
+           class="edit-button">
+            Edit Student
+        </a>
+
+    </div>
 
     <a href="{{ route('students.index') }}"
        class="back">
