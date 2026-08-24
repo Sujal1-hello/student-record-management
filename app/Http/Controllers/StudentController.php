@@ -61,10 +61,23 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[A-Za-z\s\'-]+$/',
+            ],
             'email' => 'required|email|unique:students,email',
-            'phone' => 'nullable|string|max:20',
-            'course' => 'required|string|max:255',
+            'phone' => [
+                'nullable',
+                'regex:/^(97|98)\d{8}$/',
+            ],
+            'course' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[A-Za-z0-9\s&().,-]+$/',
+            ],
         ]);
 
         // Get the student with the highest Student ID number
@@ -125,10 +138,23 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
 
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[A-Za-z\s\'-]+$/',
+            ],
             'email' => 'required|email|unique:students,email,' . $student->id,
-            'phone' => 'nullable|string|max:20',
-            'course' => 'required|string|max:255',
+            'phone' => [
+                'nullable',
+                'regex:/^(97|98)\d{8}$/',
+            ],
+            'course' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[A-Za-z0-9\s&().,-]+$/',
+            ],
         ]);
 
         $student->update($validated);
