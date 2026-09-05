@@ -14,6 +14,8 @@ class StudentController extends Controller
     {
         $search = $request->input('search');
         $course = $request->input('course');
+        $gender = $request->input('gender');
+        $semester = $request->input('semester');
 
         $students = Student::when($search, function ($query, $search) {
 
@@ -31,6 +33,15 @@ class StudentController extends Controller
             ->when($course, function ($query, $course) {
                 $query->where('course', $course);
             })
+
+            ->when($gender, function ($query, $gender) {
+                $query->where('gender', $gender);
+            })
+
+            ->when($semester, function ($query, $semester) {
+                $query->where('semester', $semester);
+            })
+
             ->paginate(10)
             ->withQueryString();
 
@@ -43,6 +54,8 @@ class StudentController extends Controller
             'students',
             'search',
             'course',
+            'gender',
+            'semester',
             'courses'
         ));
     }
@@ -67,16 +80,37 @@ class StudentController extends Controller
                 'max:255',
                 'regex:/^[A-Za-z\s\'-]+$/',
             ],
+
             'email' => 'required|email|unique:students,email',
+
             'phone' => [
                 'nullable',
                 'regex:/^(97|98)\d{8}$/',
             ],
+
+            'date_of_birth' => [
+                'nullable',
+                'date',
+                'before:today',
+            ],
+
+            'gender' => [
+                'nullable',
+                'in:Male,Female,Other',
+            ],
+
             'course' => [
                 'required',
                 'string',
                 'max:255',
                 'regex:/^[A-Za-z0-9\s&().,-]+$/',
+            ],
+
+            'semester' => [
+                'nullable',
+                'integer',
+                'min:1',
+                'max:8',
             ],
         ]);
 
@@ -136,7 +170,6 @@ class StudentController extends Controller
     public function update(Request $request, string $id)
     {
         $student = Student::findOrFail($id);
-
         $validated = $request->validate([
             'name' => [
                 'required',
@@ -144,16 +177,37 @@ class StudentController extends Controller
                 'max:255',
                 'regex:/^[A-Za-z\s\'-]+$/',
             ],
+
             'email' => 'required|email|unique:students,email,' . $student->id,
+
             'phone' => [
                 'nullable',
                 'regex:/^(97|98)\d{8}$/',
             ],
+
+            'date_of_birth' => [
+                'nullable',
+                'date',
+                'before:today',
+            ],
+
+            'gender' => [
+                'nullable',
+                'in:Male,Female,Other',
+            ],
+
             'course' => [
                 'required',
                 'string',
                 'max:255',
                 'regex:/^[A-Za-z0-9\s&().,-]+$/',
+            ],
+
+            'semester' => [
+                'nullable',
+                'integer',
+                'min:1',
+                'max:8',
             ],
         ]);
 

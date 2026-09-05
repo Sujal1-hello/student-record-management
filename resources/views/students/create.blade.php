@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Add Student</title>
 
@@ -85,87 +86,105 @@
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h1>Student Management System</h1>
+        <h1>Student Management System</h1>
 
-    <h2>Add Student</h2>
+        <h2>Add Student</h2>
 
-    @if ($errors->any())
-        <div class="error">
+        @if ($errors->any())
+            <div class="error">
 
-            <strong>Please fix the following errors:</strong>
+                <strong>Please fix the following errors:</strong>
 
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
 
-        </div>
-    @endif
+            </div>
+        @endif
 
-    <form action="{{ route('students.store') }}" method="POST">
+        <form action="{{ route('students.store') }}" method="POST">
 
-        @csrf
+            @csrf
 
-        <div class="form-group">
-            <label>Name:</label>
+            <div class="form-group">
+                <label>Name:</label>
 
-            <input
-                type="text"
-                name="name"
-                value="{{ old('name') }}"
-                required
-                maxlength="255"
-            >
-        </div>
+                <input type="text" name="name" value="{{ old('name') }}" required maxlength="255">
+            </div>
 
-        <div class="form-group">
-            <label>Email:</label>
+            <div class="form-group">
+                <label>Email:</label>
 
-            <input
-                type="email"
-                name="email"
-                value="{{ old('email') }}"
-                required
-            >
-        </div>
+                <input type="email" name="email" value="{{ old('email') }}" required>
+            </div>
 
-        <div class="form-group">
-            <label>Phone:</label>
+            <div class="form-group">
+                <label>Phone:</label>
 
-            <input
-                type="text"
-                name="phone"
-                value="{{ old('phone') }}"
-                maxlength="20"
-            >
-        </div>
+                <input type="text" name="phone" value="{{ old('phone') }}" maxlength="20">
+            </div>
 
-        <div class="form-group">
-            <label>Course:</label>
+            <div class="form-group">
+                <label>Date of birth: <span class="optional">(Optional)</span></label>
 
-            <input
-                type="text"
-                name="course"
-                value="{{ old('course') }}"
-                required
-                maxlength="255"
-            >
-        </div>
+                <input type="date" name="date_of_birth" value="{{ old('date_of_birth') }}">
+            </div>
 
-        <button type="submit" class="button">
-            Add Student
-        </button>
+            <div class="form-group">
+                <label>Gender: <span class="optional">(Optional)</span></label>
 
-    </form>
+                <select name="gender">
+                    optiona value="">Select Gender</option>
 
-    <a href="{{ route('students.index') }}" class="back">
-        ← Back to Students
-    </a>
+                    <option value="Male" {{ old('gender') }}=='Male' ? 'selected' : '' }}>
+                        Male
+                    </option>
 
-</div>
+                    <option value="Female" {{ old('gender') }}=='Female' ? 'selected' : '' }}>
+                        Female
+                    </option>
+
+                    <option value="Other" {{ old('gender') }}=='Other' ? 'selected' : '' }}>
+                        Other
+                    </option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Course:</label>
+
+                <input type="text" name="course" value="{{ old('course') }}" required maxlength="255">
+            </div>
+            
+            <div class="form-group">
+                <label>Semester: <span class="optional">(Optional)</span></label>
+
+                <select name="semester">
+                    @for ($i = 1; $i <= 8; $i++)
+                        <option value="{{ $i }}"
+                            {{ old('semester') == $i ? 'selected' : '' }}>
+                            Semester {{ $i }}
+                        </option>
+                    @endfor
+                </select>
+
+            <button type="submit" class="button">
+                Add Student
+            </button>
+
+        </form>
+
+        <a href="{{ route('students.index') }}" class="back">
+            ← Back to Students
+        </a>
+
+    </div>
 
 </body>
+
 </html>

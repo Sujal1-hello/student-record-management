@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Student Details</title>
 
@@ -117,35 +118,79 @@
 
     <h2>Student Details</h2>
 
+    <!-- Student ID -->
     <div class="student-id">
+
         <span>Student ID</span>
-        <strong>{{ $student->student_id }}</strong>
+
+        <strong>
+            {{ $student->student_id }}
+        </strong>
+
     </div>
 
+    <!-- Student Information -->
     <div class="student-info">
 
         <div class="info-row">
             <span class="label">Name</span>
-            <span class="value">{{ $student->name }}</span>
+
+            <span class="value">
+                {{ $student->name }}
+            </span>
         </div>
 
         <div class="info-row">
             <span class="label">Email</span>
-            <span class="value">{{ $student->email }}</span>
+
+            <span class="value">
+                {{ $student->email }}
+            </span>
         </div>
 
         <div class="info-row">
             <span class="label">Phone</span>
-            <span class="value">{{ $student->phone ?? 'N/A' }}</span>
+
+            <span class="value">
+                {{ $student->phone ?? 'N/A' }}
+            </span>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Date of Birth</span>
+
+            <span class="value">
+                {{ $student->date_of_birth ?? 'N/A' }}
+            </span>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Gender</span>
+
+            <span class="value">
+                {{ $student->gender ?? 'N/A' }}
+            </span>
         </div>
 
         <div class="info-row">
             <span class="label">Course</span>
-            <span class="value">{{ $student->course }}</span>
+
+            <span class="value">
+                {{ $student->course }}
+            </span>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Semester</span>
+
+            <span class="value">
+                {{ $student->semester ? 'Semester ' . $student->semester : 'N/A' }}
+            </span>
         </div>
 
     </div>
 
+    <!-- Actions -->
     <div class="actions">
 
         <a href="{{ route('students.edit', $student->id) }}"
@@ -163,4 +208,5 @@
 </div>
 
 </body>
+
 </html>

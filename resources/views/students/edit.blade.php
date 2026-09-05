@@ -31,24 +31,11 @@
         }
 
         .student-id {
-            background-color: #eff6ff;
-            border: 1px solid #bfdbfe;
-            color: #1d4ed8;
+            background-color: #f1f5f9;
             padding: 12px;
             border-radius: 6px;
             margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .student-id span {
-            display: block;
-            font-size: 13px;
-            color: #64748b;
-            margin-bottom: 4px;
-        }
-
-        .student-id strong {
-            font-size: 20px;
+            color: #333;
         }
 
         .error {
@@ -69,15 +56,18 @@
             font-weight: bold;
         }
 
-        input {
+        input,
+        select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 6px;
             box-sizing: border-box;
+            font-size: 14px;
         }
 
-        input:focus {
+        input:focus,
+        select:focus {
             outline: none;
             border-color: #16a34a;
         }
@@ -106,6 +96,12 @@
         .back:hover {
             text-decoration: underline;
         }
+
+        .optional {
+            font-weight: normal;
+            color: #777;
+            font-size: 13px;
+        }
     </style>
 </head>
 
@@ -118,8 +114,8 @@
     <h2>Edit Student</h2>
 
     <div class="student-id">
-        <span>Student ID</span>
-        <strong>{{ $student->student_id }}</strong>
+        <strong>Student ID:</strong>
+        {{ $student->student_id }}
     </div>
 
     @if ($errors->any())
@@ -165,14 +161,48 @@
         </div>
 
         <div class="form-group">
-            <label>Phone:</label>
+            <label>Phone: <span class="optional">(Optional)</span></label>
 
             <input
                 type="text"
                 name="phone"
                 value="{{ old('phone', $student->phone) }}"
-                maxlength="20"
+                maxlength="10"
+                placeholder="98XXXXXXXX"
             >
+        </div>
+
+        <div class="form-group">
+            <label>Date of Birth: <span class="optional">(Optional)</span></label>
+
+            <input
+                type="date"
+                name="date_of_birth"
+                value="{{ old('date_of_birth', $student->date_of_birth) }}"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Gender: <span class="optional">(Optional)</span></label>
+
+            <select name="gender">
+                <option value="">Select Gender</option>
+
+                <option value="Male"
+                    {{ old('gender', $student->gender) == 'Male' ? 'selected' : '' }}>
+                    Male
+                </option>
+
+                <option value="Female"
+                    {{ old('gender', $student->gender) == 'Female' ? 'selected' : '' }}>
+                    Female
+                </option>
+
+                <option value="Other"
+                    {{ old('gender', $student->gender) == 'Other' ? 'selected' : '' }}>
+                    Other
+                </option>
+            </select>
         </div>
 
         <div class="form-group">
@@ -185,6 +215,23 @@
                 required
                 maxlength="255"
             >
+        </div>
+
+        <div class="form-group">
+            <label>Semester: <span class="optional">(Optional)</span></label>
+
+            <select name="semester">
+
+                <option value="">Select Semester</option>
+
+                @for ($i = 1; $i <= 8; $i++)
+                    <option value="{{ $i }}"
+                        {{ old('semester', $student->semester) == $i ? 'selected' : '' }}>
+                        Semester {{ $i }}
+                    </option>
+                @endfor
+
+            </select>
         </div>
 
         <button type="submit" class="button">
