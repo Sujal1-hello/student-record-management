@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Models\Student;
+use App\Http\Controllers\CourseController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::resource('students', StudentController::class);
 
@@ -31,3 +33,5 @@ Route::get('/dashboard', function () {
     ));
 
 })->name('dashboard');
+
+Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');

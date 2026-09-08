@@ -38,6 +38,13 @@
             padding: 25px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            text-decoration: none;
+            display: block;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
         }
 
         .card h3 {
@@ -122,30 +129,30 @@
 
         <div class="cards">
 
-            <div class="card">
+            <a href="{{ route('students.index') }}" class="card">
                 <h3>Total Students</h3>
                 <p>{{ $totalStudents }}</p>
-            </div>
+            </a>
 
-            <div class="card">
+            <a href="{{  route('students.index', ['gender' => 'Male']) }}" class="card">
                 <h3>Male Students</h3>
                 <p>{{ $maleStudents }}</p>
-            </div>
+            </a>
 
-            <div class="card">
+            <a href="{{ route('students.index', ['gender' => 'Female']) }}" class="card">
                 <h3>Female Students</h3>
                 <p>{{ $femaleStudents }}</p>
-            </div>
+            </a>
 
-            <div class="card">
+            <a href="{{ route('students.index', ['gender' => 'Other']) }}" class="card">
                 <h3>Other Students</h3>
                 <p>{{ $otherStudents }}</p>
-            </div>
+            </a>
 
-            <div class="card">
+            <a href="{{ route('courses.index') }}" class="card">
                 <h3>Total Courses</h3>
                 <p>{{ $totalCourses }}</p>
-            </div>
+            </a>
 
         </div>
 
