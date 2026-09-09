@@ -87,6 +87,106 @@
         .view-students:hover {
             background: #0056b3;
         }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .search-form button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        .search-form button:hover {
+            background: #0056b3;
+        }
+
+        .search-form a {
+            display: inline-block;
+            padding: 10px 18px;
+            background: #6b7280;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .search-form a:hover {
+            background: #4b5563;
+        }
+
+        @media (max-width: 600px) {
+            .courses-container {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .courses-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+                margin-bottom: 25px;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .search-form input,
+            .search-form button,
+            .search-form a {
+                width: 100%;
+                box-sizing: border-box;
+                text-align: center;
+            }
+
+            .courses-header h1 {
+                font-size: 26px;
+                text-align: center;
+            }
+
+            .dashboard-link {
+                text-align: center;
+                padding: 10px;
+            }
+
+            .course-list {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .course-card {
+                padding: 20px;
+            }
+
+            .course-card h2 {
+                font-size: 19px;
+            }
+
+            .student-count {
+                font-size: 26px;
+            }
+
+            .view-students {
+                width: 100%;
+                box-sizing: border-box;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 
@@ -102,9 +202,31 @@
             </a>
         </div>
 
-        <div class="course-list">
+          <form action="{{ route('courses.index') }}" method="GET" class="search-form">
 
-            @foreach ($courses as $course)
+            <input
+                type="text"
+                name="search"
+                value="{{ $search ?? '' }}"
+                placeholder="Search course..."
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
+            @if (!empty($search))
+                <a href="{{ route('courses.index') }}">
+                    Clear
+                </a>
+            @endif
+
+        </form>
+
+        <div class="course-list">
+            
+
+            @forelse ($courses as $course)
 
                 <div class="course-card">
 
@@ -122,7 +244,14 @@
 
                 </div>
 
-            @endforeach
+            @empty
+
+                <div class="course-card">
+                    <h2>No Courses Found</h2>
+                    <p>No courses are currently available.</p>
+                </div>
+
+            @endforelse
 
         </div>
 
