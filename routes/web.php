@@ -1,37 +1,51 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Models\Student;
-use App\Http\Controllers\CourseController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware(['auth', 'verified'])->group(function () {
 
-Route::resource('students', StudentController::class);
+    Route::get('/dashboard', function () {
+        $totalStudents = Student::count();
 
-Route::get('/dashboard', function () {
+        $maleStudents = Student::where('gender', 'Male')->count();
 
-    $totalStudents = Student::count();
+        $femaleStudents = Student::where('gender', 'Female')->count();
 
-    $maleStudents = Student::where('gender', 'Male')->count();
+        $otherStudents = Student::where('gender', 'Other')->count();
 
-    $femaleStudents = Student::where('gender', 'Female')->count();
+        $totalCourses = Student::whereNotNull('course')
+            ->distinct('course')
+            ->count('course');
 
-    $otherStudents = Student::where('gender', 'Other')->count();
+        return view('dashboard', compact(
+            'totalStudents',
+            'maleStudents',
+            'femaleStudents',
+            'otherStudents',
+            'totalCourses'
+        ));
+    })->name('dashboard');
 
-    $totalCourses = Student::distinct('course')->count('course');
+    Route::resource('students', StudentController::class);
 
-    return view('dashboard', compact(
-        'totalStudents',
-        'maleStudents',
-        'femaleStudents',
-        'otherStudents',
-        'totalCourses'
-    ));
+    Route::resource('courses', CourseController::class);
 
-})->name('dashboard');
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
 
-Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';

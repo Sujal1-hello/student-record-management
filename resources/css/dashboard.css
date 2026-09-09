@@ -1,0 +1,194 @@
+.dashboard-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+
+.dashboard-intro {
+    margin-bottom: 30px;
+}
+
+.dashboard-intro h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.dashboard-intro p {
+    margin-top: 8px;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.stat-card {
+    display: block;
+    padding: 24px;
+    border-radius: 12px;
+    background: #ffffff;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.stat-card p {
+    margin: 10px 0 0;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.total-card p {
+    color: #2563eb;
+}
+
+.male-card p {
+    color: #16a34a;
+}
+
+.female-card p {
+    color: #db2777;
+}
+
+.other-card p {
+    color: #9333ea;
+}
+
+.course-card p {
+    color: #ea580c;
+}
+
+.quick-actions {
+    margin-top: 35px;
+}
+
+.quick-actions h2 {
+    margin: 0 0 15px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.action-button {
+    display: inline-block;
+    padding: 11px 18px;
+    border-radius: 7px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.add-button {
+    background: #9333ea;
+}
+
+.add-button:hover {
+    background: #7e22ce;
+}
+
+.students-button {
+    background: #2563eb;
+}
+
+.students-button:hover {
+    background: #1d4ed8;
+}
+
+.courses-button {
+    background: #ea580c;
+}
+
+.courses-button:hover {
+    background: #c2410c;
+}
+
+@media (max-width: 800px) {
+    .dashboard-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 550px) {
+    .dashboard-container {
+        padding: 24px 16px;
+    }
+
+    .dashboard-intro h1 {
+        font-size: 25px;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .dashboard-intro h1,
+    .quick-actions h2 {
+        color: #f3f4f6;
+    }
+
+    .dashboard-intro p {
+        color: #9ca3af;
+    }
+
+    .stat-card {
+        background: #1f2937;
+        box-shadow: none;
+    }
+
+    .stat-card h3 {
+        color: #9ca3af;
+    }
+}
+
+html.dark .dashboard-intro h1,
+html.dark .quick-actions h2 {
+    color: #f3f4f6;
+}
+
+html.dark .dashboard-intro p {
+    color: #9ca3af;
+}
+
+html.dark .stat-card {
+    background: #1f2937;
+    box-shadow: none;
+}
+
+html.dark .stat-card h3 {
+    color: #9ca3af;
+}
