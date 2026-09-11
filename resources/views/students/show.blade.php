@@ -1,101 +1,125 @@
 <x-app-layout>
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Student Details
-        </h2>
-    </x-slot>
 
-    <div class="student-details-container">
+    <div class="details-container">
 
-        <div class="student-details-header">
+        <div class="student-profile-card">
+              
+            <div class="profile-top">
 
-            <div>
-                <h1>Student Details</h1>
-                <p>View complete information about this student.</p>
+                <div class="profile-avatar">
+                    {{ strtoupper(substr($student->name, 0, 1)) }}
+                </div>
+
+                <div class="profile-main">
+                    <h1>{{ $student->name }}</h1>
+
+                    <span class="student-id">
+                        {{ $student->student_id }}
+                    </span>
+                </div>
+
             </div>
 
-            <a href="{{ route('students.index') }}" class="back-button">
-                ← Back to Students
+        </div>
+
+        <div class="details-card">
+
+            <div class="card-title">
+                <h2>Personal Information</h2>
+                <p>Basic information about the student.</p>
+            </div>
+
+            <div class="info-grid">
+
+                <div class="info-item">
+                    <span class="label">Name</span>
+                    <span class="value">{{ $student->name }}</span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">Email</span>
+                    <span class="value">{{ $student->email }}</span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">Phone</span>
+                    <span class="value">
+                        {{ $student->phone ?: 'N/A' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">Date of Birth</span>
+                    <span class="value">
+                        {{ $student->date_of_birth ?: 'N/A' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">Gender</span>
+
+                    <span class="value">
+                        @if ($student->gender)
+                            <span class="gender-badge {{ strtolower($student->gender) }}">
+                                {{ $student->gender }}
+                            </span>
+                        @else
+                            N/A
+                        @endif
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="details-card">
+
+            <div class="card-title">
+                <h2>Academic Information</h2>
+                <p>Course and semester information.</p>
+            </div>
+
+            <div class="info-grid">
+
+                <div class="info-item">
+                    <span class="label">Course</span>
+                    <span class="value">{{ $student->course }}</span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">Semester</span>
+                    <span class="value">
+                        {{ $student->semester ? 'Semester ' . $student->semester : 'N/A' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">Added On</span>
+                    <span class="value">
+                        {{ $student->created_at->format('F d, Y') }}
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="details-actions">
+
+            <a
+                href="{{ route('students.edit', $student->id) }}"
+                class="edit-button"
+            >
+                Edit Student
             </a>
 
-        </div>
-
-        <div class="student-id">
-
-            <span>Student ID</span>
-
-            <strong>
-                {{ $student->student_id }}
-            </strong>
-
-        </div>
-
-        <div class="student-info">
-
-            <div class="info-row">
-                <span class="label">Name</span>
-                <span class="value">
-                    {{ $student->name }}
-                </span>
-            </div>
-
-            <div class="info-row">
-                <span class="label">Email</span>
-                <span class="value">
-                    {{ $student->email }}
-                </span>
-            </div>
-
-            <div class="info-row">
-                <span class="label">Phone</span>
-                <span class="value">
-                    {{ $student->phone ?: 'N/A' }}
-                </span>
-            </div>
-
-            <div class="info-row">
-                <span class="label">Date of Birth</span>
-                <span class="value">
-                    {{ $student->date_of_birth ?: 'N/A' }}
-                </span>
-            </div>
-
-            <div class="info-row">
-                <span class="label">Gender</span>
-                <span class="value">
-                    {{ $student->gender ?: 'N/A' }}
-                </span>
-            </div>
-
-            <div class="info-row">
-                <span class="label">Course</span>
-                <span class="value">
-                    {{ $student->course }}
-                </span>
-            </div>
-
-            <div class="info-row">
-                <span class="label">Semester</span>
-                <span class="value">
-                    {{ $student->semester ? 'Semester ' . $student->semester : 'N/A' }}
-                </span>
-            </div>
-
-            <div class="info-row">
-                <span class="label">Added On</span>
-                <span class="value">
-                    {{ $student->created_at->format('F d, Y') }}
-                </span>
-            </div>
-
-        </div>
-
-        <div class="actions">
-
-            <a href="{{ route('students.edit', $student->id) }}"
-               class="edit-button">
-                Edit Student
+            <a
+                href="{{ route('students.index') }}"
+                class="cancel-button"
+            >
+                Back to Students
             </a>
 
         </div>
@@ -104,178 +128,282 @@
 
     <style>
 
-        .student-details-container {
-            max-width: 850px;
-            margin: 0 auto;
-            padding: 35px 24px;
-        }
-
-        .student-details-header {
+        .details-page-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             gap: 20px;
-            margin-bottom: 25px;
         }
 
-        .student-details-header h1 {
+        .details-page-header h2 {
             margin: 0;
-            font-size: 28px;
+            color: #111827;
+            font-size: 22px;
             font-weight: 700;
-            color: #222;
         }
 
-        .student-details-header p {
-            margin: 6px 0 0;
-            color: #64748b;
-            font-size: 14px;
+        .details-page-header p {
+            margin: 4px 0 0;
+            color: #6b7280;
+            font-size: 13px;
         }
 
         .back-button {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             padding: 10px 16px;
-            border-radius: 6px;
-            background: #e5e7eb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: #ffffff;
             color: #374151;
             text-decoration: none;
-            font-size: 14px;
-            white-space: nowrap;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.2s ease;
         }
 
         .back-button:hover {
-            background: #d1d5db;
+            background: #f3f4f6;
+        }
+
+        .details-container {
+            width: min(100% - 60px, 1000px);
+            margin: 0 auto;
+            padding: 40px 0 60px;
+        }
+
+        .student-profile-card,
+        .details-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .student-profile-card {
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .profile-avatar {
+            width: 64px;
+            height: 64px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .profile-main h1 {
+            margin: 0 0 7px;
+            color: #111827;
+            font-size: 25px;
+            font-weight: 700;
         }
 
         .student-id {
-            background-color: #eff6ff;
-            border: 1px solid #bfdbfe;
-            color: #1d4ed8;
-            padding: 18px;
-            border-radius: 8px;
+            display: inline-flex;
+            padding: 5px 9px;
+            border-radius: 6px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .details-card {
             margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .student-id span {
-            display: block;
-            font-size: 13px;
-            color: #64748b;
-            margin-bottom: 5px;
-        }
-
-        .student-id strong {
-            font-size: 24px;
-        }
-
-        .student-info {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
             overflow: hidden;
         }
 
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 16px 20px;
-            border-bottom: 1px solid #eee;
+        .card-title {
+            padding: 22px 26px;
+            border-bottom: 1px solid #e5e7eb;
         }
 
-        .info-row:last-child {
-            border-bottom: none;
+        .card-title h2 {
+            margin: 0;
+            color: #111827;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .card-title p {
+            margin: 5px 0 0;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            min-width: 0;
+            padding: 19px 26px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .info-item:nth-child(odd) {
+            border-right: 1px solid #f1f5f9;
+        }
+
+        .info-item:nth-last-child(-n + 2) {
+            border-bottom: 0;
         }
 
         .label {
-            font-weight: 600;
-            color: #555;
+            color: #9ca3af;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         .value {
-            color: #222;
-            text-align: right;
+            overflow-wrap: anywhere;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 500;
         }
 
-        .actions {
+        .gender-badge {
+            display: inline-flex;
+            width: fit-content;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .gender-badge.male {
+            background: #ecfdf5;
+            color: #15803d;
+        }
+
+        .gender-badge.female {
+            background: #fdf2f8;
+            color: #be185d;
+        }
+
+        .gender-badge.other {
+            background: #f5f3ff;
+            color: #7e22ce;
+        }
+
+        .details-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
             margin-top: 25px;
         }
 
-        .edit-button {
-            display: inline-block;
-            background-color: #16a34a;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 6px;
+        .edit-button,
+        .cancel-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 0 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
             text-decoration: none;
-            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .edit-button {
+            background: #16a34a;
+            color: white;
         }
 
         .edit-button:hover {
-            background-color: #15803d;
+            background: #15803d;
         }
 
-        html.dark .student-details-header h1 {
-            color: #f3f4f6;
+        .cancel-button {
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            color: #374151;
         }
 
-        html.dark .student-details-header p {
-            color: #9ca3af;
+        .cancel-button:hover {
+            background: #f3f4f6;
         }
 
-        html.dark .student-info {
-            background: #1f2937;
-            border-color: #374151;
-        }
+        @media (max-width: 700px) {
 
-        html.dark .info-row {
-            border-color: #374151;
-        }
-
-        html.dark .label {
-            color: #9ca3af;
-        }
-
-        html.dark .value {
-            color: #f3f4f6;
-        }
-
-        html.dark .back-button {
-            background: #374151;
-            color: #f3f4f6;
-        }
-
-        html.dark .back-button:hover {
-            background: #4b5563;
-        }
-
-        @media (max-width: 650px) {
-
-            .student-details-container {
-                padding: 25px 16px;
-            }
-
-            .student-details-header {
-                flex-direction: column;
+            .details-page-header {
                 align-items: flex-start;
+                flex-direction: column;
             }
 
             .back-button {
                 width: 100%;
-                text-align: center;
             }
 
-            .info-row {
+            .details-container {
+                width: calc(100% - 32px);
+                padding: 28px 0 40px;
+            }
+
+            .student-profile-card {
+                padding: 22px;
+            }
+
+            .profile-avatar {
+                width: 54px;
+                height: 54px;
+                font-size: 21px;
+            }
+
+            .profile-main h1 {
+                font-size: 21px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-item {
+                padding: 16px 20px;
+            }
+
+            .info-item:nth-child(odd) {
+                border-right: 0;
+            }
+
+            .info-item:last-child {
+                border-bottom: 0;
+            }
+
+            .card-title {
+                padding: 20px;
+            }
+
+            .details-actions {
                 flex-direction: column;
-                gap: 5px;
             }
 
-            .value {
-                text-align: left;
-            }
-
-            .edit-button {
+            .edit-button,
+            .cancel-button {
                 width: 100%;
-                text-align: center;
             }
 
         }
