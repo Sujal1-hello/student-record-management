@@ -1,10 +1,9 @@
 <x-app-layout>
 
-
     <div class="details-container">
 
         <div class="student-profile-card">
-              
+
             <div class="profile-top">
 
                 <div class="profile-avatar">
@@ -23,6 +22,7 @@
 
         </div>
 
+
         <div class="details-card">
 
             <div class="card-title">
@@ -31,6 +31,18 @@
             </div>
 
             <div class="info-grid">
+
+                <div class="info-item">
+                    <span class="label">Student ID</span>
+                    <span class="value">{{ $student->student_id }}</span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">Roll No</span>
+                    <span class="value">
+                        {{ $student->roll_no ?: 'N/A' }}
+                    </span>
+                </div>
 
                 <div class="info-item">
                     <span class="label">Name</span>
@@ -60,32 +72,63 @@
                     <span class="label">Gender</span>
 
                     <span class="value">
+
                         @if ($student->gender)
+
                             <span class="gender-badge {{ strtolower($student->gender) }}">
                                 {{ $student->gender }}
                             </span>
+
                         @else
+
                             N/A
+
                         @endif
+
                     </span>
+
                 </div>
 
             </div>
 
         </div>
 
+
         <div class="details-card">
 
             <div class="card-title">
                 <h2>Academic Information</h2>
-                <p>Course and semester information.</p>
+                <p>Grade, section, course and academic details.</p>
             </div>
 
             <div class="info-grid">
 
                 <div class="info-item">
+                    <span class="label">Grade</span>
+                    <span class="value">
+                        {{ $student->grade ? 'Grade ' . $student->grade : 'N/A' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">Section</span>
+                    <span class="value">
+                        {{ $student->section ?: 'N/A' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">Academic Year</span>
+                    <span class="value">
+                        {{ $student->academic_year ?: 'N/A' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
                     <span class="label">Course</span>
-                    <span class="value">{{ $student->course }}</span>
+                    <span class="value">
+                        {{ $student->course ?: 'N/A' }}
+                    </span>
                 </div>
 
                 <div class="info-item">
@@ -105,6 +148,113 @@
             </div>
 
         </div>
+
+
+        <div class="details-card">
+
+            <div class="card-title">
+                <h2>Parent Details</h2>
+                <p>Parent and guardian contact information.</p>
+            </div>
+
+
+            <div class="parent-section">
+
+                <h3>Father's Information</h3>
+
+                <div class="info-grid">
+
+                    <div class="info-item">
+                        <span class="label">Name</span>
+                        <span class="value">
+                            {{ $student->father_name ?: 'N/A' }}
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Phone</span>
+                        <span class="value">
+                            {{ $student->father_phone ?: 'N/A' }}
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Occupation</span>
+                        <span class="value">
+                            {{ $student->father_occupation ?: 'N/A' }}
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="parent-section">
+
+                <h3>Mother's Information</h3>
+
+                <div class="info-grid">
+
+                    <div class="info-item">
+                        <span class="label">Name</span>
+                        <span class="value">
+                            {{ $student->mother_name ?: 'N/A' }}
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Phone</span>
+                        <span class="value">
+                            {{ $student->mother_phone ?: 'N/A' }}
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Occupation</span>
+                        <span class="value">
+                            {{ $student->mother_occupation ?: 'N/A' }}
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="parent-section">
+
+                <h3>Guardian Information</h3>
+
+                <div class="info-grid">
+
+                    <div class="info-item">
+                        <span class="label">Name</span>
+                        <span class="value">
+                            {{ $student->guardian_name ?: 'N/A' }}
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Phone</span>
+                        <span class="value">
+                            {{ $student->guardian_phone ?: 'N/A' }}
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Relation</span>
+                        <span class="value">
+                            {{ $student->guardian_relation ?: 'N/A' }}
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
 
         <div class="details-actions">
 
@@ -126,46 +276,8 @@
 
     </div>
 
+
     <style>
-
-        .details-page-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .details-page-header h2 {
-            margin: 0;
-            color: #111827;
-            font-size: 22px;
-            font-weight: 700;
-        }
-
-        .details-page-header p {
-            margin: 4px 0 0;
-            color: #6b7280;
-            font-size: 13px;
-        }
-
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 16px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            background: #ffffff;
-            color: #374151;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            transition: 0.2s ease;
-        }
-
-        .back-button:hover {
-            background: #f3f4f6;
-        }
 
         .details-container {
             width: min(100% - 60px, 1000px);
@@ -307,6 +419,22 @@
             color: #7e22ce;
         }
 
+        .parent-section {
+            padding: 20px 26px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .parent-section:last-child {
+            border-bottom: none;
+        }
+
+        .parent-section h3 {
+            margin: 0 0 16px;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
         .details-actions {
             display: flex;
             justify-content: flex-end;
@@ -349,15 +477,6 @@
 
         @media (max-width: 700px) {
 
-            .details-page-header {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .back-button {
-                width: 100%;
-            }
-
             .details-container {
                 width: calc(100% - 32px);
                 padding: 28px 0 40px;
@@ -395,6 +514,10 @@
 
             .card-title {
                 padding: 20px;
+            }
+
+            .parent-section {
+                padding: 18px 20px;
             }
 
             .details-actions {

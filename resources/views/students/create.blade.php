@@ -1,12 +1,13 @@
 <x-app-layout>
 
+
     <div class="create-container">
 
         <div class="form-card">
 
             <div class="form-card-header">
-                <h1>Add New Student</h1>
-                <p>Enter the student's information below.</p>
+                <h1>Student Registration</h1>
+                <p>Enter the student's general, academic and parent information.</p>
             </div>
 
             @if ($errors->any())
@@ -26,12 +27,16 @@
             <form action="{{ route('students.store') }}" method="POST">
                 @csrf
 
+                <div class="section-title">
+                    <h2>General Information</h2>
+                    <p>Basic information about the student.</p>
+                </div>
+
                 <div class="form-grid">
 
-                    <div class="form-group full-width">
+                    <div class="form-group">
                         <label for="name">
-                            Name
-                            <span class="required">*</span>
+                            Name <span class="required">*</span>
                         </label>
 
                         <input
@@ -46,9 +51,24 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="roll_no">
+                            Roll No <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="roll_no"
+                            type="text"
+                            name="roll_no"
+                            value="{{ old('roll_no') }}"
+                            placeholder="Enter roll number"
+                            required
+                            maxlength="50"
+                        >
+                    </div>
+
+                    <div class="form-group">
                         <label for="email">
-                            Email
-                            <span class="required">*</span>
+                            Email <span class="required">*</span>
                         </label>
 
                         <input
@@ -63,8 +83,7 @@
 
                     <div class="form-group">
                         <label for="phone">
-                            Phone
-                            <span class="optional">(Optional)</span>
+                            Phone <span class="optional">(Optional)</span>
                         </label>
 
                         <input
@@ -79,8 +98,7 @@
 
                     <div class="form-group">
                         <label for="date_of_birth">
-                            Date of Birth
-                            <span class="optional">(Optional)</span>
+                            Date of Birth <span class="optional">(Optional)</span>
                         </label>
 
                         <input
@@ -93,34 +111,86 @@
 
                     <div class="form-group">
                         <label for="gender">
-                            Gender
-                            <span class="optional">(Optional)</span>
+                            Gender <span class="optional">(Optional)</span>
                         </label>
 
                         <select id="gender" name="gender">
                             <option value="">Select Gender</option>
-
-                            <option value="Male"
-                                {{ old('gender') == 'Male' ? 'selected' : '' }}>
+                            <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>
                                 Male
                             </option>
-
-                            <option value="Female"
-                                {{ old('gender') == 'Female' ? 'selected' : '' }}>
+                            <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>
                                 Female
                             </option>
-
-                            <option value="Other"
-                                {{ old('gender') == 'Other' ? 'selected' : '' }}>
+                            <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>
                                 Other
                             </option>
                         </select>
                     </div>
 
+                </div>
+
+
+                <div class="section-title">
+                    <h2>Academic Information</h2>
+                    <p>Student's grade, section and academic details.</p>
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="grade">
+                            Grade <span class="required">*</span>
+                        </label>
+
+                        <select id="grade" name="grade" required>
+                            <option value="">Select Grade</option>
+
+                            <option value="11" {{ old('grade') == '11' ? 'selected' : '' }}>
+                                Grade 11
+                            </option>
+
+                            <option value="12" {{ old('grade') == '12' ? 'selected' : '' }}>
+                                Grade 12
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="section">
+                            Section <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="section"
+                            type="text"
+                            name="section"
+                            value="{{ old('section') }}"
+                            placeholder="e.g. A"
+                            required
+                            maxlength="20"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="academic_year">
+                            Academic Year <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="academic_year"
+                            type="text"
+                            name="academic_year"
+                            value="{{ old('academic_year') }}"
+                            placeholder="e.g. 2082/83"
+                            required
+                            maxlength="20"
+                        >
+                    </div>
+
                     <div class="form-group">
                         <label for="course">
-                            Course
-                            <span class="required">*</span>
+                            Course <span class="required">*</span>
                         </label>
 
                         <input
@@ -128,7 +198,7 @@
                             type="text"
                             name="course"
                             value="{{ old('course') }}"
-                            placeholder="e.g. BCA"
+                            placeholder="e.g. Science"
                             required
                             maxlength="255"
                         >
@@ -136,8 +206,7 @@
 
                     <div class="form-group">
                         <label for="semester">
-                            Semester
-                            <span class="optional">(Optional)</span>
+                            Semester <span class="optional">(Optional)</span>
                         </label>
 
                         <select id="semester" name="semester">
@@ -155,6 +224,162 @@
                     </div>
 
                 </div>
+
+
+                <div class="section-title">
+                    <h2>Parent Details</h2>
+                    <p>Contact information for parents or guardians.</p>
+                </div>
+
+                <div class="parent-box">
+
+                    <h3>Father's Information</h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="father_name">Father's Name</label>
+
+                            <input
+                                id="father_name"
+                                type="text"
+                                name="father_name"
+                                value="{{ old('father_name') }}"
+                                placeholder="Father's full name"
+                                maxlength="255"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="father_phone">Father's Phone</label>
+
+                            <input
+                                id="father_phone"
+                                type="text"
+                                name="father_phone"
+                                value="{{ old('father_phone') }}"
+                                placeholder="98XXXXXXXX"
+                                maxlength="20"
+                            >
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="father_occupation">Father's Occupation</label>
+
+                            <input
+                                id="father_occupation"
+                                type="text"
+                                name="father_occupation"
+                                value="{{ old('father_occupation') }}"
+                                placeholder="Father's occupation"
+                                maxlength="255"
+                            >
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="parent-box">
+
+                    <h3>Mother's Information</h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="mother_name">Mother's Name</label>
+
+                            <input
+                                id="mother_name"
+                                type="text"
+                                name="mother_name"
+                                value="{{ old('mother_name') }}"
+                                placeholder="Mother's full name"
+                                maxlength="255"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mother_phone">Mother's Phone</label>
+
+                            <input
+                                id="mother_phone"
+                                type="text"
+                                name="mother_phone"
+                                value="{{ old('mother_phone') }}"
+                                placeholder="98XXXXXXXX"
+                                maxlength="20"
+                            >
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="mother_occupation">Mother's Occupation</label>
+
+                            <input
+                                id="mother_occupation"
+                                type="text"
+                                name="mother_occupation"
+                                value="{{ old('mother_occupation') }}"
+                                placeholder="Mother's occupation"
+                                maxlength="255"
+                            >
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="parent-box">
+
+                    <h3>Guardian Information</h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="guardian_name">Guardian's Name</label>
+
+                            <input
+                                id="guardian_name"
+                                type="text"
+                                name="guardian_name"
+                                value="{{ old('guardian_name') }}"
+                                placeholder="Guardian's full name"
+                                maxlength="255"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="guardian_phone">Guardian's Phone</label>
+
+                            <input
+                                id="guardian_phone"
+                                type="text"
+                                name="guardian_phone"
+                                value="{{ old('guardian_phone') }}"
+                                placeholder="98XXXXXXXX"
+                                maxlength="20"
+                            >
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="guardian_relation">Guardian's Relation</label>
+
+                            <input
+                                id="guardian_relation"
+                                type="text"
+                                name="guardian_relation"
+                                value="{{ old('guardian_relation') }}"
+                                placeholder="e.g. Uncle, Aunt, Brother"
+                                maxlength="100"
+                            >
+                        </div>
+
+                    </div>
+
+                </div>
+
 
                 <div class="form-actions">
 
@@ -176,6 +401,7 @@
         </div>
 
     </div>
+
 
     <style>
 
@@ -211,7 +437,6 @@
             text-decoration: none;
             font-size: 13px;
             font-weight: 600;
-            transition: 0.2s ease;
         }
 
         .back-button:hover {
@@ -225,68 +450,70 @@
         }
 
         .form-card {
-            padding: 32px;
+            padding: 30px;
             background: #ffffff;
             border: 1px solid #e5e7eb;
             border-radius: 14px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .form-card-header {
-            margin-bottom: 28px;
+            margin-bottom: 30px;
         }
 
         .form-card-header h1 {
             margin: 0;
             color: #111827;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 700;
         }
 
         .form-card-header p {
-            margin: 7px 0 0;
+            margin: 6px 0 0;
             color: #6b7280;
             font-size: 14px;
         }
 
-        .error-box {
-            margin-bottom: 25px;
-            padding: 15px 18px;
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-radius: 9px;
-            color: #991b1b;
+        .section-title {
+            margin: 30px 0 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e5e7eb;
         }
 
-        .error-title {
-            margin-bottom: 8px;
-            font-size: 14px;
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        .section-title h2 {
+            margin: 0;
+            color: #111827;
+            font-size: 17px;
             font-weight: 700;
         }
 
-        .error-box ul {
-            margin: 0;
-            padding-left: 20px;
-            font-size: 13px;
-        }
-
-        .error-box li {
-            margin-bottom: 4px;
+        .section-title p {
+            margin: 4px 0 0;
+            color: #6b7280;
+            font-size: 12px;
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 22px 18px;
+            gap: 20px;
+        }
+
+        .form-group {
+            min-width: 0;
         }
 
         .full-width {
-            grid-column: span 2;
+            grid-column: 1 / -1;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 7px;
             color: #374151;
             font-size: 13px;
             font-weight: 600;
@@ -299,13 +526,13 @@
         .optional {
             color: #9ca3af;
             font-size: 11px;
-            font-weight: 500;
+            font-weight: 400;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            height: 46px;
+            height: 44px;
             box-sizing: border-box;
             padding: 0 13px;
             border: 1px solid #d1d5db;
@@ -315,11 +542,6 @@
             font-family: inherit;
             font-size: 14px;
             outline: none;
-            transition: 0.2s ease;
-        }
-
-        .form-group input::placeholder {
-            color: #9ca3af;
         }
 
         .form-group input:focus,
@@ -328,20 +550,55 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
+        .parent-box {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            background: #f9fafb;
+        }
+
+        .parent-box h3 {
+            margin: 0 0 18px;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .error-box {
+            margin-bottom: 25px;
+            padding: 15px 18px;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .error-title {
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .error-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 13px;
+        }
+
         .form-actions {
             display: flex;
             justify-content: flex-end;
-            align-items: center;
             gap: 10px;
             margin-top: 30px;
-            padding-top: 24px;
+            padding-top: 22px;
             border-top: 1px solid #e5e7eb;
         }
 
         .cancel-button,
         .submit-button {
             min-height: 42px;
-            padding: 0 18px;
+            padding: 0 20px;
             border-radius: 8px;
             font-family: inherit;
             font-size: 13px;
@@ -376,11 +633,6 @@
 
         @media (max-width: 700px) {
 
-            .create-container {
-                width: calc(100% - 32px);
-                padding: 28px 0 40px;
-            }
-
             .create-page-header {
                 align-items: flex-start;
                 flex-direction: column;
@@ -390,33 +642,36 @@
                 width: 100%;
             }
 
+            .create-container {
+                width: calc(100% - 32px);
+                padding: 28px 0 40px;
+            }
+
             .form-card {
                 padding: 22px;
             }
 
-            .form-card-header h1 {
-                font-size: 23px;
-            }
-
             .form-grid {
                 grid-template-columns: 1fr;
-                gap: 18px;
+                gap: 16px;
             }
 
             .full-width {
                 grid-column: auto;
             }
 
+            .parent-box {
+                padding: 16px;
+            }
+
             .form-actions {
-                flex-direction: column-reverse;
-                align-items: stretch;
+                flex-direction: column;
             }
 
             .cancel-button,
             .submit-button {
                 width: 100%;
             }
-
         }
 
     </style>

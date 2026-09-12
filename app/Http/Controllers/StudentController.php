@@ -72,77 +72,149 @@ class StudentController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/^[A-Za-z\s\'-]+$/',
-            ],
+{
+    $validated = $request->validate([
+        'name' => [
+            'required',
+            'string',
+            'max:255',
+            'regex:/^[A-Za-z\s\'-]+$/',
+        ],
 
-            'email' => 'required|email|unique:students,email',
+        'email' => 'required|email|unique:students,email',
 
-            'phone' => [
-                'nullable',
-                'regex:/^(97|98)\d{8}$/',
-            ],
+        'phone' => [
+            'nullable',
+            'regex:/^(97|98)\d{8}$/',
+        ],
 
-            'date_of_birth' => [
-                'nullable',
-                'date',
-                'before:today',
-            ],
+        'date_of_birth' => [
+            'nullable',
+            'date',
+            'before:today',
+        ],
 
-            'gender' => [
-                'nullable',
-                'in:Male,Female,Other',
-            ],
+        'gender' => [
+            'nullable',
+            'in:Male,Female,Other',
+        ],
 
-            'course' => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/^[A-Za-z0-9\s&().,-]+$/',
-            ],
+        'roll_no' => [
+            'required',
+            'string',
+            'max:50',
+        ],
 
-            'semester' => [
-                'nullable',
-                'integer',
-                'min:1',
-                'max:8',
-            ],
-        ]);
+        'grade' => [
+            'required',
+            'in:11,12',
+        ],
 
-        // Get the student with the highest Student ID number
-        $lastStudent = Student::whereNotNull('student_id')
-            ->get()
-            ->sortByDesc(function ($student) {
-                return (int) str_replace('STU', '', $student->student_id);
-            })
-            ->first();
+        'section' => [
+            'required',
+            'string',
+            'max:20',
+        ],
 
-        // Generate the next Student ID
-        if ($lastStudent) {
-            $lastNumber = (int) str_replace('STU', '', $lastStudent->student_id);
-            $nextNumber = $lastNumber + 1;
-        } else {
-            $nextNumber = 1;
-        }
+        'academic_year' => [
+            'required',
+            'string',
+            'max:20',
+        ],
 
-        $validated['student_id'] = 'STU' . str_pad(
-            $nextNumber,
-            3,
-            '0',
-            STR_PAD_LEFT
-        );
+        'course' => [
+            'required',
+            'string',
+            'max:255',
+            'regex:/^[A-Za-z0-9\s&().,-]+$/',
+        ],
 
-        Student::create($validated);
+        'semester' => [
+            'nullable',
+            'integer',
+            'min:1',
+            'max:8',
+        ],
 
-        return redirect()
-            ->route('students.index')
-            ->with('success', 'Student created successfully.');
+        'father_name' => [
+            'nullable',
+            'string',
+            'max:255',
+        ],
+
+        'father_phone' => [
+            'nullable',
+            'regex:/^(97|98)\d{8}$/',
+        ],
+
+        'father_occupation' => [
+            'nullable',
+            'string',
+            'max:255',
+        ],
+
+        'mother_name' => [
+            'nullable',
+            'string',
+            'max:255',
+        ],
+
+        'mother_phone' => [
+            'nullable',
+            'regex:/^(97|98)\d{8}$/',
+        ],
+
+        'mother_occupation' => [
+            'nullable',
+            'string',
+            'max:255',
+        ],
+
+        'guardian_name' => [
+            'nullable',
+            'string',
+            'max:255',
+        ],
+
+        'guardian_phone' => [
+            'nullable',
+            'regex:/^(97|98)\d{8}$/',
+        ],
+
+        'guardian_relation' => [
+            'nullable',
+            'string',
+            'max:100',
+        ],
+    ]);
+
+    $lastStudent = Student::whereNotNull('student_id')
+        ->get()
+        ->sortByDesc(function ($student) {
+            return (int) str_replace('STU', '', $student->student_id);
+        })
+        ->first();
+
+    if ($lastStudent) {
+        $lastNumber = (int) str_replace('STU', '', $lastStudent->student_id);
+        $nextNumber = $lastNumber + 1;
+    } else {
+        $nextNumber = 1;
     }
+
+    $validated['student_id'] = 'STU' . str_pad(
+        $nextNumber,
+        3,
+        '0',
+        STR_PAD_LEFT
+    );
+
+    Student::create($validated);
+
+    return redirect()
+        ->route('students.index')
+        ->with('success', 'Student created successfully.');
+}
 
     /**
      * Display the specified resource.
@@ -168,55 +240,135 @@ class StudentController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        $student = Student::findOrFail($id);
-        $validated = $request->validate([
-            'name' => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/^[A-Za-z\s\'-]+$/',
-            ],
+{
+    $student = Student::findOrFail($id);
 
-            'email' => 'required|email|unique:students,email,' . $student->id,
+    $validated = $request->validate([
 
-            'phone' => [
-                'nullable',
-                'regex:/^(97|98)\d{8}$/',
-            ],
+        'name' => [
+            'required',
+            'string',
+            'max:255',
+            'regex:/^[A-Za-z\s\'-]+$/',
+        ],
 
-            'date_of_birth' => [
-                'nullable',
-                'date',
-                'before:today',
-            ],
+        'roll_no' => [
+            'required',
+            'string',
+            'max:50',
+        ],
 
-            'gender' => [
-                'nullable',
-                'in:Male,Female,Other',
-            ],
+        'email' => [
+            'required',
+            'email',
+            'unique:students,email,' . $student->id,
+        ],
 
-            'course' => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/^[A-Za-z0-9\s&().,-]+$/',
-            ],
+        'phone' => [
+            'nullable',
+            'regex:/^(97|98)\d{8}$/',
+        ],
 
-            'semester' => [
-                'nullable',
-                'integer',
-                'min:1',
-                'max:8',
-            ],
-        ]);
+        'date_of_birth' => [
+            'nullable',
+            'date',
+            'before:today',
+        ],
 
-        $student->update($validated);
+        'gender' => [
+            'nullable',
+            'in:Male,Female,Other',
+        ],
 
-        return redirect()
-            ->route('students.index')
-            ->with('success', 'Student updated successfully.');
-    }
+        'grade' => [
+            'required',
+            'in:11,12',
+        ],
+
+        'section' => [
+            'required',
+            'string',
+            'max:20',
+        ],
+
+        'academic_year' => [
+            'required',
+            'string',
+            'max:20',
+        ],
+
+        'course' => [
+            'required',
+            'string',
+            'max:255',
+            'regex:/^[A-Za-z0-9\s&().,-]+$/',
+        ],
+
+        'semester' => [
+            'nullable',
+            'integer',
+            'min:1',
+            'max:8',
+        ],
+
+        'father_name' => [
+            'nullable',
+            'string',
+            'max:255',
+        ],
+
+        'father_phone' => [
+            'nullable',
+            'regex:/^(97|98)\d{8}$/',
+        ],
+
+        'father_occupation' => [
+            'nullable',
+            'string',
+            'max:255',
+        ],
+
+        'mother_name' => [
+            'nullable',
+            'string',
+            'max:255',
+        ],
+
+        'mother_phone' => [
+            'nullable',
+            'regex:/^(97|98)\d{8}$/',
+        ],
+
+        'mother_occupation' => [
+            'nullable',
+            'string',
+            'max:255',
+        ],
+
+        'guardian_name' => [
+            'nullable',
+            'string',
+            'max:255',
+        ],
+
+        'guardian_phone' => [
+            'nullable',
+            'regex:/^(97|98)\d{8}$/',
+        ],
+
+        'guardian_relation' => [
+            'nullable',
+            'string',
+            'max:100',
+        ],
+    ]);
+
+    $student->update($validated);
+
+    return redirect()
+        ->route('students.index')
+        ->with('success', 'Student updated successfully.');
+}
 
     /**
      * Remove the specified resource from storage.
