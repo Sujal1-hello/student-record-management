@@ -144,6 +144,10 @@
             Courses
         </a>
 
+        <a href="{{ route('library.index') }}"
+           class="mobile-nav-link {{ request()->routeIs('library.*') ? 'active' : '' }}">
+            Library
+
         <div class="mobile-user">
 
             <div class="mobile-user-info">

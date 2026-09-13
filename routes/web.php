@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\BookIssueController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CourseController;
@@ -43,9 +44,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('fees', FeeController::class);
 
+    Route::get('/library', [LibraryController::class, 'index'])
+        ->name('library.index');
+
     Route::resource('books', BookController::class);
 
     Route::get('book-issues', [BookIssueController::class, 'index'])->name('book-issues.index');
+
     Route::get('book-issues/create', [BookIssueController::class, 'create'])->name('book-issues.create');
     Route::post('book-issues', [BookIssueController::class, 'store'])->name('book-issues.store');
     Route::patch('book-issues/{bookIssue}/return', [BookIssueController::class, 'returnBook'])->name('book-issues.return');
