@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\FeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Models\Student;
@@ -37,6 +38,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('students', StudentController::class);
 
     Route::resource('courses', CourseController::class);
+
+    Route::resource('fees', FeeController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
