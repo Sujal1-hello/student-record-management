@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BookIssueController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\ProfileController;
@@ -41,6 +43,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('fees', FeeController::class);
 
+    Route::resource('books', BookController::class);
+
+    Route::get('book-issues', [BookIssueController::class, 'index'])->name('book-issues.index');
+    Route::get('book-issues/create', [BookIssueController::class, 'create'])->name('book-issues.create');
+    Route::post('book-issues', [BookIssueController::class, 'store'])->name('book-issues.store');
+    Route::patch('book-issues/{bookIssue}/return', [BookIssueController::class, 'returnBook'])->name('book-issues.return');
+
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
 
@@ -51,4 +60,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -35,4 +35,9 @@ public function fees(): HasMany
     return $this->hasMany(Fee::class);
 }
 
+public function bookIssues(): \Illuminate\Database\Eloquent\Relations\HasMany
+{
+    return $this->hasMany(BookIssue::class);
+}
+
 }
