@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\BookIssueController;
 use App\Http\Controllers\BookController;
@@ -46,6 +47,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/library', [LibraryController::class, 'index'])
         ->name('library.index');
+
+    Route::get('/search', [SearchController::class, 'index'])
+    ->name('search.index');
 
     Route::resource('books', BookController::class);
 

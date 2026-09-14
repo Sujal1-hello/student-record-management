@@ -13,17 +13,17 @@
             <div class="desktop-nav">
 
                 <a href="{{ route('dashboard') }}"
-                   class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     Dashboard
                 </a>
 
                 <a href="{{ route('students.index') }}"
-                   class="nav-link {{ request()->routeIs('students.*') ? 'active' : '' }}">
+                    class="nav-link {{ request()->routeIs('students.*') ? 'active' : '' }}">
                     Students
                 </a>
 
                 <a href="{{ route('courses.index') }}"
-                   class="nav-link {{ request()->routeIs('courses.*') ? 'active' : '' }}">
+                    class="nav-link {{ request()->routeIs('courses.*') ? 'active' : '' }}">
                     Courses
                 </a>
 
@@ -35,33 +35,19 @@
 
             <div x-data="{ userOpen: false }" class="user-menu">
 
-                <button
-                    @click="userOpen = !userOpen"
-                    class="user-button"
-                    type="button"
-                >
+                <button @click="userOpen = !userOpen" class="user-button" type="button">
                     <span>{{ Auth::user()->name }}</span>
 
-                    <svg
-                        class="user-arrow"
-                        :class="{ 'rotate': userOpen }"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                    >
+                    <svg class="user-arrow" :class="{ 'rotate': userOpen }" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
                             d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
                             clip-rule="evenodd" />
                     </svg>
                 </button>
 
-                <div
-                    x-show="userOpen"
-                    @click.outside="userOpen = false"
-                    x-transition
-                    class="user-dropdown"
-                    style="display: none;"
-                >
+                <div x-show="userOpen" @click.outside="userOpen = false" x-transition class="user-dropdown"
+                    style="display: none;">
 
                     <div class="user-info">
                         <strong>{{ Auth::user()->name }}</strong>
@@ -88,65 +74,45 @@
 
         </div>
 
-        <button
-            @click="open = !open"
-            class="mobile-menu-button"
-            type="button"
-            aria-label="Toggle navigation"
-        >
-            <svg
-                x-show="!open"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
-            >
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M4 6h16M4 12h16M4 18h16" />
+        <button @click="open = !open" class="mobile-menu-button" type="button" aria-label="Toggle navigation">
+            <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
 
-            <svg
-                x-show="open"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
-                style="display: none;"
-            >
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M6 18L18 6M6 6l12 12" />
+            <svg x-show="open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" style="display: none;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
 
     </div>
 
-    <div
-        x-show="open"
-        x-transition
-        class="mobile-navigation"
-        style="display: none;"
-    >
+    <div x-show="open" x-transition class="mobile-navigation" style="display: none;">
 
         <a href="{{ route('dashboard') }}"
-           class="mobile-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            class="mobile-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             Dashboard
         </a>
 
         <a href="{{ route('students.index') }}"
-           class="mobile-nav-link {{ request()->routeIs('students.*') ? 'active' : '' }}">
+            class="mobile-nav-link {{ request()->routeIs('students.*') ? 'active' : '' }}">
             Students
         </a>
 
         <a href="{{ route('courses.index') }}"
-           class="mobile-nav-link {{ request()->routeIs('courses.*') ? 'active' : '' }}">
+            class="mobile-nav-link {{ request()->routeIs('courses.*') ? 'active' : '' }}">
             Courses
         </a>
 
         <a href="{{ route('library.index') }}"
-           class="mobile-nav-link {{ request()->routeIs('library.*') ? 'active' : '' }}">
+            class="mobile-nav-link {{ request()->routeIs('library.*') ? 'active' : '' }}">
             Library
+        </a>
+
+        <a href="{{ route('search.index') }}" class="nav-link {{ request()->routeIs('search.*') ? 'active' : '' }}">
+            Search
+        </a>
 
         <div class="mobile-user">
 
