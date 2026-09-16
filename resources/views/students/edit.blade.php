@@ -18,10 +18,14 @@
 
         <div class="student-id">
             <span>Student ID</span>
-
             <strong>
                 {{ $student->student_id }}
             </strong>
+
+            <small>
+                Last updated:
+                {{ $student->updated_at ? $student->updated_at->format('M d, Y h:i A') : 'Not available' }}
+            </small>
         </div>
 
 
@@ -64,13 +68,8 @@
                             Name <span class="required">*</span>
                         </label>
 
-                        <input
-                            type="text"
-                            name="name"
-                            value="{{ old('name', $student->name) }}"
-                            required
-                            maxlength="255"
-                        >
+                        <input type="text" name="name" value="{{ old('name', $student->name) }}" required
+                            maxlength="255">
 
                     </div>
 
@@ -81,14 +80,8 @@
                             Roll No <span class="required">*</span>
                         </label>
 
-                        <input
-                            type="text"
-                            name="roll_no"
-                            value="{{ old('roll_no', $student->roll_no) }}"
-                            required
-                            maxlength="50"
-                            placeholder="Enter roll number"
-                        >
+                        <input type="text" name="roll_no" value="{{ old('roll_no', $student->roll_no) }}" required
+                            maxlength="50" placeholder="Enter roll number">
 
                     </div>
 
@@ -99,12 +92,7 @@
                             Email <span class="required">*</span>
                         </label>
 
-                        <input
-                            type="email"
-                            name="email"
-                            value="{{ old('email', $student->email) }}"
-                            required
-                        >
+                        <input type="email" name="email" value="{{ old('email', $student->email) }}" required>
 
                     </div>
 
@@ -115,13 +103,8 @@
                             Phone <span class="optional">(Optional)</span>
                         </label>
 
-                        <input
-                            type="text"
-                            name="phone"
-                            value="{{ old('phone', $student->phone) }}"
-                            maxlength="10"
-                            placeholder="98XXXXXXXX"
-                        >
+                        <input type="text" name="phone" value="{{ old('phone', $student->phone) }}" maxlength="10"
+                            placeholder="98XXXXXXXX">
 
                     </div>
 
@@ -132,11 +115,8 @@
                             Date of Birth <span class="optional">(Optional)</span>
                         </label>
 
-                        <input
-                            type="date"
-                            name="date_of_birth"
-                            value="{{ old('date_of_birth', $student->date_of_birth) }}"
-                        >
+                        <input type="date" name="date_of_birth"
+                            value="{{ old('date_of_birth', $student->date_of_birth) }}">
 
                     </div>
 
@@ -151,24 +131,15 @@
 
                             <option value="">Select Gender</option>
 
-                            <option
-                                value="Male"
-                                {{ old('gender', $student->gender) == 'Male' ? 'selected' : '' }}
-                            >
+                            <option value="Male" {{ old('gender', $student->gender) == 'Male' ? 'selected' : '' }}>
                                 Male
                             </option>
 
-                            <option
-                                value="Female"
-                                {{ old('gender', $student->gender) == 'Female' ? 'selected' : '' }}
-                            >
+                            <option value="Female" {{ old('gender', $student->gender) == 'Female' ? 'selected' : '' }}>
                                 Female
                             </option>
 
-                            <option
-                                value="Other"
-                                {{ old('gender', $student->gender) == 'Other' ? 'selected' : '' }}
-                            >
+                            <option value="Other" {{ old('gender', $student->gender) == 'Other' ? 'selected' : '' }}>
                                 Other
                             </option>
 
@@ -197,17 +168,11 @@
 
                             <option value="">Select Grade</option>
 
-                            <option
-                                value="11"
-                                {{ old('grade', $student->grade) == '11' ? 'selected' : '' }}
-                            >
+                            <option value="11" {{ old('grade', $student->grade) == '11' ? 'selected' : '' }}>
                                 Grade 11
                             </option>
 
-                            <option
-                                value="12"
-                                {{ old('grade', $student->grade) == '12' ? 'selected' : '' }}
-                            >
+                            <option value="12" {{ old('grade', $student->grade) == '12' ? 'selected' : '' }}>
                                 Grade 12
                             </option>
 
@@ -222,14 +187,8 @@
                             Section <span class="required">*</span>
                         </label>
 
-                        <input
-                            type="text"
-                            name="section"
-                            value="{{ old('section', $student->section) }}"
-                            required
-                            maxlength="20"
-                            placeholder="e.g. A"
-                        >
+                        <input type="text" name="section" value="{{ old('section', $student->section) }}" required
+                            maxlength="20" placeholder="e.g. A">
 
                     </div>
 
@@ -240,14 +199,9 @@
                             Academic Year <span class="required">*</span>
                         </label>
 
-                        <input
-                            type="text"
-                            name="academic_year"
-                            value="{{ old('academic_year', $student->academic_year) }}"
-                            required
-                            maxlength="20"
-                            placeholder="e.g. 2082/83"
-                        >
+                        <input type="text" name="academic_year"
+                            value="{{ old('academic_year', $student->academic_year) }}" required maxlength="20"
+                            placeholder="e.g. 2082/83">
 
                     </div>
 
@@ -258,13 +212,8 @@
                             Course <span class="required">*</span>
                         </label>
 
-                        <input
-                            type="text"
-                            name="course"
-                            value="{{ old('course', $student->course) }}"
-                            required
-                            maxlength="255"
-                        >
+                        <input type="text" name="course" value="{{ old('course', $student->course) }}" required
+                            maxlength="255">
 
                     </div>
 
@@ -281,10 +230,7 @@
 
                             @for ($i = 1; $i <= 8; $i++)
 
-                                <option
-                                    value="{{ $i }}"
-                                    {{ old('semester', $student->semester) == $i ? 'selected' : '' }}
-                                >
+                                <option value="{{ $i }}" {{ old('semester', $student->semester) == $i ? 'selected' : '' }}>
                                     Semester {{ $i }}
                                 </option>
 
@@ -313,13 +259,9 @@
 
                             <label>Father's Name</label>
 
-                            <input
-                                type="text"
-                                name="father_name"
-                                value="{{ old('father_name', $student->father_name) }}"
-                                maxlength="255"
-                                placeholder="Father's full name"
-                            >
+                            <input type="text" name="father_name"
+                                value="{{ old('father_name', $student->father_name) }}" maxlength="255"
+                                placeholder="Father's full name">
 
                         </div>
 
@@ -328,13 +270,9 @@
 
                             <label>Father's Phone</label>
 
-                            <input
-                                type="text"
-                                name="father_phone"
-                                value="{{ old('father_phone', $student->father_phone) }}"
-                                maxlength="20"
-                                placeholder="98XXXXXXXX"
-                            >
+                            <input type="text" name="father_phone"
+                                value="{{ old('father_phone', $student->father_phone) }}" maxlength="20"
+                                placeholder="98XXXXXXXX">
 
                         </div>
 
@@ -343,13 +281,9 @@
 
                             <label>Father's Occupation</label>
 
-                            <input
-                                type="text"
-                                name="father_occupation"
-                                value="{{ old('father_occupation', $student->father_occupation) }}"
-                                maxlength="255"
-                                placeholder="Father's occupation"
-                            >
+                            <input type="text" name="father_occupation"
+                                value="{{ old('father_occupation', $student->father_occupation) }}" maxlength="255"
+                                placeholder="Father's occupation">
 
                         </div>
 
@@ -368,13 +302,9 @@
 
                             <label>Mother's Name</label>
 
-                            <input
-                                type="text"
-                                name="mother_name"
-                                value="{{ old('mother_name', $student->mother_name) }}"
-                                maxlength="255"
-                                placeholder="Mother's full name"
-                            >
+                            <input type="text" name="mother_name"
+                                value="{{ old('mother_name', $student->mother_name) }}" maxlength="255"
+                                placeholder="Mother's full name">
 
                         </div>
 
@@ -383,13 +313,9 @@
 
                             <label>Mother's Phone</label>
 
-                            <input
-                                type="text"
-                                name="mother_phone"
-                                value="{{ old('mother_phone', $student->mother_phone) }}"
-                                maxlength="20"
-                                placeholder="98XXXXXXXX"
-                            >
+                            <input type="text" name="mother_phone"
+                                value="{{ old('mother_phone', $student->mother_phone) }}" maxlength="20"
+                                placeholder="98XXXXXXXX">
 
                         </div>
 
@@ -398,13 +324,9 @@
 
                             <label>Mother's Occupation</label>
 
-                            <input
-                                type="text"
-                                name="mother_occupation"
-                                value="{{ old('mother_occupation', $student->mother_occupation) }}"
-                                maxlength="255"
-                                placeholder="Mother's occupation"
-                            >
+                            <input type="text" name="mother_occupation"
+                                value="{{ old('mother_occupation', $student->mother_occupation) }}" maxlength="255"
+                                placeholder="Mother's occupation">
 
                         </div>
 
@@ -423,13 +345,9 @@
 
                             <label>Guardian's Name</label>
 
-                            <input
-                                type="text"
-                                name="guardian_name"
-                                value="{{ old('guardian_name', $student->guardian_name) }}"
-                                maxlength="255"
-                                placeholder="Guardian's full name"
-                            >
+                            <input type="text" name="guardian_name"
+                                value="{{ old('guardian_name', $student->guardian_name) }}" maxlength="255"
+                                placeholder="Guardian's full name">
 
                         </div>
 
@@ -438,13 +356,9 @@
 
                             <label>Guardian's Phone</label>
 
-                            <input
-                                type="text"
-                                name="guardian_phone"
-                                value="{{ old('guardian_phone', $student->guardian_phone) }}"
-                                maxlength="20"
-                                placeholder="98XXXXXXXX"
-                            >
+                            <input type="text" name="guardian_phone"
+                                value="{{ old('guardian_phone', $student->guardian_phone) }}" maxlength="20"
+                                placeholder="98XXXXXXXX">
 
                         </div>
 
@@ -453,13 +367,9 @@
 
                             <label>Guardian's Relation</label>
 
-                            <input
-                                type="text"
-                                name="guardian_relation"
-                                value="{{ old('guardian_relation', $student->guardian_relation) }}"
-                                maxlength="100"
-                                placeholder="e.g. Uncle, Aunt, Brother"
-                            >
+                            <input type="text" name="guardian_relation"
+                                value="{{ old('guardian_relation', $student->guardian_relation) }}" maxlength="100"
+                                placeholder="e.g. Uncle, Aunt, Brother">
 
                         </div>
 
@@ -470,10 +380,7 @@
 
                 <div class="actions">
 
-                    <a
-                        href="{{ route('students.index') }}"
-                        class="cancel-button"
-                    >
+                    <a href="{{ route('students.index') }}" class="cancel-button">
                         Cancel
                     </a>
 
@@ -491,7 +398,6 @@
 
 
     <style>
-
         .student-edit-container {
             width: min(100% - 60px, 1000px);
             margin: 0 auto;
@@ -557,6 +463,15 @@
 
         .student-id strong {
             font-size: 24px;
+            color: #0f172a;
+        }
+
+        .student-id small {
+            display: block;
+            margin-top: 6px;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 400;
         }
 
         .error-box {
@@ -755,8 +670,8 @@
                 width: 100%;
             }
 
-        }
 
+        }
     </style>
 
 </x-app-layout>
