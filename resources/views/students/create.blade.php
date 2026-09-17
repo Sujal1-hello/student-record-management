@@ -1,4 +1,4 @@
-```blade
+
 <x-app-layout>
 
     <div class="create-container">
@@ -1360,4 +1360,4 @@
     </script>
 
 </x-app-layout>
-```
+
