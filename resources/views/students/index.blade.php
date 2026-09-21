@@ -1,35 +1,37 @@
 <x-app-layout>
 
-
     <div class="students-container">
 
+        {{-- Success Message --}}
         @if (session('success'))
             <div class="success-message">
-                <span>✓</span>
-                {{ session('success') }}
+                <span class="success-icon">✓</span>
+                <span>{{ session('success') }}</span>
             </div>
         @endif
 
+
+        {{-- Page Header --}}
         <div class="page-intro">
             <div>
+                <span class="page-label">STUDENT MANAGEMENT</span>
                 <h1>Student Records</h1>
                 <p>View, search, filter and manage all students.</p>
             </div>
 
             <a href="{{ route('students.create') }}" class="add-student-button">
-                + Add New Student
+                <span>+</span>
+                Add New Student
             </a>
         </div>
 
+
+        {{-- Filters --}}
         <form action="{{ route('students.index') }}" method="GET" class="filter-panel">
 
             <div class="search-field">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none">
                     <circle cx="11" cy="11" r="7"></circle>
                     <path d="m20 20-4-4"></path>
                 </svg>
@@ -43,50 +45,65 @@
 
             </div>
 
+
             <select name="course">
                 <option value="">All Courses</option>
 
                 @foreach ($courses as $courseOption)
-                    <option value="{{ $courseOption }}"
-                        {{ ($course ?? '') == $courseOption ? 'selected' : '' }}>
+                    <option
+                        value="{{ $courseOption }}"
+                        {{ ($course ?? '') == $courseOption ? 'selected' : '' }}
+                    >
                         {{ $courseOption }}
                     </option>
                 @endforeach
             </select>
 
+
             <select name="gender">
                 <option value="">All Genders</option>
 
-                <option value="Male"
-                    {{ ($gender ?? '') == 'Male' ? 'selected' : '' }}>
+                <option
+                    value="Male"
+                    {{ ($gender ?? '') == 'Male' ? 'selected' : '' }}
+                >
                     Male
                 </option>
 
-                <option value="Female"
-                    {{ ($gender ?? '') == 'Female' ? 'selected' : '' }}>
+                <option
+                    value="Female"
+                    {{ ($gender ?? '') == 'Female' ? 'selected' : '' }}
+                >
                     Female
                 </option>
 
-                <option value="Other"
-                    {{ ($gender ?? '') == 'Other' ? 'selected' : '' }}>
+                <option
+                    value="Other"
+                    {{ ($gender ?? '') == 'Other' ? 'selected' : '' }}
+                >
                     Other
                 </option>
             </select>
+
 
             <select name="semester">
                 <option value="">All Semesters</option>
 
                 @for ($i = 1; $i <= 8; $i++)
-                    <option value="{{ $i }}"
-                        {{ ($semester ?? '') == $i ? 'selected' : '' }}>
+                    <option
+                        value="{{ $i }}"
+                        {{ ($semester ?? '') == $i ? 'selected' : '' }}
+                    >
                         Semester {{ $i }}
                     </option>
                 @endfor
             </select>
 
+
             <button type="submit" class="search-button">
                 Search
             </button>
+
 
             @if (!empty($search) || !empty($course) || !empty($gender) || !empty($semester))
                 <a href="{{ route('students.index') }}" class="clear-button">
@@ -96,21 +113,33 @@
 
         </form>
 
+
+        {{-- Student Records --}}
         @if ($students->count())
 
+            {{-- Results Header --}}
             <div class="records-header">
-                <div>
+
+                <div class="results-info">
+
                     <strong>
                         {{ $students->total() }}
                         {{ $students->total() == 1 ? 'Student' : 'Students' }}
                     </strong>
 
                     <span>
-                        Showing {{ $students->firstItem() }}–{{ $students->lastItem() }}
+                        Showing
+                        {{ $students->firstItem() }}
+                        –
+                        {{ $students->lastItem() }}
                     </span>
+
                 </div>
+
             </div>
 
+
+            {{-- Desktop Table --}}
             <div class="students-table-card">
 
                 <div class="table-wrapper">
@@ -130,82 +159,127 @@
                             </tr>
                         </thead>
 
+
                         <tbody>
 
                             @foreach ($students as $student)
 
                                 <tr>
 
+                                    {{-- Student ID --}}
                                     <td>
                                         <span class="student-id">
                                             {{ $student->student_id }}
                                         </span>
                                     </td>
 
+
+                                    {{-- Name --}}
                                     <td>
+
                                         <div class="student-name">
+
                                             <div class="student-avatar">
                                                 {{ strtoupper(substr($student->name, 0, 1)) }}
                                             </div>
 
-                                            <span>{{ $student->name }}</span>
+                                            <span>
+                                                {{ $student->name }}
+                                            </span>
+
                                         </div>
+
                                     </td>
 
+
+                                    {{-- Email --}}
                                     <td>
                                         <span class="email">
                                             {{ $student->email }}
                                         </span>
                                     </td>
 
+
+                                    {{-- Phone --}}
                                     <td>
                                         {{ $student->phone ?? 'N/A' }}
                                     </td>
 
+
+                                    {{-- Gender --}}
                                     <td>
+
                                         @if ($student->gender)
+
                                             <span class="gender-badge {{ strtolower($student->gender) }}">
                                                 {{ $student->gender }}
                                             </span>
+
                                         @else
-                                            <span class="muted">N/A</span>
+
+                                            <span class="muted">
+                                                N/A
+                                            </span>
+
                                         @endif
+
                                     </td>
 
+
+                                    {{-- Course --}}
                                     <td>
+
                                         <span class="course-name">
                                             {{ $student->course }}
                                         </span>
+
                                     </td>
 
+
+                                    {{-- Semester --}}
                                     <td>
+
                                         @if ($student->semester)
+
                                             Semester {{ $student->semester }}
+
                                         @else
-                                            <span class="muted">N/A</span>
+
+                                            <span class="muted">
+                                                N/A
+                                            </span>
+
                                         @endif
+
                                     </td>
 
+
+                                    {{-- Actions --}}
                                     <td>
 
                                         <div class="actions">
 
                                             <a
                                                 href="{{ route('students.show', $student->id) }}"
-                                                class="view-button">
+                                                class="view-button"
+                                            >
                                                 View
                                             </a>
 
+
                                             <a
                                                 href="{{ route('students.edit', $student->id) }}"
-                                                class="edit-button">
+                                                class="edit-button"
+                                            >
                                                 Edit
                                             </a>
+
 
                                             <form
                                                 action="{{ route('students.destroy', $student->id) }}"
                                                 method="POST"
-                                                class="delete-form">
+                                                class="delete-form"
+                                            >
 
                                                 @csrf
                                                 @method('DELETE')
@@ -213,7 +287,8 @@
                                                 <button
                                                     type="submit"
                                                     class="delete-button"
-                                                    onclick="return confirm('Are you sure you want to delete this student?')">
+                                                    onclick="return confirm('Are you sure you want to delete this student?')"
+                                                >
                                                     Delete
                                                 </button>
 
@@ -235,6 +310,8 @@
 
             </div>
 
+
+            {{-- Mobile Cards --}}
             <div class="mobile-student-list">
 
                 @foreach ($students as $student)
@@ -250,22 +327,30 @@
                                 </div>
 
                                 <div>
-                                    <strong>{{ $student->name }}</strong>
+
+                                    <strong>
+                                        {{ $student->name }}
+                                    </strong>
 
                                     <span>
                                         {{ $student->student_id }}
                                     </span>
+
                                 </div>
 
                             </div>
 
+
                             @if ($student->gender)
+
                                 <span class="gender-badge {{ strtolower($student->gender) }}">
                                     {{ $student->gender }}
                                 </span>
+
                             @endif
 
                         </div>
+
 
                         <div class="mobile-details">
 
@@ -293,23 +378,27 @@
 
                         </div>
 
+
                         <div class="mobile-actions">
 
                             <a
                                 href="{{ route('students.show', $student->id) }}"
-                                class="view-button">
+                                class="view-button"
+                            >
                                 View
                             </a>
 
                             <a
                                 href="{{ route('students.edit', $student->id) }}"
-                                class="edit-button">
+                                class="edit-button"
+                            >
                                 Edit
                             </a>
 
                             <form
                                 action="{{ route('students.destroy', $student->id) }}"
-                                method="POST">
+                                method="POST"
+                            >
 
                                 @csrf
                                 @method('DELETE')
@@ -317,7 +406,8 @@
                                 <button
                                     type="submit"
                                     class="delete-button"
-                                    onclick="return confirm('Are you sure you want to delete this student?')">
+                                    onclick="return confirm('Are you sure you want to delete this student?')"
+                                >
                                     Delete
                                 </button>
 
@@ -331,12 +421,114 @@
 
             </div>
 
-            <div class="pagination">
-                {{ $students->links() }}
+
+            {{-- Professional Pagination --}}
+            <div class="pagination-wrapper">
+
+                <div class="pagination-summary">
+
+                    <span>
+                        Showing
+                        <strong>{{ $students->firstItem() }}</strong>
+                        to
+                        <strong>{{ $students->lastItem() }}</strong>
+                        of
+                        <strong>{{ $students->total() }}</strong>
+                        results
+                    </span>
+
+                </div>
+
+
+                <div class="pagination-links">
+
+                    {{-- Previous --}}
+                    @if ($students->onFirstPage())
+
+                        <span class="pagination-button disabled">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="m15 18-6-6 6-6"></path>
+                            </svg>
+
+                            Previous
+                        </span>
+
+                    @else
+
+                        <a
+                            href="{{ $students->previousPageUrl() }}"
+                            class="pagination-button"
+                        >
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="m15 18-6-6 6-6"></path>
+                            </svg>
+
+                            Previous
+                        </a>
+
+                    @endif
+
+
+                    {{-- Page Numbers --}}
+                    @foreach ($students->getUrlRange(1, $students->lastPage()) as $page => $url)
+
+                        @if ($page == $students->currentPage())
+
+                            <span class="pagination-number active">
+                                {{ $page }}
+                            </span>
+
+                        @else
+
+                            <a
+                                href="{{ $url }}"
+                                class="pagination-number"
+                            >
+                                {{ $page }}
+                            </a>
+
+                        @endif
+
+                    @endforeach
+
+
+                    {{-- Next --}}
+                    @if ($students->hasMorePages())
+
+                        <a
+                            href="{{ $students->nextPageUrl() }}"
+                            class="pagination-button"
+                        >
+                            Next
+
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="m9 18 6-6-6-6"></path>
+                            </svg>
+
+                        </a>
+
+                    @else
+
+                        <span class="pagination-button disabled">
+
+                            Next
+
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="m9 18 6-6-6-6"></path>
+                            </svg>
+
+                        </span>
+
+                    @endif
+
+                </div>
+
             </div>
+
 
         @else
 
+            {{-- Empty State --}}
             <div class="empty-state">
 
                 <div class="empty-icon">
@@ -345,25 +537,35 @@
 
                 @if (!empty($search) || !empty($course) || !empty($gender) || !empty($semester))
 
-                    <h3>No Students Found</h3>
+                    <h3>
+                        No Students Found
+                    </h3>
 
                     <p>
                         No students match your current search or filters.
                     </p>
 
-                    <a href="{{ route('students.index') }}" class="clear-button">
+                    <a
+                        href="{{ route('students.index') }}"
+                        class="clear-button"
+                    >
                         Clear Filters
                     </a>
 
                 @else
 
-                    <h3>No Students Available</h3>
+                    <h3>
+                        No Students Available
+                    </h3>
 
                     <p>
                         You haven't added any students yet.
                     </p>
 
-                    <a href="{{ route('students.create') }}" class="add-student-button">
+                    <a
+                        href="{{ route('students.create') }}"
+                        class="add-student-button"
+                    >
                         + Add Your First Student
                     </a>
 
@@ -375,103 +577,134 @@
 
     </div>
 
+
     <style>
 
-        .students-page-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .students-page-header h2 {
-            margin: 0;
-            font-size: 22px;
-            font-weight: 700;
-            color: #111827;
-        }
-
-        .students-page-header p {
-            margin: 4px 0 0;
-            color: #6b7280;
-            font-size: 13px;
-        }
-
-        .header-add-button,
-        .add-student-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 16px;
-            border-radius: 8px;
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            transition: 0.2s ease;
-        }
-
-        .header-add-button:hover,
-        .add-student-button:hover {
-            background: #1d4ed8;
-        }
+        /* ================================
+           MAIN CONTAINER
+        ================================= */
 
         .students-container {
-            width: min(1400px, calc(100% - 60px));
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 0 60px;
+            padding: 32px 24px 50px;
         }
+
+
+        /* ================================
+           SUCCESS MESSAGE
+        ================================= */
 
         .success-message {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 24px;
             padding: 13px 16px;
-            background: #ecfdf5;
+            margin-bottom: 24px;
+            background: #f0fdf4;
             border: 1px solid #bbf7d0;
-            border-radius: 9px;
             color: #166534;
+            border-radius: 10px;
             font-size: 14px;
             font-weight: 500;
         }
 
-        .success-message span {
+        .success-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            background: #22c55e;
+            color: white;
+            border-radius: 50%;
+            font-size: 13px;
             font-weight: 700;
         }
 
+
+        /* ================================
+           PAGE HEADER
+        ================================= */
+
         .page-intro {
             display: flex;
-            align-items: flex-end;
             justify-content: space-between;
+            align-items: flex-end;
             gap: 20px;
             margin-bottom: 28px;
+        }
+
+        .page-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
         }
 
         .page-intro h1 {
             margin: 0;
             color: #111827;
-            font-size: 28px;
+            font-size: 30px;
+            line-height: 1.2;
             font-weight: 700;
         }
 
         .page-intro p {
-            margin: 7px 0 0;
+            margin: 8px 0 0;
             color: #6b7280;
             font-size: 14px;
         }
 
+
+        /* ================================
+           ADD BUTTON
+        ================================= */
+
+        .add-student-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 17px;
+            background: #2563eb;
+            color: white;
+            border-radius: 9px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid #2563eb;
+            transition: 0.2s ease;
+        }
+
+        .add-student-button span {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .add-student-button:hover {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+        }
+
+
+        /* ================================
+           FILTER PANEL
+        ================================= */
+
         .filter-panel {
             display: grid;
-            grid-template-columns: minmax(280px, 2fr) repeat(3, minmax(150px, 1fr)) auto auto;
+            grid-template-columns: minmax(240px, 1fr) 180px 160px 160px auto auto;
             gap: 10px;
-            padding: 18px;
-            margin-bottom: 24px;
+            align-items: center;
+            padding: 16px;
+            margin-bottom: 20px;
             background: #ffffff;
             border: 1px solid #e5e7eb;
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
         }
 
         .search-field {
@@ -485,29 +718,20 @@
             width: 18px;
             height: 18px;
             transform: translateY(-50%);
-            color: #9ca3af;
-            pointer-events: none;
-        }
-
-        .search-field input,
-        .filter-panel select {
-            width: 100%;
-            height: 44px;
-            box-sizing: border-box;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            background: #ffffff;
-            color: #111827;
-            font-size: 13px;
-            outline: none;
+            stroke: #9ca3af;
+            stroke-width: 2;
         }
 
         .search-field input {
-            padding: 0 13px 0 40px;
-        }
-
-        .filter-panel select {
-            padding: 0 12px;
+            width: 100%;
+            height: 42px;
+            padding: 0 14px 0 40px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            outline: none;
+            color: #111827;
+            background: #ffffff;
+            font-size: 14px;
         }
 
         .search-field input:focus,
@@ -516,62 +740,92 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        .search-button,
-        .clear-button {
-            height: 44px;
-            padding: 0 18px;
+        .filter-panel select {
+            width: 100%;
+            height: 42px;
+            padding: 0 12px;
+            border: 1px solid #d1d5db;
             border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-            text-decoration: none;
-            cursor: pointer;
+            background: #ffffff;
+            color: #374151;
+            font-size: 14px;
+            outline: none;
         }
 
         .search-button {
+            height: 42px;
+            padding: 0 17px;
             border: 0;
-            background: #2563eb;
+            border-radius: 8px;
+            background: #111827;
             color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
         }
 
         .search-button:hover {
-            background: #1d4ed8;
+            background: #1f2937;
         }
 
         .clear-button {
-            border: 1px solid #e5e7eb;
-            background: #f3f4f6;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 42px;
+            padding: 0 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: white;
             color: #374151;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.2s ease;
         }
 
         .clear-button:hover {
-            background: #e5e7eb;
+            background: #f9fafb;
+            border-color: #9ca3af;
         }
+
+
+        /* ================================
+           RESULTS HEADER
+        ================================= */
 
         .records-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             margin-bottom: 12px;
-            color: #6b7280;
-            font-size: 13px;
         }
 
-        .records-header strong {
-            margin-right: 10px;
+        .results-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .results-info strong {
             color: #111827;
             font-size: 15px;
         }
 
+        .results-info span {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+
+        /* ================================
+           TABLE
+        ================================= */
+
         .students-table-card {
-            overflow: hidden;
             background: #ffffff;
             border: 1px solid #e5e7eb;
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
         }
 
         .table-wrapper {
@@ -581,64 +835,59 @@
 
         table {
             width: 100%;
-            min-width: 1000px;
             border-collapse: collapse;
         }
 
+        thead {
+            background: #f9fafb;
+        }
+
         th {
-            padding: 14px 16px;
-            background: #f8fafc;
+            padding: 13px 16px;
             border-bottom: 1px solid #e5e7eb;
             color: #6b7280;
             text-align: left;
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.04em;
             text-transform: uppercase;
+            letter-spacing: 0.04em;
             white-space: nowrap;
         }
 
         td {
             padding: 15px 16px;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f3f4f6;
             color: #374151;
             font-size: 13px;
-            vertical-align: middle;
+            white-space: nowrap;
         }
 
         tbody tr:last-child td {
-            border-bottom: 0;
+            border-bottom: none;
         }
 
         tbody tr:hover {
-            background: #f8fafc;
+            background: #fafafa;
         }
 
-        .student-id {
-            display: inline-flex;
-            padding: 5px 8px;
-            border-radius: 6px;
-            background: #eff6ff;
-            color: #2563eb;
-            font-size: 12px;
-            font-weight: 700;
-        }
+
+        /* ================================
+           STUDENT NAME
+        ================================= */
 
         .student-name {
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #111827;
-            font-weight: 600;
         }
 
         .student-avatar {
-            width: 34px;
-            height: 34px;
-            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             background: #eff6ff;
             color: #2563eb;
@@ -646,8 +895,18 @@
             font-weight: 700;
         }
 
+        .student-name > span {
+            color: #111827;
+            font-weight: 600;
+        }
+
+        .student-id {
+            color: #2563eb;
+            font-weight: 600;
+        }
+
         .email {
-            color: #4b5563;
+            color: #6b7280;
         }
 
         .course-name {
@@ -659,17 +918,23 @@
             color: #9ca3af;
         }
 
+
+        /* ================================
+           GENDER BADGES
+        ================================= */
+
         .gender-badge {
             display: inline-flex;
-            padding: 5px 9px;
+            align-items: center;
+            padding: 4px 9px;
             border-radius: 999px;
             font-size: 11px;
             font-weight: 600;
         }
 
         .gender-badge.male {
-            background: #ecfdf5;
-            color: #15803d;
+            background: #eff6ff;
+            color: #2563eb;
         }
 
         .gender-badge.female {
@@ -678,15 +943,19 @@
         }
 
         .gender-badge.other {
-            background: #f5f3ff;
-            color: #7e22ce;
+            background: #f3f4f6;
+            color: #4b5563;
         }
+
+
+        /* ================================
+           ACTIONS
+        ================================= */
 
         .actions {
             display: flex;
             align-items: center;
-            gap: 7px;
-            white-space: nowrap;
+            gap: 6px;
         }
 
         .view-button,
@@ -695,18 +964,19 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 32px;
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-family: inherit;
+            min-width: 52px;
+            height: 32px;
+            padding: 0 9px;
+            border-radius: 7px;
             font-size: 12px;
             font-weight: 600;
             text-decoration: none;
-            box-sizing: border-box;
             cursor: pointer;
+            transition: 0.2s ease;
         }
 
         .view-button {
+            border: 1px solid #dbeafe;
             background: #eff6ff;
             color: #2563eb;
         }
@@ -716,21 +986,17 @@
         }
 
         .edit-button {
-            background: #f0fdf4;
-            color: #16a34a;
+            border: 1px solid #e5e7eb;
+            background: #ffffff;
+            color: #374151;
         }
 
         .edit-button:hover {
-            background: #dcfce7;
-        }
-
-        .delete-form {
-            display: inline;
-            margin: 0;
+            background: #f9fafb;
         }
 
         .delete-button {
-            border: 0;
+            border: 1px solid #fee2e2;
             background: #fef2f2;
             color: #dc2626;
         }
@@ -739,70 +1005,142 @@
             background: #fee2e2;
         }
 
+        .delete-form {
+            margin: 0;
+        }
+
+
+        /* ================================
+           PROFESSIONAL PAGINATION
+        ================================= */
+
+        .pagination-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 20px;
+            padding: 15px 2px;
+        }
+
+        .pagination-summary {
+            color: #6b7280;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .pagination-summary strong {
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .pagination-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .pagination-button,
+        .pagination-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 36px;
+            min-width: 36px;
+            padding: 0 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #374151;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .pagination-button {
+            gap: 6px;
+        }
+
+        .pagination-button svg {
+            width: 15px;
+            height: 15px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .pagination-number {
+            padding: 0;
+        }
+
+        .pagination-button:hover,
+        .pagination-number:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+            color: #111827;
+        }
+
+        .pagination-number.active {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .pagination-number.active:hover {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+            color: #ffffff;
+        }
+
+        .pagination-button.disabled {
+            background: #f9fafb;
+            border-color: #f3f4f6;
+            color: #c4c8ce;
+            cursor: not-allowed;
+        }
+
+
+        /* ================================
+           MOBILE STUDENTS
+        ================================= */
+
         .mobile-student-list {
             display: none;
         }
 
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 24px;
-        }
 
-        .pagination svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .pagination a,
-        .pagination span {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 36px;
-            height: 36px;
-            margin: 0 2px;
-            padding: 0 9px;
-            border: 1px solid #e5e7eb;
-            border-radius: 7px;
-            background: #ffffff;
-            color: #2563eb;
-            text-decoration: none;
-            font-size: 13px;
-        }
-
-        .pagination a:hover {
-            background: #eff6ff;
-        }
-
-        .pagination span[aria-current="page"] {
-            border-color: #2563eb;
-            background: #2563eb;
-            color: white;
-        }
-
-        .pagination span[aria-disabled="true"] {
-            background: #f9fafb;
-            color: #9ca3af;
-        }
+        /* ================================
+           EMPTY STATE
+        ================================= */
 
         .empty-state {
             padding: 70px 20px;
-            text-align: center;
             background: #ffffff;
             border: 1px solid #e5e7eb;
             border-radius: 12px;
+            text-align: center;
         }
 
         .empty-icon {
-            margin-bottom: 15px;
-            font-size: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px;
+            background: #eff6ff;
+            border-radius: 50%;
+            font-size: 28px;
         }
 
         .empty-state h3 {
             margin: 0;
             color: #111827;
-            font-size: 20px;
+            font-size: 18px;
         }
 
         .empty-state p {
@@ -811,32 +1149,47 @@
             font-size: 14px;
         }
 
-        @media (max-width: 1200px) {
 
-            .students-container {
-                width: min(100% - 40px, 1200px);
-            }
+        /* ================================
+           TABLET
+        ================================= */
+
+        @media (max-width: 1100px) {
 
             .filter-panel {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr 1fr 1fr;
             }
 
             .search-field {
-                grid-column: span 2;
+                grid-column: span 3;
+            }
+
+            .search-button,
+            .clear-button {
+                width: 100%;
             }
 
         }
 
-        @media (max-width: 800px) {
+
+        /* ================================
+           MOBILE
+        ================================= */
+
+        @media (max-width: 768px) {
 
             .students-container {
-                width: calc(100% - 32px);
-                padding: 28px 0 40px;
+                padding: 24px 16px 40px;
             }
 
             .page-intro {
-                align-items: stretch;
+                align-items: flex-start;
                 flex-direction: column;
+                margin-bottom: 22px;
+            }
+
+            .page-intro h1 {
+                font-size: 26px;
             }
 
             .add-student-button {
@@ -845,18 +1198,11 @@
 
             .filter-panel {
                 grid-template-columns: 1fr;
-                padding: 14px;
+                gap: 9px;
             }
 
             .search-field {
-                grid-column: auto;
-            }
-
-            .filter-panel select,
-            .search-field input,
-            .search-button,
-            .clear-button {
-                width: 100%;
+                grid-column: span 1;
             }
 
             .students-table-card {
@@ -866,89 +1212,76 @@
             .mobile-student-list {
                 display: flex;
                 flex-direction: column;
-                gap: 14px;
+                gap: 12px;
             }
 
             .mobile-student-card {
-                padding: 18px;
+                padding: 16px;
                 background: #ffffff;
                 border: 1px solid #e5e7eb;
                 border-radius: 12px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
             }
 
             .mobile-card-header {
                 display: flex;
-                align-items: center;
+                align-items: flex-start;
                 justify-content: space-between;
                 gap: 12px;
-                padding-bottom: 16px;
-                border-bottom: 1px solid #f1f5f9;
-            }
-
-            .mobile-card-header .student-name {
-                min-width: 0;
+                padding-bottom: 14px;
+                border-bottom: 1px solid #f3f4f6;
             }
 
             .mobile-card-header .student-name > div:last-child {
-                min-width: 0;
                 display: flex;
                 flex-direction: column;
                 gap: 3px;
             }
 
             .mobile-card-header strong {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                color: #111827;
+                font-size: 14px;
             }
 
             .mobile-card-header .student-name span {
-                color: #6b7280;
-                font-size: 11px;
+                color: #9ca3af;
+                font-size: 12px;
                 font-weight: 500;
             }
 
             .mobile-details {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 16px;
-                padding: 16px 0;
+                gap: 14px;
+                padding: 15px 0;
             }
 
             .mobile-details div {
-                min-width: 0;
                 display: flex;
                 flex-direction: column;
                 gap: 4px;
-            }
-
-            .mobile-details div:first-child {
-                grid-column: span 2;
+                min-width: 0;
             }
 
             .mobile-details small {
                 color: #9ca3af;
                 font-size: 10px;
                 font-weight: 700;
-                letter-spacing: 0.05em;
                 text-transform: uppercase;
             }
 
             .mobile-details span {
                 overflow: hidden;
                 color: #374151;
-                font-size: 13px;
+                font-size: 12px;
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
 
             .mobile-actions {
                 display: grid;
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: 1fr 1fr 1fr;
                 gap: 7px;
-                padding-top: 14px;
-                border-top: 1px solid #f1f5f9;
             }
 
             .mobile-actions .view-button,
@@ -957,61 +1290,60 @@
                 width: 100%;
             }
 
-            .mobile-actions form {
-                margin: 0;
+            .pagination-wrapper {
+                flex-direction: column;
+                gap: 12px;
+                align-items: center;
             }
 
-            .students-page-header {
-                align-items: flex-start;
+            .pagination-links {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .pagination-button {
+                font-size: 12px;
             }
 
         }
 
-        @media (max-width: 550px) {
 
-            .students-page-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
+        /* ================================
+           SMALL MOBILE
+        ================================= */
 
-            .header-add-button {
-                width: 100%;
+        @media (max-width: 480px) {
+
+            .students-container {
+                padding: 20px 12px 32px;
             }
 
             .page-intro h1 {
-                font-size: 24px;
+                font-size: 23px;
             }
 
-            .records-header {
+            .results-info {
                 align-items: flex-start;
                 flex-direction: column;
-                gap: 4px;
+                gap: 3px;
             }
 
-            .mobile-student-card {
-                padding: 15px;
+            .pagination-summary {
+                font-size: 12px;
             }
 
-            .mobile-card-header {
-                align-items: flex-start;
+            .pagination-button {
+                min-width: 34px;
+                padding: 0 8px;
             }
 
-            .mobile-card-header .gender-badge {
-                flex-shrink: 0;
+            .pagination-number {
+                min-width: 34px;
             }
 
-            .mobile-details {
-                grid-template-columns: 1fr;
-            }
-
-            .mobile-details div:first-child {
-                grid-column: auto;
-            }
-
-            .pagination {
-                overflow-x: auto;
-                justify-content: flex-start;
-                padding-bottom: 5px;
+            .pagination-button svg {
+                width: 14px;
+                height: 14px;
             }
 
         }
