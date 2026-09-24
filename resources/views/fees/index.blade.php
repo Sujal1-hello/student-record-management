@@ -1,60 +1,120 @@
+```blade
 <x-app-layout>
 
     <style>
+
+        /* ========================================
+           FEE MANAGEMENT
+           ======================================== */
+
         .fee-management-page {
-            background: #f3f4f6;
             min-height: 100vh;
-            padding: 32px 20px 50px;
+            background: #f8fafc;
+            padding: 42px 0 70px;
         }
 
         .fee-management-container {
-            max-width: 1250px;
+            width: min(1380px, calc(100% - 64px));
             margin: 0 auto;
         }
+
+
+        /* ========================================
+           PAGE HEADER
+           ======================================== */
 
         .fee-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
-            margin-bottom: 24px;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .fee-heading {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .heading-icon {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            border-radius: 14px;
+            font-size: 23px;
+        }
+
+        .eyebrow {
+            display: block;
+            margin-bottom: 4px;
+            color: #2563eb;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
         }
 
         .fee-title {
             margin: 0;
             color: #111827;
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+            font-size: 29px;
+            line-height: 1.2;
+            font-weight: 750;
+            letter-spacing: -.025em;
         }
 
         .fee-subtitle {
             margin: 6px 0 0;
             color: #6b7280;
-            font-size: 14px;
+            font-size: 13px;
         }
+
+
+        /* ========================================
+           ADD FEE BUTTON
+           ======================================== */
 
         .add-fee-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 7px;
-            padding: 11px 18px;
+            gap: 8px;
+            height: 42px;
+            padding: 0 17px;
             background: #2563eb;
-            color: white;
             border: 1px solid #2563eb;
-            border-radius: 8px;
+            border-radius: 9px;
+            color: #ffffff;
             text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: 0.2s;
+            font-size: 13px;
+            font-weight: 650;
+            box-shadow: 0 3px 8px rgba(37, 99, 235, .18);
+            transition: all .2s ease;
             white-space: nowrap;
+        }
+
+        .add-fee-button span:first-child {
+            font-size: 17px;
+            line-height: 1;
         }
 
         .add-fee-button:hover {
             background: #1d4ed8;
             border-color: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(37, 99, 235, .22);
         }
+
+
+        /* ========================================
+           SUCCESS MESSAGE
+           ======================================== */
 
         .success-message {
             display: flex;
@@ -64,30 +124,37 @@
             padding: 13px 16px;
             background: #f0fdf4;
             border: 1px solid #bbf7d0;
-            border-radius: 9px;
+            border-radius: 10px;
             color: #15803d;
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 550;
         }
 
         .success-icon {
+            width: 25px;
+            height: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 24px;
-            height: 24px;
+            flex-shrink: 0;
             border-radius: 50%;
             background: #dcfce7;
-            font-size: 13px;
+            font-size: 12px;
+            font-weight: 700;
         }
 
+
+        /* ========================================
+           SEARCH
+           ======================================== */
+
         .search-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 18px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 7px rgba(0, 0, 0, 0.03);
+            padding: 17px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, .035);
         }
 
         .search-form {
@@ -103,11 +170,11 @@
 
         .search-icon {
             position: absolute;
-            left: 13px;
             top: 50%;
+            left: 14px;
             transform: translateY(-50%);
             color: #9ca3af;
-            font-size: 15px;
+            font-size: 14px;
             pointer-events: none;
         }
 
@@ -115,23 +182,27 @@
             width: 100%;
             min-height: 44px;
             box-sizing: border-box;
-            padding: 10px 14px 10px 38px;
+            padding: 10px 14px 10px 39px;
             border: 1px solid #d1d5db;
-            border-radius: 8px;
-            background: white;
+            border-radius: 9px;
+            background: #ffffff;
             color: #111827;
-            font-size: 14px;
+            font-size: 13px;
             outline: none;
-            transition: 0.2s;
+            transition: all .2s ease;
         }
 
         .search-input::placeholder {
             color: #9ca3af;
         }
 
+        .search-input:hover {
+            border-color: #cbd5e1;
+        }
+
         .search-input:focus {
             border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .10);
         }
 
         .search-button,
@@ -141,61 +212,97 @@
             justify-content: center;
             min-height: 44px;
             padding: 10px 17px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 650;
             text-decoration: none;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all .2s ease;
+            white-space: nowrap;
         }
 
         .search-button {
             border: 1px solid #111827;
             background: #111827;
-            color: white;
+            color: #ffffff;
         }
 
         .search-button:hover {
             background: #1f2937;
+            border-color: #1f2937;
         }
 
         .clear-button {
             border: 1px solid #d1d5db;
-            background: #f9fafb;
+            background: #ffffff;
             color: #374151;
         }
 
         .clear-button:hover {
-            background: #f3f4f6;
+            background: #f8fafc;
+            border-color: #cbd5e1;
         }
 
+
+        /* ========================================
+           TABLE CARD
+           ======================================== */
+
         .table-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 2px 7px rgba(0, 0, 0, 0.03);
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, .035);
         }
 
         .table-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 18px 20px;
-            border-bottom: 1px solid #e5e7eb;
+            gap: 15px;
+            padding: 20px 22px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .table-heading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .table-heading-icon {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 15px;
         }
 
         .table-header-title {
             margin: 0;
             color: #111827;
-            font-size: 16px;
-            font-weight: 650;
+            font-size: 15px;
+            font-weight: 700;
         }
 
         .table-header-count {
+            padding: 5px 9px;
+            border-radius: 999px;
+            background: #f3f4f6;
             color: #6b7280;
-            font-size: 13px;
+            font-size: 10px;
+            font-weight: 650;
         }
+
+
+        /* ========================================
+           TABLE
+           ======================================== */
 
         .table-wrapper {
             overflow-x: auto;
@@ -208,16 +315,16 @@
         }
 
         .fee-table thead {
-            background: #f9fafb;
+            background: #f8fafc;
         }
 
         .fee-table th {
             padding: 13px 18px;
             border-bottom: 1px solid #e5e7eb;
-            color: #6b7280;
-            font-size: 11px;
+            color: #64748b;
+            font-size: 10px;
             font-weight: 700;
-            letter-spacing: 0.05em;
+            letter-spacing: .06em;
             text-align: left;
             text-transform: uppercase;
             white-space: nowrap;
@@ -225,103 +332,164 @@
 
         .fee-table td {
             padding: 16px 18px;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f1f5f9;
             vertical-align: middle;
         }
 
         .fee-table tbody tr {
-            transition: 0.15s;
+            transition: background .15s ease;
         }
 
         .fee-table tbody tr:hover {
-            background: #f9fafb;
+            background: #f8fafc;
         }
 
         .fee-table tbody tr:last-child td {
             border-bottom: none;
         }
 
+
+        /* ========================================
+           STUDENT
+           ======================================== */
+
+        .student-cell {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-width: 160px;
+        }
+
+        .student-avatar {
+            width: 37px;
+            height: 37px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: 750;
+        }
+
         .student-name {
             color: #111827;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 650;
         }
 
         .student-id {
             margin-top: 3px;
-            color: #6b7280;
-            font-size: 12px;
+            color: #94a3b8;
+            font-size: 10px;
         }
+
+
+        /* ========================================
+           FEE DETAILS
+           ======================================== */
 
         .fee-type {
             color: #374151;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 12px;
+            font-weight: 550;
         }
 
         .amount {
             color: #374151;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 12px;
+            font-weight: 550;
             white-space: nowrap;
         }
 
         .paid-amount {
             color: #15803d;
-            font-weight: 600;
+            font-weight: 650;
         }
 
         .remaining-amount {
             color: #dc2626;
-            font-weight: 600;
+            font-weight: 650;
         }
+
+
+        /* ========================================
+           STATUS
+           ======================================== */
 
         .status-badge {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            min-width: 68px;
-            padding: 5px 10px;
+            gap: 6px;
+            min-width: 70px;
+            padding: 5px 9px;
             border-radius: 999px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
         }
 
+        .status-badge::before {
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+        }
+
         .status-paid {
-            background: #dcfce7;
+            background: #ecfdf5;
             color: #15803d;
         }
 
+        .status-paid::before {
+            background: #22c55e;
+        }
+
         .status-partial {
-            background: #fef3c7;
+            background: #fffbeb;
             color: #b45309;
         }
 
+        .status-partial::before {
+            background: #f59e0b;
+        }
+
         .status-pending {
-            background: #fee2e2;
+            background: #fef2f2;
             color: #b91c1c;
         }
+
+        .status-pending::before {
+            background: #ef4444;
+        }
+
+
+        /* ========================================
+           ACTIONS
+           ======================================== */
 
         .actions {
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            gap: 7px;
+            gap: 6px;
         }
 
         .action-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 34px;
-            padding: 7px 11px;
+            min-height: 33px;
+            padding: 6px 10px;
             border-radius: 7px;
-            font-size: 12px;
-            font-weight: 600;
-            text-decoration: none;
             border: 1px solid transparent;
+            font-size: 11px;
+            font-weight: 650;
+            text-decoration: none;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all .18s ease;
         }
 
         .view-button {
@@ -354,56 +522,76 @@
             background: #fee2e2;
         }
 
+
+        /* ========================================
+           EMPTY STATE
+           ======================================== */
+
         .empty-state {
             padding: 70px 20px;
             text-align: center;
         }
 
         .empty-icon {
+            width: 58px;
+            height: 58px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 58px;
-            height: 58px;
-            margin: 0 auto 16px;
-            background: #f3f4f6;
-            border-radius: 50%;
-            color: #9ca3af;
-            font-size: 26px;
+            margin: 0 auto 15px;
+            border-radius: 15px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            font-size: 25px;
         }
 
         .empty-title {
             margin: 0;
             color: #374151;
-            font-size: 17px;
-            font-weight: 650;
+            font-size: 16px;
+            font-weight: 700;
         }
 
         .empty-text {
             margin: 6px 0 0;
             color: #9ca3af;
-            font-size: 13px;
+            font-size: 12px;
         }
 
+
+        /* ========================================
+           PAGINATION
+           ======================================== */
+
         .pagination-area {
-            padding: 16px 20px;
+            padding: 17px 22px;
             border-top: 1px solid #e5e7eb;
-            background: #fff;
+            background: #ffffff;
         }
+
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
 
         @media (max-width: 768px) {
 
             .fee-management-page {
-                padding: 24px 14px 40px;
+                padding: 28px 0 45px;
+            }
+
+            .fee-management-container {
+                width: calc(100% - 32px);
             }
 
             .fee-header {
+                align-items: stretch;
                 flex-direction: column;
-                align-items: flex-start;
+                gap: 20px;
             }
 
             .fee-title {
-                font-size: 24px;
+                font-size: 25px;
             }
 
             .add-fee-button {
@@ -421,7 +609,7 @@
             }
 
             .table-header {
-                padding: 16px;
+                padding: 17px;
             }
 
             .fee-table th,
@@ -433,25 +621,86 @@
             .actions {
                 justify-content: flex-start;
             }
+
         }
+
+
+        @media (max-width: 450px) {
+
+            .fee-management-container {
+                width: calc(100% - 24px);
+            }
+
+            .fee-heading {
+                align-items: flex-start;
+            }
+
+            .heading-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 19px;
+            }
+
+            .fee-title {
+                font-size: 23px;
+            }
+
+            .fee-subtitle {
+                line-height: 1.5;
+            }
+
+            .table-heading-icon {
+                display: none;
+            }
+
+            .table-header {
+                padding: 15px;
+            }
+
+            .pagination-area {
+                padding: 15px;
+            }
+
+        }
+
     </style>
+
 
     <div class="fee-management-page">
 
         <div class="fee-management-container">
 
-            {{-- Header --}}
+
+            {{-- ========================================
+                 HEADER
+                 ======================================== --}}
+
             <div class="fee-header">
 
-                <div>
-                    <h1 class="fee-title">
-                        Fee Management
-                    </h1>
+                <div class="fee-heading">
 
-                    <p class="fee-subtitle">
-                        Manage student fees and payments
-                    </p>
+                    <div class="heading-icon">
+                        💰
+                    </div>
+
+                    <div>
+
+                        <span class="eyebrow">
+                            Finance Management
+                        </span>
+
+                        <h1 class="fee-title">
+                            Fee Management
+                        </h1>
+
+                        <p class="fee-subtitle">
+                            Manage student fees, payments and outstanding balances.
+                        </p>
+
+                    </div>
+
                 </div>
+
 
                 <a
                     href="{{ route('fees.create') }}"
@@ -463,7 +712,11 @@
 
             </div>
 
-            {{-- Success Message --}}
+
+            {{-- ========================================
+                 SUCCESS MESSAGE
+                 ======================================== --}}
+
             @if(session('success'))
 
                 <div class="success-message">
@@ -480,7 +733,11 @@
 
             @endif
 
-            {{-- Search --}}
+
+            {{-- ========================================
+                 SEARCH
+                 ======================================== --}}
+
             <div class="search-card">
 
                 <form
@@ -499,11 +756,12 @@
                             type="text"
                             name="search"
                             value="{{ $search }}"
-                            placeholder="Search student, ID or fee type..."
+                            placeholder="Search student, student ID or fee type..."
                             class="search-input"
                         >
 
                     </div>
+
 
                     <button
                         type="submit"
@@ -511,6 +769,7 @@
                     >
                         Search
                     </button>
+
 
                     @if($search)
 
@@ -527,20 +786,38 @@
 
             </div>
 
-            {{-- Fee Table --}}
+
+            {{-- ========================================
+                 FEE RECORDS
+                 ======================================== --}}
+
             <div class="table-card">
 
                 <div class="table-header">
 
-                    <h2 class="table-header-title">
-                        Fee Records
-                    </h2>
+                    <div class="table-heading">
+
+                        <div class="table-heading-icon">
+                            💳
+                        </div>
+
+                        <h2 class="table-header-title">
+                            Fee Records
+                        </h2>
+
+                    </div>
+
 
                     <span class="table-header-count">
-                        {{ $fees->total() }} record{{ $fees->total() == 1 ? '' : 's' }}
+
+                        {{ $fees->total() }}
+
+                        record{{ $fees->total() == 1 ? '' : 's' }}
+
                     </span>
 
                 </div>
+
 
                 <div class="table-wrapper">
 
@@ -582,26 +859,45 @@
 
                         </thead>
 
+
                         <tbody>
 
                             @forelse($fees as $fee)
 
                                 <tr>
 
+
                                     {{-- Student --}}
+
                                     <td>
 
-                                        <div class="student-name">
-                                            {{ $fee->student->name }}
-                                        </div>
+                                        <div class="student-cell">
 
-                                        <div class="student-id">
-                                            {{ $fee->student->student_id }}
+                                            <div class="student-avatar">
+
+                                                {{ strtoupper(substr($fee->student->name, 0, 1)) }}
+
+                                            </div>
+
+                                            <div>
+
+                                                <div class="student-name">
+                                                    {{ $fee->student->name }}
+                                                </div>
+
+                                                <div class="student-id">
+                                                    {{ $fee->student->student_id }}
+                                                </div>
+
+                                            </div>
+
                                         </div>
 
                                     </td>
 
+
                                     {{-- Fee Type --}}
+
                                     <td>
 
                                         <span class="fee-type">
@@ -610,7 +906,9 @@
 
                                     </td>
 
+
                                     {{-- Total --}}
+
                                     <td>
 
                                         <span class="amount">
@@ -619,7 +917,9 @@
 
                                     </td>
 
+
                                     {{-- Paid --}}
+
                                     <td>
 
                                         <span class="amount paid-amount">
@@ -628,7 +928,9 @@
 
                                     </td>
 
+
                                     {{-- Remaining --}}
+
                                     <td>
 
                                         <span class="amount remaining-amount">
@@ -637,7 +939,9 @@
 
                                     </td>
 
+
                                     {{-- Status --}}
+
                                     <td>
 
                                         @if($fee->payment_status === 'Paid')
@@ -662,7 +966,9 @@
 
                                     </td>
 
+
                                     {{-- Actions --}}
+
                                     <td>
 
                                         <div class="actions">
@@ -674,12 +980,14 @@
                                                 View
                                             </a>
 
+
                                             <a
                                                 href="{{ route('fees.edit', $fee->id) }}"
                                                 class="action-button edit-button"
                                             >
                                                 Edit
                                             </a>
+
 
                                             <form
                                                 action="{{ route('fees.destroy', $fee->id) }}"
@@ -688,6 +996,7 @@
                                             >
 
                                                 @csrf
+
                                                 @method('DELETE')
 
                                                 <button
@@ -704,6 +1013,7 @@
                                     </td>
 
                                 </tr>
+
 
                             @empty
 
@@ -722,7 +1032,7 @@
                                             </h3>
 
                                             <p class="empty-text">
-                                                Add a fee record to get started.
+                                                No fee records match your current search.
                                             </p>
 
                                         </div>
@@ -739,11 +1049,15 @@
 
                 </div>
 
+
                 {{-- Pagination --}}
+
                 @if($fees->hasPages())
 
                     <div class="pagination-area">
+
                         {{ $fees->links() }}
+
                     </div>
 
                 @endif
@@ -755,3 +1069,4 @@
     </div>
 
 </x-app-layout>
+```
