@@ -1,87 +1,173 @@
 <x-app-layout>
 
     <style>
+        :root {
+            --fee-primary: #2563eb;
+            --fee-primary-dark: #1d4ed8;
+            --fee-primary-soft: #eff6ff;
+            --fee-text: #111827;
+            --fee-muted: #6b7280;
+            --fee-border: #e5e7eb;
+            --fee-border-dark: #d1d5db;
+            --fee-bg: #f8fafc;
+            --fee-card: #ffffff;
+            --fee-danger: #dc2626;
+            --fee-danger-bg: #fef2f2;
+            --fee-success: #15803d;
+            --fee-success-bg: #f0fdf4;
+            --fee-warning: #b45309;
+            --fee-warning-bg: #fffbeb;
+            --fee-radius: 14px;
+        }
+
         .fee-page {
-            background: #f3f4f6;
             min-height: 100vh;
-            padding: 32px 20px 50px;
+            padding: 36px 24px 56px;
+            background:
+                radial-gradient(circle at top left, rgba(37, 99, 235, 0.06), transparent 32%),
+                var(--fee-bg);
+            color: var(--fee-text);
         }
 
         .fee-container {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1120px;
             margin: 0 auto;
         }
 
         .fee-header {
             display: flex;
+            align-items: flex-end;
             justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        .fee-header-content {
+            min-width: 0;
+        }
+
+        .fee-eyebrow {
+            display: inline-flex;
             align-items: center;
-            margin-bottom: 24px;
-            gap: 20px;
+            gap: 7px;
+            margin-bottom: 8px;
+            color: var(--fee-primary);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .fee-eyebrow::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: var(--fee-primary);
         }
 
         .fee-header h1 {
             margin: 0;
-            font-size: 28px;
-            font-weight: 700;
-            color: #111827;
+            font-size: clamp(28px, 4vw, 34px);
+            line-height: 1.15;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            color: var(--fee-text);
         }
 
         .fee-header p {
-            margin: 6px 0 0;
+            margin: 8px 0 0;
+            color: var(--fee-muted);
             font-size: 14px;
-            color: #6b7280;
+            line-height: 1.5;
         }
 
         .back-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 16px;
-            background: white;
+            gap: 8px;
+            flex-shrink: 0;
+            min-height: 42px;
+            padding: 9px 15px;
+            border: 1px solid var(--fee-border-dark);
+            border-radius: 10px;
+            background: var(--fee-card);
             color: #374151;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
             text-decoration: none;
             font-size: 14px;
-            font-weight: 500;
-            transition: 0.2s;
+            font-weight: 600;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+            transition: .2s ease;
         }
 
         .back-button:hover {
+            border-color: #9ca3af;
             background: #f9fafb;
+            transform: translateY(-1px);
         }
 
         .fee-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             overflow: hidden;
+            background: var(--fee-card);
+            border: 1px solid var(--fee-border);
+            border-radius: var(--fee-radius);
+            box-shadow: 0 4px 16px rgba(15, 23, 42, .045);
         }
 
         .form-section {
-            padding: 24px;
+            padding: 26px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+            border-radius: 9px;
+            background: var(--fee-primary-soft);
+            color: var(--fee-primary);
+            font-size: 15px;
+            font-weight: 800;
         }
 
         .section-title {
-            margin: 0 0 20px;
-            font-size: 18px;
-            font-weight: 650;
-            color: #111827;
+            margin: 0;
+            color: var(--fee-text);
+            font-size: 17px;
+            line-height: 1.35;
+            font-weight: 750;
+            letter-spacing: -.01em;
+        }
+
+        .section-description {
+            margin: 3px 0 0;
+            color: var(--fee-muted);
+            font-size: 12px;
+            line-height: 1.5;
         }
 
         .field-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 18px;
+            gap: 20px;
         }
 
         .field-group {
             display: flex;
             flex-direction: column;
+            min-width: 0;
         }
 
         .field-group.full {
@@ -89,55 +175,80 @@
         }
 
         .field-label {
-            display: block;
-            margin-bottom: 7px;
-            font-size: 14px;
-            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 8px;
             color: #374151;
+            font-size: 13px;
+            font-weight: 650;
         }
 
         .field-input,
         .field-select {
             width: 100%;
+            min-height: 46px;
             box-sizing: border-box;
-            min-height: 44px;
-            padding: 10px 12px;
-            background: white;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            color: #111827;
-            font-size: 14px;
+            padding: 11px 13px;
+            border: 1px solid var(--fee-border-dark);
+            border-radius: 10px;
             outline: none;
-            transition: 0.2s;
+            background: #fff;
+            color: var(--fee-text);
+            font-size: 14px;
+            line-height: 1.4;
+            transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+
+        .field-input:hover,
+        .field-select:hover {
+            border-color: #9ca3af;
         }
 
         .field-input:focus,
         .field-select:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: var(--fee-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .11);
         }
 
         .field-input::placeholder {
             color: #9ca3af;
         }
 
+        .field-input[type="number"] {
+            font-variant-numeric: tabular-nums;
+        }
+
         .student-select {
-            max-width: 700px;
+            max-width: none;
         }
 
         .payment-summary {
-            margin-top: 22px;
-            padding: 18px;
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
+            margin-top: 24px;
+            padding: 20px;
+            border: 1px solid #dbeafe;
+            border-radius: 12px;
+            background: linear-gradient(180deg, #f8fbff 0%, #f9fafb 100%);
+        }
+
+        .summary-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
         }
 
         .summary-title {
-            margin: 0 0 14px;
-            font-size: 15px;
-            font-weight: 600;
-            color: #374151;
+            margin: 0;
+            color: #1f2937;
+            font-size: 14px;
+            font-weight: 750;
+        }
+
+        .summary-hint {
+            color: var(--fee-muted);
+            font-size: 11px;
         }
 
         .summary-grid {
@@ -147,53 +258,91 @@
         }
 
         .summary-box {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 14px;
+            min-width: 0;
+            padding: 16px;
+            background: #fff;
+            border: 1px solid var(--fee-border);
+            border-radius: 11px;
         }
 
         .summary-label {
-            font-size: 12px;
-            color: #6b7280;
-            margin-bottom: 5px;
+            margin-bottom: 7px;
+            color: var(--fee-muted);
+            font-size: 11px;
+            font-weight: 650;
+            letter-spacing: .02em;
+            text-transform: uppercase;
         }
 
         .summary-value {
-            font-size: 18px;
-            font-weight: 700;
-            color: #111827;
+            color: var(--fee-text);
+            font-size: 21px;
+            line-height: 1.2;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
         }
 
         .status-value {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 44px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            background: #fee2e2;
+            min-height: 34px;
+            padding: 6px 12px;
+            border: 1px solid #fecaca;
+            border-radius: 999px;
+            background: var(--fee-danger-bg);
             color: #b91c1c;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 750;
         }
 
         .amount-error {
-            margin-top: 12px;
-            padding: 10px 12px;
-            border-radius: 8px;
-            background: #fef2f2;
+            margin-top: 14px;
+            padding: 11px 13px;
             border: 1px solid #fecaca;
-            color: #dc2626;
+            border-radius: 9px;
+            background: var(--fee-danger-bg);
+            color: var(--fee-danger);
+            font-size: 12px;
+            font-weight: 550;
+            line-height: 1.5;
+        }
+
+        .error-box {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 18px;
+            padding: 15px 17px;
+            border: 1px solid #fecaca;
+            border-left: 4px solid #ef4444;
+            border-radius: 11px;
+            background: var(--fee-danger-bg);
+            color: #991b1b;
+        }
+
+        .error-box h3 {
+            margin: 0 0 7px;
             font-size: 13px;
+            font-weight: 750;
+        }
+
+        .error-box ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .error-box li {
+            margin-bottom: 3px;
+            font-size: 12px;
         }
 
         .form-actions {
             display: flex;
             justify-content: flex-end;
+            align-items: center;
             gap: 10px;
             margin-top: 24px;
-            padding-bottom: 10px;
+            padding-top: 4px;
         }
 
         .cancel-button,
@@ -203,106 +352,112 @@
             justify-content: center;
             min-height: 44px;
             padding: 10px 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 650;
+            line-height: 1;
             text-decoration: none;
             cursor: pointer;
-            transition: 0.2s;
+            transition: .2s ease;
         }
 
         .cancel-button {
-            background: white;
+            border: 1px solid var(--fee-border-dark);
+            background: #fff;
             color: #374151;
-            border: 1px solid #d1d5db;
         }
 
         .cancel-button:hover {
-            background: #f3f4f6;
+            background: #f9fafb;
+            border-color: #9ca3af;
         }
 
         .save-button {
-            background: #2563eb;
-            color: white;
-            border: 1px solid #2563eb;
-            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.15);
+            border: 1px solid var(--fee-primary);
+            background: var(--fee-primary);
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, .18);
         }
 
         .save-button:hover {
-            background: #1d4ed8;
-            border-color: #1d4ed8;
+            border-color: var(--fee-primary-dark);
+            background: var(--fee-primary-dark);
+            box-shadow: 0 6px 14px rgba(37, 99, 235, .22);
+            transform: translateY(-1px);
         }
 
         .save-button:disabled {
-            background: #9ca3af;
             border-color: #9ca3af;
+            background: #9ca3af;
             cursor: not-allowed;
             box-shadow: none;
-        }
-
-        .error-box {
-            margin-bottom: 20px;
-            padding: 14px 16px;
-            border-radius: 10px;
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #b91c1c;
-        }
-
-        .error-box h3 {
-            margin: 0 0 8px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .error-box ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-
-        .error-box li {
-            margin-bottom: 3px;
+            transform: none;
         }
 
         @media (max-width: 768px) {
-
             .fee-page {
                 padding: 24px 14px 40px;
             }
 
             .fee-header {
+                align-items: stretch;
                 flex-direction: column;
-                align-items: flex-start;
+                gap: 16px;
+                margin-bottom: 22px;
             }
 
             .back-button {
                 width: 100%;
             }
 
+            .form-section {
+                padding: 20px 18px;
+            }
+
             .field-grid,
             .summary-grid {
                 grid-template-columns: 1fr;
+                gap: 16px;
             }
 
             .field-group.full {
                 grid-column: auto;
             }
 
-            .form-section {
-                padding: 18px;
-            }
-
-            .student-select {
-                max-width: 100%;
+            .summary-heading {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 4px;
             }
 
             .form-actions {
                 flex-direction: column-reverse;
+                align-items: stretch;
             }
 
             .cancel-button,
             .save-button {
                 width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .fee-page {
+                padding-inline: 10px;
+            }
+
+            .form-section {
+                padding: 18px 15px;
+            }
+
+            .payment-summary {
+                padding: 15px;
+            }
+
+            .section-icon {
+                width: 31px;
+                height: 31px;
+                flex-basis: 31px;
             }
         }
     </style>
@@ -314,20 +469,16 @@
             {{-- Header --}}
             <div class="fee-header">
 
-                <div>
-                    <h1>
-                        Add Fee
-                    </h1>
+                <div class="fee-header-content">
+                    <div class="fee-eyebrow">Fee Management</div>
+                    <h1>Add Fee</h1>
 
                     <p>
                         Add a new student fee record
                     </p>
                 </div>
 
-                <a
-                    href="{{ route('fees.index') }}"
-                    class="back-button"
-                >
+                <a href="{{ route('fees.index') }}" class="back-button">
                     ← Back to Fees
                 </a>
 
@@ -354,11 +505,7 @@
 
             @endif
 
-            <form
-                method="POST"
-                action="{{ route('fees.store') }}"
-                id="feeForm"
-            >
+            <form method="POST" action="{{ route('fees.store') }}" id="feeForm">
 
                 @csrf
 
@@ -367,25 +514,21 @@
 
                     <div class="form-section">
 
-                        <h2 class="section-title">
-                            Student Information
-                        </h2>
+                        <div class="section-heading">
+                            <div class="section-icon">01</div>
+                            <div>
+                                <h2 class="section-title">Student Information</h2>
+                                <p class="section-description">Select the student for this fee record.</p>
+                            </div>
+                        </div>
 
                         <div class="field-group">
 
-                            <label
-                                for="student_id"
-                                class="field-label"
-                            >
+                            <label for="student_id" class="field-label">
                                 Student
                             </label>
 
-                            <select
-                                name="student_id"
-                                id="student_id"
-                                class="field-select student-select"
-                                required
-                            >
+                            <select name="student_id" id="student_id" class="field-select student-select" required>
 
                                 <option value="">
                                     Select Student
@@ -393,12 +536,8 @@
 
                                 @foreach($students as $student)
 
-                                    <option
-                                        value="{{ $student->id }}"
-                                        data-grade="{{ $student->grade }}"
-                                        data-academic-year="{{ $student->academic_year }}"
-                                        {{ old('student_id') == $student->id ? 'selected' : '' }}
-                                    >
+                                    <option value="{{ $student->id }}" data-grade="{{ $student->grade }}"
+                                        data-academic-year="{{ $student->academic_year }}" {{ old('student_id') == $student->id ? 'selected' : '' }}>
                                         {{ $student->student_id }} - {{ $student->name }}
                                     </option>
 
@@ -417,43 +556,33 @@
 
                     <div class="form-section">
 
-                        <h2 class="section-title">
-                            Academic Information
-                        </h2>
+                        <div class="section-heading">
+                            <div class="section-icon">02</div>
+                            <div>
+                                <h2 class="section-title">Academic Information</h2>
+                                <p class="section-description">Enter the student's current academic details.</p>
+                            </div>
+                        </div>
 
                         <div class="field-grid">
 
                             <div class="field-group">
 
-                                <label
-                                    for="grade"
-                                    class="field-label"
-                                >
+                                <label for="grade" class="field-label">
                                     Grade
                                 </label>
 
-                                <select
-                                    name="grade"
-                                    id="grade"
-                                    class="field-select"
-                                    required
-                                >
+                                <select name="grade" id="grade" class="field-select" required>
 
                                     <option value="">
                                         Select Grade
                                     </option>
 
-                                    <option
-                                        value="11"
-                                        {{ old('grade') == '11' ? 'selected' : '' }}
-                                    >
+                                    <option value="11" {{ old('grade') == '11' ? 'selected' : '' }}>
                                         Grade 11
                                     </option>
 
-                                    <option
-                                        value="12"
-                                        {{ old('grade') == '12' ? 'selected' : '' }}
-                                    >
+                                    <option value="12" {{ old('grade') == '12' ? 'selected' : '' }}>
                                         Grade 12
                                     </option>
 
@@ -463,22 +592,13 @@
 
                             <div class="field-group">
 
-                                <label
-                                    for="academic_year"
-                                    class="field-label"
-                                >
+                                <label for="academic_year" class="field-label">
                                     Academic Year
                                 </label>
 
-                                <input
-                                    type="text"
-                                    name="academic_year"
-                                    id="academic_year"
-                                    value="{{ old('academic_year') }}"
-                                    placeholder="Example: 2083/84"
-                                    class="field-input"
-                                    required
-                                >
+                                <input type="text" name="academic_year" id="academic_year"
+                                    value="{{ old('academic_year') }}" placeholder="Example: 2083/84"
+                                    class="field-input" required>
 
                             </div>
 
@@ -493,79 +613,54 @@
 
                     <div class="form-section">
 
-                        <h2 class="section-title">
-                            Fee Information
-                        </h2>
+                        <div class="section-heading">
+                            <div class="section-icon">03</div>
+                            <div>
+                                <h2 class="section-title">Fee Information</h2>
+                                <p class="section-description">Enter the fee amount and payment breakdown.</p>
+                            </div>
+                        </div>
 
                         <div class="field-grid">
 
                             {{-- Fee Type --}}
                             <div class="field-group">
 
-                                <label
-                                    for="fee_type"
-                                    class="field-label"
-                                >
+                                <label for="fee_type" class="field-label">
                                     Fee Type
                                 </label>
 
-                                <select
-                                    name="fee_type"
-                                    id="fee_type"
-                                    class="field-select"
-                                    required
-                                >
+                                <select name="fee_type" id="fee_type" class="field-select" required>
 
                                     <option value="">
                                         Select Fee Type
                                     </option>
 
-                                    <option
-                                        value="Admission Fee"
-                                        {{ old('fee_type') == 'Admission Fee' ? 'selected' : '' }}
-                                    >
+                                    <option value="Admission Fee" {{ old('fee_type') == 'Admission Fee' ? 'selected' : '' }}>
                                         Admission Fee
                                     </option>
 
-                                    <option
-                                        value="Tuition Fee"
-                                        {{ old('fee_type') == 'Tuition Fee' ? 'selected' : '' }}
-                                    >
+                                    <option value="Tuition Fee" {{ old('fee_type') == 'Tuition Fee' ? 'selected' : '' }}>
                                         Tuition Fee
                                     </option>
 
-                                    <option
-                                        value="Examination Fee"
-                                        {{ old('fee_type') == 'Examination Fee' ? 'selected' : '' }}
-                                    >
+                                    <option value="Examination Fee" {{ old('fee_type') == 'Examination Fee' ? 'selected' : '' }}>
                                         Examination Fee
                                     </option>
 
-                                    <option
-                                        value="Library Fee"
-                                        {{ old('fee_type') == 'Library Fee' ? 'selected' : '' }}
-                                    >
+                                    <option value="Library Fee" {{ old('fee_type') == 'Library Fee' ? 'selected' : '' }}>
                                         Library Fee
                                     </option>
 
-                                    <option
-                                        value="Computer Fee"
-                                        {{ old('fee_type') == 'Computer Fee' ? 'selected' : '' }}
-                                    >
+                                    <option value="Computer Fee" {{ old('fee_type') == 'Computer Fee' ? 'selected' : '' }}>
                                         Computer Fee
                                     </option>
 
-                                    <option
-                                        value="Transportation Fee"
-                                        {{ old('fee_type') == 'Transportation Fee' ? 'selected' : '' }}
-                                    >
+                                    <option value="Transportation Fee" {{ old('fee_type') == 'Transportation Fee' ? 'selected' : '' }}>
                                         Transportation Fee
                                     </option>
 
-                                    <option
-                                        value="Other Fee"
-                                        {{ old('fee_type') == 'Other Fee' ? 'selected' : '' }}
-                                    >
+                                    <option value="Other Fee" {{ old('fee_type') == 'Other Fee' ? 'selected' : '' }}>
                                         Other Fee
                                     </option>
 
@@ -576,70 +671,38 @@
                             {{-- Total Amount --}}
                             <div class="field-group">
 
-                                <label
-                                    for="total_amount"
-                                    class="field-label"
-                                >
+                                <label for="total_amount" class="field-label">
                                     Total Amount
                                 </label>
 
-                                <input
-                                    type="number"
-                                    name="total_amount"
-                                    id="total_amount"
-                                    value="{{ old('total_amount', 0) }}"
-                                    min="0"
-                                    step="0.01"
-                                    placeholder="Enter total amount"
-                                    class="field-input"
-                                    required
-                                >
+                                <input type="number" name="total_amount" id="total_amount"
+                                    value="{{ old('total_amount', 0) }}" min="0" step="0.01"
+                                    placeholder="Enter total amount" class="field-input" required>
 
                             </div>
 
                             {{-- Discount --}}
                             <div class="field-group">
 
-                                <label
-                                    for="discount"
-                                    class="field-label"
-                                >
+                                <label for="discount" class="field-label">
                                     Discount
                                 </label>
 
-                                <input
-                                    type="number"
-                                    name="discount"
-                                    id="discount"
-                                    value="{{ old('discount', 0) }}"
-                                    min="0"
-                                    step="0.01"
-                                    placeholder="Enter discount"
-                                    class="field-input"
-                                >
+                                <input type="number" name="discount" id="discount" value="{{ old('discount', 0) }}"
+                                    min="0" step="0.01" placeholder="Enter discount" class="field-input">
 
                             </div>
 
                             {{-- Paid Amount --}}
                             <div class="field-group">
 
-                                <label
-                                    for="paid_amount"
-                                    class="field-label"
-                                >
+                                <label for="paid_amount" class="field-label">
                                     Paid Amount
                                 </label>
 
-                                <input
-                                    type="number"
-                                    name="paid_amount"
-                                    id="paid_amount"
-                                    value="{{ old('paid_amount', 0) }}"
-                                    min="0"
-                                    step="0.01"
-                                    placeholder="Enter paid amount"
-                                    class="field-input"
-                                >
+                                <input type="number" name="paid_amount" id="paid_amount"
+                                    value="{{ old('paid_amount', 0) }}" min="0" step="0.01"
+                                    placeholder="Enter paid amount" class="field-input">
 
                             </div>
 
@@ -648,9 +711,8 @@
                         {{-- Payment Summary --}}
                         <div class="payment-summary">
 
-                            <h3 class="summary-title">
-                                Payment Summary
-                            </h3>
+                            <h3 class="summary-title">Payment Summary</h3>
+                            <span class="summary-hint">Calculated automatically</span>
 
                             <div class="summary-grid">
 
@@ -661,19 +723,11 @@
                                         Remaining Amount
                                     </div>
 
-                                    <div
-                                        id="remaining_display"
-                                        class="summary-value"
-                                    >
+                                    <div id="remaining_display" class="summary-value">
                                         Rs. 0.00
                                     </div>
 
-                                    <input
-                                        type="hidden"
-                                        name="remaining_amount"
-                                        id="remaining_amount"
-                                        value="0"
-                                    >
+                                    <input type="hidden" name="remaining_amount" id="remaining_amount" value="0">
 
                                 </div>
 
@@ -684,30 +738,18 @@
                                         Payment Status
                                     </div>
 
-                                    <div
-                                        id="status_display"
-                                        class="status-value"
-                                    >
+                                    <div id="status_display" class="status-value">
                                         Pending
                                     </div>
 
-                                    <input
-                                        type="hidden"
-                                        name="payment_status"
-                                        id="payment_status"
-                                        value="Pending"
-                                    >
+                                    <input type="hidden" name="payment_status" id="payment_status" value="Pending">
 
                                 </div>
 
                             </div>
 
                             {{-- Amount Error --}}
-                            <div
-                                id="amountError"
-                                class="amount-error"
-                                style="display: none;"
-                            >
+                            <div id="amountError" class="amount-error" style="display: none;">
                                 Discount + Paid Amount cannot be greater than Total Amount.
                             </div>
 
@@ -722,77 +764,54 @@
 
                     <div class="form-section">
 
-                        <h2 class="section-title">
-                            Payment Details
-                        </h2>
+                        <div class="section-heading">
+                            <div class="section-icon">04</div>
+                            <div>
+                                <h2 class="section-title">Payment Details</h2>
+                                <p class="section-description">Record when and how the payment was made.</p>
+                            </div>
+                        </div>
 
                         <div class="field-grid">
 
                             {{-- Payment Date --}}
                             <div class="field-group">
 
-                                <label
-                                    for="payment_date"
-                                    class="field-label"
-                                >
+                                <label for="payment_date" class="field-label">
                                     Payment Date
                                 </label>
 
-                                <input
-                                    type="date"
-                                    name="payment_date"
-                                    id="payment_date"
-                                    value="{{ old('payment_date', date('Y-m-d')) }}"
-                                    class="field-input"
-                                >
+                                <input type="date" name="payment_date" id="payment_date"
+                                    value="{{ old('payment_date', date('Y-m-d')) }}" class="field-input">
 
                             </div>
 
                             {{-- Payment Method --}}
                             <div class="field-group">
 
-                                <label
-                                    for="payment_method"
-                                    class="field-label"
-                                >
+                                <label for="payment_method" class="field-label">
                                     Payment Method
                                 </label>
 
-                                <select
-                                    name="payment_method"
-                                    id="payment_method"
-                                    class="field-select"
-                                >
+                                <select name="payment_method" id="payment_method" class="field-select">
 
                                     <option value="">
                                         Select Payment Method
                                     </option>
 
-                                    <option
-                                        value="Cash"
-                                        {{ old('payment_method') == 'Cash' ? 'selected' : '' }}
-                                    >
+                                    <option value="Cash" {{ old('payment_method') == 'Cash' ? 'selected' : '' }}>
                                         Cash
                                     </option>
 
-                                    <option
-                                        value="Bank"
-                                        {{ old('payment_method') == 'Bank' ? 'selected' : '' }}
-                                    >
+                                    <option value="Bank" {{ old('payment_method') == 'Bank' ? 'selected' : '' }}>
                                         Bank
                                     </option>
 
-                                    <option
-                                        value="Online"
-                                        {{ old('payment_method') == 'Online' ? 'selected' : '' }}
-                                    >
+                                    <option value="Online" {{ old('payment_method') == 'Online' ? 'selected' : '' }}>
                                         Online
                                     </option>
 
-                                    <option
-                                        value="Other"
-                                        {{ old('payment_method') == 'Other' ? 'selected' : '' }}
-                                    >
+                                    <option value="Other" {{ old('payment_method') == 'Other' ? 'selected' : '' }}>
                                         Other
                                     </option>
 
@@ -809,18 +828,11 @@
                 {{-- Form Buttons --}}
                 <div class="form-actions">
 
-                    <a
-                        href="{{ route('fees.index') }}"
-                        class="cancel-button"
-                    >
+                    <a href="{{ route('fees.index') }}" class="cancel-button">
                         Cancel
                     </a>
 
-                    <button
-                        type="submit"
-                        id="saveButton"
-                        class="save-button"
-                    >
+                    <button type="submit" id="saveButton" class="save-button">
                         Save Fee
                     </button>
 
