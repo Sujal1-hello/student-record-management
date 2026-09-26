@@ -1,453 +1,990 @@
 <x-app-layout>
 
+    <div class="courses-page">
 
-    <div class="courses-container">
+        <div class="courses-container">
 
-        <div class="courses-top">
-
-            <div>
-                <h1>Course Overview</h1>
-                <p>Browse all available courses and their enrolled students.</p>
-            </div>
-
-        </div>
-
-        <form action="{{ route('courses.index') }}" method="GET" class="search-form">
-
-            <div class="search-input-wrapper">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2">
-                    <circle cx="11" cy="11" r="7"></circle>
-                    <path d="m20 20-4-4"></path>
-                </svg>
-
-                <input
-                    type="text"
-                    name="search"
-                    value="{{ $search ?? '' }}"
-                    placeholder="Search courses..."
-                >
-            </div>
-
-            <button type="submit" class="search-button">
-                Search
-            </button>
-
-            @if (!empty($search))
-                <a href="{{ route('courses.index') }}" class="clear-button">
-                    Clear
-                </a>
-            @endif
-
-        </form>
-
-        @if ($courses->count())
-
-            <div class="course-summary">
-                <span>
-                    {{ $courses->count() }} {{ $courses->count() === 1 ? 'course' : 'courses' }}
-                </span>
-                <span class="summary-dot">•</span>
-                <span>Available courses</span>
-            </div>
-
-            <div class="course-list">
-
-                @foreach ($courses as $course)
-
-                    <div class="course-card">
-
-                        <div class="course-card-top">
-
-                            <div class="course-icon">
-                                {{ strtoupper(substr($course->course, 0, 1)) }}
-                            </div>
-
-                            <span class="course-label">
-                                COURSE
-                            </span>
-
+            {{-- Page Header --}}
+            <div class="page-header">
+                <div>
+                    <div class="page-title-row">
+                        <div class="title-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" />
+                            </svg>
                         </div>
 
-                        <h2>{{ $course->course }}</h2>
-
-                        <div class="student-count">
-                            {{ $course->student_count }}
+                        <div>
+                            <h1>Courses</h1>
+                            <p>Manage courses and view enrolled students.</p>
                         </div>
+                    </div>
+                </div>
+            </div>
 
-                        <p>
-                            {{ $course->student_count == 1 ? 'Student enrolled' : 'Students enrolled' }}
-                        </p>
 
-                        <a
-                            href="{{ route('students.index', ['course' => $course->course]) }}"
-                            class="view-students"
-                        >
-                            View Students
-                            <span>→</span>
-                        </a>
+            {{-- Search Section --}}
+            <div class="search-card">
+
+                <form action="{{ route('courses.index') }}" method="GET" class="search-form">
+
+                    <div class="search-box">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <path d="m20 20-4-4"></path>
+                        </svg>
+
+                        <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Search courses...">
 
                     </div>
 
-                @endforeach
+                    <button type="submit" class="search-button">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <path d="m20 20-4-4"></path>
+                        </svg>
+                        Search
+                    </button>
+
+                    @if (!empty($search))
+                        <a href="{{ route('courses.index') }}" class="clear-button">
+                            Clear
+                        </a>
+                    @endif
+
+                </form>
 
             </div>
 
-        @else
 
-            <div class="empty-state">
+            {{-- Results Header --}}
+            @if ($courses->count())
 
-                <div class="empty-icon">
-                    📚
+                <div class="results-header">
+
+                    <div>
+                        <h2>Available Courses</h2>
+
+                        <p>
+                            Showing
+                            <strong>{{ $courses->count() }}</strong>
+                            {{ $courses->count() === 1 ? 'course' : 'courses' }}
+                        </p>
+                    </div>
+
+                    <div class="course-count">
+                        <span>{{ $courses->count() }}</span>
+                        <small>Courses</small>
+                    </div>
+
                 </div>
 
-                <h2>No Courses Found</h2>
 
-                <p>
+                {{-- Course Grid --}}
+                <div class="course-grid">
+
+                    @foreach ($courses as $course)
+
+                        <div class="course-card">
+
+                            {{-- Card Top --}}
+                            <div class="card-top">
+
+                                <div class="course-icon">
+                                    {{ strtoupper(substr($course->course, 0, 1)) }}
+                                </div>
+
+                                <span class="course-badge">
+                                    COURSE
+                                </span>
+
+                            </div>
+
+
+                            {{-- Course Information --}}
+                            <div class="course-content">
+
+                                <h3>
+                                    {{ $course->course }}
+                                </h3>
+
+                                <div class="enrollment">
+
+                                    <div class="student-icon">
+
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                            stroke-linecap="round" stroke-linejoin="round">
+
+                                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                            <circle cx="9" cy="7" r="4" />
+                                            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+
+                                        </svg>
+
+                                    </div>
+
+                                    <div>
+                                        <strong>{{ $course->student_count }}</strong>
+
+                                        <span>
+                                            {{ $course->student_count == 1 ? 'Student enrolled' : 'Students enrolled' }}
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            {{-- Card Footer --}}
+                            <div class="card-footer">
+
+                                <a href="{{ route('students.index', ['course' => $course->course]) }}" class="view-button">
+                                    <span>View Students</span>
+
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+
+                                        <path d="M5 12h14" />
+                                        <path d="m13 6 6 6-6 6" />
+
+                                    </svg>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    @endforeach
+
+                </div>
+
+
+            @else
+
+                {{-- Empty State --}}
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round">
+
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" />
+
+                        </svg>
+
+                    </div>
+
+                    <h2>No Courses Found</h2>
+
+                    <p>
+                        @if (!empty($search))
+                            We couldn't find any courses matching
+                            "<strong>{{ $search }}</strong>".
+                        @else
+                            There are currently no courses available.
+                        @endif
+                    </p>
+
                     @if (!empty($search))
-                        No courses match your current search.
-                    @else
-                        No courses are currently available.
+
+                        <a href="{{ route('courses.index') }}" class="empty-button">
+                            Clear Search
+                        </a>
+
                     @endif
-                </p>
 
-                @if (!empty($search))
-                    <a href="{{ route('courses.index') }}" class="clear-button">
-                        Clear Search
-                    </a>
-                @endif
+                </div>
 
-            </div>
+            @endif
 
-        @endif
+        </div>
 
     </div>
 
+
     <style>
+        /* =========================================================
+           COURSES PAGE
+        ========================================================= */
 
-        .courses-page-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
+        .courses-page {
+            min-height: calc(100vh - 64px);
+            background: #f8fafc;
+            color: #0f172a;
         }
 
-        .courses-page-header h2 {
-            margin: 0;
-            font-size: 22px;
-            font-weight: 700;
-            color: #111827;
-        }
-
-        .courses-page-header p {
-            margin: 4px 0 0;
-            font-size: 13px;
-            color: #6b7280;
-        }
-
-        .header-action {
-            display: inline-flex;
-            align-items: center;
-            padding: 10px 16px;
-            background: #2563eb;
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            transition: 0.2s ease;
-        }
-
-        .header-action:hover {
-            background: #1d4ed8;
-        }
 
         .courses-container {
-            width: min(1200px, calc(100% - 60px));
+            width: min(1250px, calc(100% - 48px));
             margin: 0 auto;
-            padding: 40px 0 60px;
+            padding: 42px 0 70px;
         }
 
-        .courses-top {
+
+        /* =========================================================
+           PAGE HEADER
+        ========================================================= */
+
+        .page-header {
             margin-bottom: 28px;
         }
 
-        .courses-top h1 {
-            margin: 0;
-            font-size: 28px;
-            font-weight: 700;
-            color: #111827;
+
+        .page-title-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .courses-top p {
-            margin: 7px 0 0;
-            color: #6b7280;
-            font-size: 14px;
+
+        .title-icon {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #eff6ff;
+            color: #2563eb;
+
+            border: 1px solid #dbeafe;
+            border-radius: 12px;
+
+            flex-shrink: 0;
         }
+
+
+        .title-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+
+        .page-header h1 {
+            margin: 0;
+
+            font-size: 28px;
+            line-height: 1.2;
+            font-weight: 750;
+
+            letter-spacing: -0.025em;
+            color: #0f172a;
+        }
+
+
+        .page-header p {
+            margin: 6px 0 0;
+
+            font-size: 14px;
+            line-height: 1.5;
+
+            color: #64748b;
+        }
+
+
+        /* =========================================================
+           SEARCH
+        ========================================================= */
+
+        .search-card {
+            padding: 18px;
+
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+
+            box-shadow:
+                0 1px 2px rgba(15, 23, 42, 0.03),
+                0 4px 12px rgba(15, 23, 42, 0.03);
+
+            margin-bottom: 30px;
+        }
+
 
         .search-form {
             display: flex;
+            align-items: center;
             gap: 10px;
-            margin-bottom: 18px;
         }
 
-        .search-input-wrapper {
+
+        .search-box {
             position: relative;
             flex: 1;
         }
 
-        .search-input-wrapper svg {
+
+        .search-box svg {
             position: absolute;
-            left: 14px;
+
+            left: 15px;
             top: 50%;
+
             width: 18px;
             height: 18px;
+
             transform: translateY(-50%);
-            color: #9ca3af;
+
+            color: #94a3b8;
+
             pointer-events: none;
         }
 
-        .search-input-wrapper input {
+
+        .search-box input {
             width: 100%;
-            height: 44px;
+            height: 46px;
+
             box-sizing: border-box;
-            padding: 0 14px 0 42px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            background: #ffffff;
-            color: #111827;
+
+            padding: 0 15px 0 44px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 9px;
+
+            color: #0f172a;
+
             font-size: 14px;
+
             outline: none;
-            transition: 0.2s ease;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
         }
 
-        .search-input-wrapper input:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+
+        .search-box input::placeholder {
+            color: #94a3b8;
         }
+
+
+        .search-box input:hover {
+            background: #ffffff;
+            border-color: #cbd5e1;
+        }
+
+
+        .search-box input:focus {
+            background: #ffffff;
+            border-color: #2563eb;
+
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
 
         .search-button,
         .clear-button {
-            height: 44px;
-            padding: 0 20px;
-            border: 0;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
+            height: 46px;
+
+            padding: 0 18px;
+
+            border-radius: 9px;
+
+            font-size: 13px;
+            font-weight: 650;
+
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            box-sizing: border-box;
+
+            gap: 8px;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease,
+                transform 0.15s ease;
         }
 
+
         .search-button {
+            border: 1px solid #2563eb;
+
             background: #2563eb;
-            color: white;
+            color: #ffffff;
         }
+
+
+        .search-button svg {
+            width: 16px;
+            height: 16px;
+        }
+
 
         .search-button:hover {
             background: #1d4ed8;
+            border-color: #1d4ed8;
         }
+
+
+        .search-button:active,
+        .clear-button:active {
+            transform: translateY(1px);
+        }
+
 
         .clear-button {
-            background: #f3f4f6;
-            color: #374151;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #e2e8f0;
+
+            background: #ffffff;
+            color: #475569;
         }
+
 
         .clear-button:hover {
-            background: #e5e7eb;
+            background: #f8fafc;
+            border-color: #cbd5e1;
         }
 
-        .course-summary {
+
+        /* =========================================================
+           RESULTS HEADER
+        ========================================================= */
+
+        .results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 18px;
+        }
+
+
+        .results-header h2 {
+            margin: 0;
+
+            font-size: 17px;
+            font-weight: 700;
+
+            color: #0f172a;
+        }
+
+
+        .results-header p {
+            margin: 4px 0 0;
+
+            font-size: 13px;
+            color: #64748b;
+        }
+
+
+        .results-header p strong {
+            color: #334155;
+        }
+
+
+        .course-count {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin: 20px 0;
+
+            padding: 7px 11px;
+
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+
+            color: #475569;
+        }
+
+
+        .course-count span {
             font-size: 13px;
-            color: #6b7280;
+            font-weight: 700;
+
+            color: #2563eb;
         }
 
-        .course-summary span:first-child {
-            color: #374151;
+
+        .course-count small {
+            font-size: 11px;
             font-weight: 600;
+
+            color: #64748b;
         }
 
-        .summary-dot {
-            color: #9ca3af;
-        }
 
-        .course-list {
+        /* =========================================================
+           COURSE GRID
+        ========================================================= */
+
+        .course-grid {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 20px;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 18px;
         }
+
+
+        /* =========================================================
+           COURSE CARD
+        ========================================================= */
 
         .course-card {
-            padding: 24px;
+            display: flex;
+            flex-direction: column;
+
+            min-height: 245px;
+
             background: #ffffff;
-            border: 1px solid #e5e7eb;
+
+            border: 1px solid #e2e8f0;
             border-radius: 14px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 1px 2px rgba(15, 23, 42, 0.03);
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
         }
+
 
         .course-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+
+            border-color: #cbd5e1;
+
+            box-shadow:
+                0 10px 25px rgba(15, 23, 42, 0.08);
         }
 
-        .course-card-top {
+
+        .card-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+
+            padding: 20px 20px 0;
         }
 
+
         .course-icon {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 10px;
+
+            border-radius: 11px;
+
             background: #eff6ff;
             color: #2563eb;
-            font-size: 17px;
-            font-weight: 700;
+
+            border: 1px solid #dbeafe;
+
+            font-size: 16px;
+            font-weight: 750;
         }
 
-        .course-label {
-            font-size: 10px;
-            font-weight: 700;
+
+        .course-badge {
+            padding: 5px 8px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+
+            color: #64748b;
+
+            font-size: 9px;
+            font-weight: 750;
+
             letter-spacing: 0.08em;
-            color: #9ca3af;
         }
 
-        .course-card h2 {
+
+        .course-content {
+            flex: 1;
+
+            padding: 20px;
+        }
+
+
+        .course-content h3 {
             margin: 0;
-            min-height: 25px;
-            font-size: 18px;
+
+            min-height: 46px;
+
+            font-size: 17px;
+            line-height: 1.4;
+
             font-weight: 700;
-            color: #111827;
+
+            color: #0f172a;
+
             word-break: break-word;
         }
 
-        .student-count {
-            margin-top: 18px;
-            font-size: 30px;
+
+        /* =========================================================
+           ENROLLMENT
+        ========================================================= */
+
+        .enrollment {
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+
+            margin-top: 20px;
+        }
+
+
+        .student-icon {
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+
+            color: #64748b;
+        }
+
+
+        .student-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+
+
+        .enrollment div:last-child {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+
+        .enrollment strong {
+            font-size: 20px;
             line-height: 1;
-            font-weight: 700;
-            color: #2563eb;
+
+            font-weight: 750;
+
+            color: #0f172a;
         }
 
-        .course-card p {
-            margin: 7px 0 20px;
-            font-size: 13px;
-            color: #6b7280;
+
+        .enrollment span {
+            font-size: 11px;
+            color: #64748b;
         }
 
-        .view-students {
+
+        /* =========================================================
+           CARD FOOTER
+        ========================================================= */
+
+        .card-footer {
+            padding: 0 20px 20px;
+        }
+
+
+        .view-button {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 13px;
-            border-radius: 7px;
-            background: #eff6ff;
-            color: #2563eb;
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 11px 13px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+
+            color: #334155;
+
+            font-size: 12px;
+            font-weight: 650;
+
             text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            transition: 0.2s ease;
+
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease;
         }
 
-        .view-students:hover {
-            background: #dbeafe;
+
+        .view-button svg {
+            width: 16px;
+            height: 16px;
+
+            transition: transform 0.2s ease;
         }
 
-        .view-students span {
-            font-size: 16px;
+
+        .view-button:hover {
+            background: #eff6ff;
+
+            border-color: #bfdbfe;
+
+            color: #2563eb;
         }
+
+
+        .view-button:hover svg {
+            transform: translateX(3px);
+        }
+
+
+        /* =========================================================
+           EMPTY STATE
+        ========================================================= */
 
         .empty-state {
-            padding: 70px 20px;
+            padding: 75px 25px;
+
             text-align: center;
+
             background: #ffffff;
-            border: 1px solid #e5e7eb;
+
+            border: 1px solid #e2e8f0;
             border-radius: 14px;
+
+            box-shadow:
+                0 1px 2px rgba(15, 23, 42, 0.03);
         }
 
+
         .empty-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
+            width: 64px;
+            height: 64px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+
+            color: #94a3b8;
         }
+
+
+        .empty-icon svg {
+            width: 30px;
+            height: 30px;
+        }
+
 
         .empty-state h2 {
             margin: 0;
-            font-size: 20px;
-            color: #111827;
+
+            font-size: 19px;
+            font-weight: 700;
+
+            color: #0f172a;
         }
+
 
         .empty-state p {
-            margin: 8px 0 20px;
-            color: #6b7280;
-            font-size: 14px;
+            max-width: 430px;
+
+            margin: 8px auto 20px;
+
+            font-size: 13px;
+            line-height: 1.6;
+
+            color: #64748b;
         }
 
-        @media (max-width: 1000px) {
-            .course-list {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        .empty-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            height: 40px;
+
+            padding: 0 16px;
+
+            background: #2563eb;
+            color: #ffffff;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+            font-weight: 650;
+
+            text-decoration: none;
+
+            transition: background 0.2s ease;
+        }
+
+
+        .empty-button:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* =========================================================
+           TABLET
+        ========================================================= */
+
+        @media (max-width: 1100px) {
+
+            .course-grid {
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
             }
+
         }
 
-        @media (max-width: 750px) {
+
+        /* =========================================================
+           SMALL TABLET
+        ========================================================= */
+
+        @media (max-width: 800px) {
+
             .courses-container {
-                width: min(100% - 32px, 600px);
-                padding: 28px 0 40px;
+                width: min(100% - 32px, 700px);
+
+                padding-top: 30px;
             }
 
-            .course-list {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+
+            .course-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
             }
 
-            .courses-page-header {
-                align-items: flex-start;
-            }
         }
 
-        @media (max-width: 550px) {
-            .courses-page-header {
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 560px) {
+
+            .courses-container {
+                width: calc(100% - 24px);
+
+                padding: 24px 0 45px;
+            }
+
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+
+            .title-icon {
+                width: 43px;
+                height: 43px;
+            }
+
+
+            .title-icon svg {
+                width: 21px;
+                height: 21px;
+            }
+
+
+            .search-card {
+                padding: 12px;
+            }
+
+
+            .search-form {
                 flex-direction: column;
                 align-items: stretch;
             }
 
-            .header-action {
-                justify-content: center;
-            }
-
-            .courses-top h1 {
-                font-size: 24px;
-            }
-
-            .search-form {
-                flex-direction: column;
-            }
 
             .search-button,
             .clear-button {
                 width: 100%;
             }
 
-            .course-list {
+
+            .results-header {
+                align-items: flex-start;
+            }
+
+
+            .course-count {
+                display: none;
+            }
+
+
+            .course-grid {
                 grid-template-columns: 1fr;
             }
+
+
+            .course-card {
+                min-height: 0;
+            }
+
         }
 
+
+        /* =========================================================
+           VERY SMALL MOBILE
+        ========================================================= */
+
+        @media (max-width: 380px) {
+
+            .page-title-row {
+                align-items: flex-start;
+            }
+
+
+            .page-header h1 {
+                font-size: 22px;
+            }
+
+
+            .page-header p {
+                font-size: 13px;
+            }
+
+        }
     </style>
 
 </x-app-layout>
