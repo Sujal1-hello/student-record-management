@@ -30,17 +30,20 @@
 
                     <div class="form-field span-2">
                         <label>Title</label>
-                        <input type="text" name="title" value="{{ old('title') }}" placeholder="e.g. Introduction to Algorithms">
+                        <input type="text" name="title" value="{{ old('title') }}"
+                            placeholder="e.g. Introduction to Algorithms">
                     </div>
 
                     <div class="form-field span-2">
                         <label>Author</label>
-                        <input type="text" name="author" value="{{ old('author') }}" placeholder="e.g. Thomas H. Cormen">
+                        <input type="text" name="author" value="{{ old('author') }}"
+                            placeholder="e.g. Thomas H. Cormen">
                     </div>
 
                     <div class="form-field">
                         <label>Category</label>
-                        <input type="text" name="category" value="{{ old('category') }}" placeholder="e.g. Computer Science">
+                        <input type="text" name="category" value="{{ old('category') }}"
+                            placeholder="e.g. Computer Science">
                     </div>
 
                     <div class="form-field">
@@ -65,8 +68,7 @@
 
     </div>
 
-        <style>
-
+    <style>
         .form-container {
             width: min(900px, calc(100% - 60px));
             margin: 0 auto;
@@ -81,8 +83,18 @@
             margin-bottom: 28px;
         }
 
-        .page-intro h1 { margin: 0; color: #111827; font-size: 26px; font-weight: 700; }
-        .page-intro p { margin: 7px 0 0; color: #6b7280; font-size: 14px; }
+        .page-intro h1 {
+            margin: 0;
+            color: #111827;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .page-intro p {
+            margin: 7px 0 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
 
         .clear-button {
             display: inline-flex;
@@ -100,7 +112,9 @@
             cursor: pointer;
         }
 
-        .clear-button:hover { background: #e5e7eb; }
+        .clear-button:hover {
+            background: #e5e7eb;
+        }
 
         .save-button {
             display: inline-flex;
@@ -117,7 +131,9 @@
             cursor: pointer;
         }
 
-        .save-button:hover { background: #1d4ed8; }
+        .save-button:hover {
+            background: #1d4ed8;
+        }
 
         .error-message {
             display: flex;
@@ -131,7 +147,10 @@
             font-size: 13px;
         }
 
-        .error-message ul { margin: 0; padding-left: 16px; }
+        .error-message ul {
+            margin: 0;
+            padding-left: 16px;
+        }
 
         .form-card {
             background: #ffffff;
@@ -147,7 +166,9 @@
             gap: 18px;
         }
 
-        .form-field.span-2 { grid-column: span 2; }
+        .form-field.span-2 {
+            grid-column: span 2;
+        }
 
         .form-field label {
             display: block;
@@ -185,14 +206,33 @@
         }
 
         @media (max-width: 700px) {
-            .form-container { width: calc(100% - 32px); padding: 28px 0 40px; }
-            .page-intro { flex-direction: column; align-items: stretch; }
-            .form-grid { grid-template-columns: 1fr; }
-            .form-field.span-2 { grid-column: auto; }
-            .form-actions { flex-direction: column-reverse; }
-            .form-actions a, .form-actions button { width: 100%; }
-        }
+            .form-container {
+                width: calc(100% - 32px);
+                padding: 28px 0 40px;
+            }
 
+            .page-intro {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-field.span-2 {
+                grid-column: auto;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+            }
+
+            .form-actions a,
+            .form-actions button {
+                width: 100%;
+            }
+        }
     </style>
 
 </x-app-layout>
