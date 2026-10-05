@@ -53,9 +53,9 @@
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+            <x-primary-button class="ms-3 px-6 py-2 rounded-lg shadow-sm hover:shadow-md transition duration-200">
+    {{ __('Log in') }}
+</x-primary-button>
         </div>
     </form>
 </x-guest-layout>
