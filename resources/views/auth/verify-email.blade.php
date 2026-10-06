@@ -19,7 +19,7 @@
 
             <div class="flex items-center">
                 <x-primary-button>
-                    {{ __('Resend Verification Email') }}
+                    {{ __('Resend Verification Link') }}
                 </x-primary-button>
             </div>
         </form>
