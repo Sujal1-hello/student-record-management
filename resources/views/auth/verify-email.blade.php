@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <div class="mt-6 flex items-center justify-between">
+    <div class="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <form method="POST" action="{{ route('verification.send') }}">
             @csrf
 
