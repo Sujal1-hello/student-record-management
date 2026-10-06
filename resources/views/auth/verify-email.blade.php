@@ -18,7 +18,7 @@
             @csrf
 
             <div class="flex items-center">
-                <x-primary-button>
+                <x-primary-button class="w-full justify-center sm:w-auto">
                     {{ __('Resend Verification Link') }}
                 </x-primary-button>
             </div>
