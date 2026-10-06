@@ -28,7 +28,7 @@
             @csrf
 
             <button type="submit"
-                class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                class="rounded-md px-3 py-2 text-sm text-gray-600 underline underline-offset-4 transition hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
                 {{ __('Log Out') }}
             </button>
         </form>
