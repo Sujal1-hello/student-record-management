@@ -53,8 +53,8 @@
             @endif
 
             <x-primary-button class="ms-3 px-7 py-2 rounded-lg shadow-sm hover:shadow-md transition duration-300 cursor-pointer">
-                {{ __('Log in') }}
-            </x-primary-button>
+    {{ __('Log in') }}
+</x-primary-button>
         </div>
     </form>
 </x-guest-layout>
