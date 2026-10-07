@@ -40,7 +40,7 @@
                 <input id="remember_me" type="checkbox"
                    class="rounded-md border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 transition duration-200 cursor-pointer"
                     name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
+                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400 cursor-pointer">{{ __('Remember me') }}</span>
             </label>
         </div>
 
