@@ -3,7 +3,7 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <div class="mb-6">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
             Welcome Back
         </h2>
         <p class="text-sm text-gray-600 dark:text-gray-400">
@@ -29,8 +29,7 @@
 
             <x-text-input id="password"
                 class="block mt-1 w-full border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500"
-                type="password" 
-                name="password" required autocomplete="current-password" />
+                type="password" name="password" required autocomplete="current-password" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -38,23 +37,24 @@
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded-md border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 transition duration-200" 
-                name="remember">
+                <input id="remember_me" type="checkbox"
+                    class="rounded-md border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 transition duration-200"
+                    name="remember">
                 <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
             </label>
         </div>
 
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <a class="text-sm text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 transition duration-200" 
-                href="{{ route('password.request') }}">
+                <a class="text-sm text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 transition duration-200"
+                    href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
 
             <x-primary-button class="ms-3 px-6 py-2 rounded-lg shadow-sm hover:shadow-md transition duration-200">
-    {{ __('Log in') }}
-</x-primary-button>
+                {{ __('Log in') }}
+            </x-primary-button>
         </div>
     </form>
 </x-guest-layout>
