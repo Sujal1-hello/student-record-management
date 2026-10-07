@@ -52,7 +52,7 @@
                 </a>
             @endif
 
-            <x-primary-button class="ms-3 px-6 py-2 rounded-lg shadow-sm hover:shadow-md transition duration-200">
+            <x-primary-button class="ms-3 px-6 py-2 rounded-lg shadow-sm hover:shadow-md transition duration-300">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
