@@ -6,8 +6,8 @@
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
             Welcome Back
         </h2>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-            Please login to your account.
+        <p class="text-base text-gray-600 dark:text-gray-400">
+            Please log in to your account.
         </p>
     </div>
 
