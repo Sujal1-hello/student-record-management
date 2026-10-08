@@ -2,7 +2,12 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <!-- Name -->
+        <div class="mb-6">
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+        Create Your Account
+    </h2>
+</div>
+
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
