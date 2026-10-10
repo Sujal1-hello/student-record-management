@@ -64,36 +64,87 @@ Validation errors are displayed directly in the forms.
 Laravel Breeze provides authentication, while protected routes restrict access to authorized users.
 
 
-Laravel Breeze is used to provide the authentication system.
+## 🛠️ Technologies Used
 
-🚀 Future Improvements
+* Laravel and PHP
+* MySQL / MariaDB
+* Blade, HTML, CSS, and JavaScript
+* Tailwind CSS and Alpine.js
+* Laravel Breeze
+* Vite
+* Git and GitHub
+* XAMPP and VS Code
 
-Possible future improvements include:
+## ⚙️ Installation
 
-Student profile photos
-Attendance management
-Grade management
-Export student records
-Admin and staff roles
-Email notifications
-Advanced reporting
-API integration
-👨‍💻 Author
+### 1. Clone the repository
 
-Sujal Rai
+```bash
+git clone https://github.com/SujalRaiSujal1-hello/student-record-management.git
+```
+
+### 2. Open the project directory
+
+```bash
+cd student-record-management
+```
+
+### 3. Install dependencies
+
+```bash
+composer install
+npm install
+```
+
+### 4. Configure the environment
+
+```bash
+copy .env.example .env
+php artisan key:generate
+```
+
+Create a MySQL database and configure your `.env` file with the correct database name and credentials.
+
+### 5. Run database migrations
+
+```bash
+php artisan migrate
+```
+
+### 6. Build frontend assets
+
+```bash
+npm run build
+```
+
+### 7. Start the Laravel server
+
+```bash
+php artisan serve
+```
+
+Open `http://127.0.0.1:8000` in your browser.
+
+## 🚀 Future Improvements
+
+Potential enhancements include:
+
+* Student profile photos
+* Attendance and grade management
+* Exporting student records
+* Admin and staff roles
+* Email notifications
+* Advanced reporting
+* API integration
+
+## 👨‍💻 Author
+
+**Sujal Rai**
 
 Web Developer Intern
 
 Interested in building modern web applications using Laravel, React, Next.js, and related technologies.
 
-📄 License
+## 📄 License
 
 This project was developed for educational, internship, and portfolio purposes.
-
-
-After saving it, run:
-
-```bash
-git add README.md
-git commit -m "Update project README"
-git push
