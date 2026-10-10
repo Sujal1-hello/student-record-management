@@ -1,26 +1,4 @@
-# Student Record Management System
 
-A web-based Student Record Management System developed using Laravel and MySQL as part of my Web Development Internship.
-
-The system allows authenticated users to manage student records, courses, and academic information through a clean and responsive web interface.
-
----
-
-## 👨‍💻 Internship Project
-
-| Information | Details |
-|---|---|
-| Project | Student Record Management System |
-| Developer | Sujal Rai |
-| Internship Role | Web Developer Intern |
-| Framework | Laravel |
-| Backend | PHP |
-| Database | MySQL / MariaDB |
-| Frontend | Blade, HTML, CSS, JavaScript |
-| Authentication | Laravel Breeze |
-| Version Control | Git & GitHub |
-| Development Environment | XAMPP, VS Code |
-| Status | ✅ Completed |
 
 ---
 
