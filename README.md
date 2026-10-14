@@ -4,7 +4,7 @@ A web-based **Student Record Management System** built with Laravel, PHP, and My
 
 ## Overview
 
-The system simplifies student record administration by providing tools for creating, viewing, updating, searching, filtering, and deleting student records. It also includes course management, dashboard statistics, user authentication, form validation, and dark mode.
+The system simplifies student record administration by providing tools to create, view, update, search, filter, and delete student records. It also includes course management, dashboard statistics, user authentication, form validation, and dark mode.
 
 ## Key Features
 
@@ -78,26 +78,26 @@ The application follows the **Model-View-Controller (MVC)** architectural patter
 
 ```text
 User
-  |
-  v
+ |
+ v
 Routes
-  |
-  v
+ |
+ v
 Controllers
-  |
-  +-------------------+
-  |                   |
-  v                   v
-Models             Blade Views
-  |                   |
-  v                   v
-Eloquent ORM       User Interface
-  |
-  v
+ |
+ +-------------------+
+ |                   |
+ v                   v
+Models           Blade Views
+ |                   |
+ v                   v
+Eloquent ORM     User Interface
+ |
+ v
 MySQL / MariaDB
 ```
 
-- **Routes:** Define application endpoints and map requests to the appropriate handlers.
+- **Routes:** Define application endpoints and direct requests to the appropriate handlers.
 - **Controllers:** Process requests and coordinate application logic.
 - **Models:** Represent database entities and manage data interactions.
 - **Eloquent ORM:** Provides Laravel's object-oriented database interaction layer.
@@ -138,7 +138,7 @@ student-record-management/
 
 ## Installation and Setup
 
-Follow the steps below to run the application locally.
+Follow these steps to run the application locally.
 
 ### Prerequisites
 
@@ -195,7 +195,7 @@ php artisan key:generate
 
 ### 5. Configure the Database
 
-Start Apache and MySQL from the XAMPP Control Panel. Create a database named `student_record_db` in phpMyAdmin, or use the database name configured for your local project.
+Start Apache and MySQL from the XAMPP Control Panel. Create a database named `student_record_db` in phpMyAdmin.
 
 Update the relevant settings in your `.env` file:
 
@@ -208,7 +208,7 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-Adjust the database name and credentials to match your environment.
+Adjust the database name and credentials to match your local environment.
 
 ### 6. Run Database Migrations
 
@@ -284,4 +284,3 @@ Interested in building web applications using Laravel, PHP, React, Next.js, and 
 ## License
 
 Developed for educational and internship purposes. No specific open-source license is declared.
-
