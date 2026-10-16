@@ -1,656 +1,540 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="description" content="A simple, secure, and efficient student record management system.">
     <title>Student Management System</title>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary: #315ee8;
+            --primary-dark: #2449c6;
+            --primary-soft: #edf2ff;
+            --ink: #172033;
+            --muted: #65718a;
+            --line: #e5eaf3;
+            --page: #f7f9fd;
+            --success: #15966a;
+            --shadow: 0 18px 55px rgba(28, 48, 94, 0.08);
         }
 
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --primary-light: #eff6ff;
-            --text: #111827;
-            --text-light: #6b7280;
-            --border: #e5e7eb;
-            --background: #f8fafc;
-            --white: #ffffff;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: var(--background);
-            color: var(--text);
+            min-height: 100vh;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 88% 10%, rgba(207, 221, 255, 0.65), transparent 26rem),
+                radial-gradient(circle at 5% 80%, rgba(225, 234, 255, 0.55), transparent 25rem),
+                var(--page);
+            font-family: Inter, Arial, Helvetica, sans-serif;
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* =========================
-           NAVIGATION
-        ========================= */
+        a {
+            color: inherit;
+        }
 
         .navbar {
-            position: absolute;
-            top: 0;
-            left: 0;
+            position: relative;
+            z-index: 2;
             width: 100%;
-            padding: 22px 30px;
-            z-index: 10;
+            border-bottom: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.9);
         }
 
         .nav-container {
-            max-width: 1150px;
-            margin: auto;
+            width: min(1160px, calc(100% - 48px));
+            min-height: 82px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 24px;
         }
 
         .logo {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
-            color: var(--text);
-            font-size: 17px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: -0.35px;
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            color: white;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 17px;
-            font-weight: 700;
+            display: grid;
+            width: 43px;
+            height: 43px;
+            place-items: center;
+            border-radius: 14px;
+            color: #fff;
+            background: linear-gradient(145deg, #4776ff, #2449c6);
+            box-shadow: 0 8px 18px rgba(49, 94, 232, 0.24);
+            font-size: 19px;
+        }
+
+        .logo-copy {
+            display: grid;
+            line-height: 1.25;
+        }
+
+        .logo-copy small {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .nav-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 0 16px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            color: #47536b;
             text-decoration: none;
-            color: #4b5563;
             font-size: 14px;
-            font-weight: 600;
-            padding: 9px 14px;
-            border-radius: 7px;
+            font-weight: 700;
             transition: 0.2s ease;
         }
 
         .nav-link:hover {
-            background: #eef2ff;
             color: var(--primary);
+            background: var(--primary-soft);
         }
 
-        .nav-register {
+        .nav-link.register,
+        .button.primary {
+            color: #fff;
             background: var(--primary);
-            color: white;
+            box-shadow: 0 8px 18px rgba(49, 94, 232, 0.18);
         }
 
-        .nav-register:hover {
+        .nav-link.register:hover,
+        .button.primary:hover {
             background: var(--primary-dark);
-            color: white;
+            color: #fff;
+            transform: translateY(-2px);
         }
-
-        /* =========================
-           HERO
-        ========================= */
 
         .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 120px 20px 70px;
-            position: relative;
-            overflow: hidden;
+            width: min(1160px, calc(100% - 48px));
+            margin: 0 auto;
+            padding: 88px 0 56px;
         }
 
-        .hero::before {
-            content: "";
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            background: #dbeafe;
-            top: -280px;
-            right: -180px;
-            opacity: 0.55;
-        }
-
-        .hero::after {
-            content: "";
-            position: absolute;
-            width: 350px;
-            height: 350px;
-            border-radius: 50%;
-            background: #e0e7ff;
-            bottom: -220px;
-            left: -160px;
-            opacity: 0.45;
-        }
-
-        .hero-container {
-            max-width: 1100px;
-            width: 100%;
+        .hero-content {
+            max-width: 850px;
+            margin: 0 auto;
             text-align: center;
-            position: relative;
-            z-index: 2;
         }
 
-        /* =========================
-           BADGE
-        ========================= */
-
-        .badge {
+        .eyebrow {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 15px;
-            background: var(--primary-light);
+            gap: 9px;
+            padding: 8px 13px;
+            margin-bottom: 25px;
+            border: 1px solid #dce5ff;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.8);
             color: var(--primary);
-            border: 1px solid #dbeafe;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 22px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.55px;
+            text-transform: uppercase;
         }
 
-        .badge-dot {
+        .eyebrow-dot {
             width: 7px;
             height: 7px;
-            background: #22c55e;
             border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 0 4px #dff7ed;
         }
 
-        /* =========================
-           HERO HEADING
-        ========================= */
-
         h1 {
-            max-width: 850px;
+            max-width: 820px;
             margin: 0 auto 22px;
-            font-size: 58px;
+            font-size: clamp(2.55rem, 5.6vw, 4.55rem);
+            font-weight: 850;
             line-height: 1.08;
-            letter-spacing: -1.5px;
-            color: var(--text);
+            letter-spacing: -0.065em;
         }
 
         h1 span {
             color: var(--primary);
+            background: linear-gradient(100deg, #315ee8, #6c82f7);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .description {
             max-width: 680px;
-            margin: 0 auto 32px;
-            color: var(--text-light);
-            font-size: 17px;
-            line-height: 1.8;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: clamp(15px, 1.8vw, 18px);
+            line-height: 1.85;
         }
 
-        /* =========================
-           BUTTONS
-        ========================= */
-
-        .buttons {
+        .actions {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 12px;
             flex-wrap: wrap;
-            margin-bottom: 65px;
+            gap: 13px;
+            margin: 32px 0 58px;
         }
 
         .button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 13px 23px;
-            border-radius: 8px;
+            gap: 10px;
+            min-height: 51px;
+            padding: 0 22px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
             text-decoration: none;
             font-size: 14px;
-            font-weight: 700;
-            transition: all 0.2s ease;
+            font-weight: 800;
+            transition: 0.2s ease;
         }
 
-        .primary {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.20);
+        .button.secondary {
+            background: #fff;
+            color: #34415a;
+            box-shadow: 0 5px 15px rgba(28, 48, 94, 0.04);
         }
 
-        .primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
-        }
-
-        .secondary {
-            background: white;
-            color: #374151;
-            border: 1px solid #d1d5db;
-        }
-
-        .secondary:hover {
-            background: #f9fafb;
-            border-color: #9ca3af;
+        .button.secondary:hover {
+            border-color: #c8d5fb;
+            background: #fdfdff;
             transform: translateY(-2px);
         }
 
-        /* =========================
-           FEATURES
-        ========================= */
-
-        .features {
+        .feature-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 18px;
             text-align: left;
         }
 
         .feature {
-            background: rgba(255, 255, 255, 0.96);
-            padding: 26px;
-            border-radius: 14px;
-            border: 1px solid var(--border);
-            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
-            transition: all 0.25s ease;
+            min-height: 220px;
+            padding: 27px;
+            border: 1px solid var(--line);
+            border-radius: 19px;
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: var(--shadow);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
 
         .feature:hover {
             transform: translateY(-5px);
-            border-color: #bfdbfe;
-            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+            border-color: #cbd8ff;
+            box-shadow: 0 22px 48px rgba(28, 48, 94, 0.12);
         }
 
         .feature-icon {
-            width: 46px;
-            height: 46px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--primary-light);
-            border-radius: 11px;
-            font-size: 20px;
-            margin-bottom: 18px;
+            display: grid;
+            width: 49px;
+            height: 49px;
+            place-items: center;
+            margin-bottom: 21px;
+            border-radius: 15px;
+            background: var(--primary-soft);
+            font-size: 23px;
         }
 
         .feature h2 {
-            font-size: 17px;
             margin-bottom: 9px;
-            color: var(--text);
+            font-size: 17px;
+            letter-spacing: -0.25px;
         }
 
         .feature p {
-            color: var(--text-light);
+            color: var(--muted);
             font-size: 14px;
-            line-height: 1.7;
+            line-height: 1.8;
         }
-
-        /* =========================
-           SYSTEM INFORMATION
-        ========================= */
 
         .system-info {
             display: flex;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            gap: 25px;
-            margin-top: 30px;
-            padding: 17px 25px;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            gap: 24px;
+            margin-top: 25px;
+            padding: 19px 24px;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.85);
         }
 
         .info-item {
             display: flex;
             align-items: center;
-            gap: 6px;
-            color: var(--text-light);
+            gap: 7px;
+            color: var(--muted);
             font-size: 13px;
         }
 
         .info-item strong {
-            color: var(--text);
+            color: var(--ink);
+            font-weight: 800;
         }
 
-        .divider {
+        .info-separator {
             width: 1px;
             height: 20px;
-            background: var(--border);
+            background: var(--line);
         }
 
-        /* =========================
-           FOOTER
-        ========================= */
-
         .footer {
-            margin-top: 35px;
-            color: #9ca3af;
+            padding: 26px 12px 0;
+            color: #8791a5;
+            text-align: center;
             font-size: 12px;
         }
 
-        /* =========================
-           RESPONSIVE
-        ========================= */
+        a:focus-visible {
+            outline: 3px solid #9bb3ff;
+            outline-offset: 3px;
+        }
 
-        @media (max-width: 850px) {
-
-            h1 {
-                font-size: 46px;
+        @media (max-width: 760px) {
+            .hero {
+                padding-top: 65px;
             }
 
-            .features {
+            .feature-grid {
                 grid-template-columns: 1fr;
             }
 
             .feature {
-                text-align: center;
-            }
-
-            .feature-icon {
-                margin-left: auto;
-                margin-right: auto;
+                min-height: auto;
             }
         }
 
-        @media (max-width: 600px) {
-
-            .navbar {
-                padding: 18px 16px;
+        @media (max-width: 520px) {
+            .nav-container {
+                width: calc(100% - 30px);
+                min-height: 72px;
+                gap: 10px;
             }
 
             .logo {
+                gap: 8px;
                 font-size: 14px;
             }
 
             .logo-icon {
-                width: 35px;
-                height: 35px;
+                width: 38px;
+                height: 38px;
+                border-radius: 12px;
+            }
+
+            .logo-copy small {
+                font-size: 9px;
+                letter-spacing: 0.4px;
+            }
+
+            .nav-links {
+                gap: 4px;
             }
 
             .nav-link {
-                padding: 7px 9px;
+                min-height: 38px;
+                padding: 0 10px;
                 font-size: 12px;
             }
 
             .hero {
-                padding: 105px 16px 50px;
+                width: calc(100% - 30px);
+                padding-top: 54px;
             }
 
-            h1 {
-                font-size: 38px;
-                letter-spacing: -0.8px;
+            .eyebrow {
+                margin-bottom: 20px;
+                font-size: 10px;
             }
 
-            .description {
-                font-size: 15px;
-            }
-
-            .buttons {
-                margin-bottom: 45px;
+            .actions {
+                flex-direction: column;
+                margin: 27px 0 42px;
             }
 
             .button {
                 width: 100%;
-                max-width: 270px;
+                max-width: 300px;
             }
 
             .system-info {
-                flex-direction: column;
-                gap: 11px;
+                gap: 12px;
+                padding: 17px;
             }
 
-            .divider {
+            .info-separator {
                 display: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
             }
         }
     </style>
 </head>
 
 <body>
-
-    <!-- =========================
-         NAVIGATION
-    ========================== -->
-
-    <nav class="navbar">
-
+    <nav class="navbar" aria-label="Main navigation">
         <div class="nav-container">
-
-            <a href="{{ url('/') }}" class="logo">
-
-                <div class="logo-icon">
-                    S
-                </div>
-
-                <span>
+            <a href="{{ url('/') }}" class="logo" aria-label="Student Management System home">
+                <span class="logo-icon" aria-hidden="true">S</span>
+                <span class="logo-copy">
                     Student Management
+                    <small>Record Management System</small>
                 </span>
-
             </a>
 
             <div class="nav-links">
-
                 @auth
-
-                    <a href="{{ route('dashboard') }}" class="nav-link">
-                        Dashboard
-                    </a>
-
+                    <a href="{{ route('dashboard') }}" class="nav-link">Dashboard</a>
                 @else
-
-                    <a href="{{ route('login') }}" class="nav-link">
-                        Login
+                    <a href="{{ route('login') }}" class="nav-link">Log in</a>
+                    <a href="{{ route('register') }}" class="nav-link register">
+                        Get started <span aria-hidden="true">→</span>
                     </a>
-
-                    <a href="{{ route('register') }}" class="nav-link nav-register">
-                        Register
-                    </a>
-
                 @endauth
-
             </div>
-
         </div>
-
     </nav>
 
-
-    <!-- =========================
-         HERO SECTION
-    ========================== -->
-
-    <section class="hero">
-
-        <div class="hero-container">
-
-            <div class="badge">
-
-                <span class="badge-dot"></span>
-
-                Student Management System
-
+    <main class="hero">
+        <div class="hero-content">
+            <div class="eyebrow">
+                <span class="eyebrow-dot" aria-hidden="true"></span>
+                Simple. Organised. Efficient.
             </div>
-
 
             <h1>
-
-                Manage Student Records
-
-                <span>
-                    Easily
-                </span>
-
+                Manage student records
+                <span>with confidence.</span>
             </h1>
 
-
             <p class="description">
-
-                A modern student record management system for organising
-                student information, courses, academic records, and
-                related details through a simple and efficient interface.
-
+                Keep student information, course details, and academic records
+                organised in one convenient place. Spend less time managing
+                paperwork and more time focusing on what matters.
             </p>
 
-
-            <!-- Buttons -->
-
-            <div class="buttons">
-
+            <div class="actions">
                 @auth
-
                     <a href="{{ route('dashboard') }}" class="button primary">
-                        Go to Dashboard →
+                        Open dashboard <span aria-hidden="true">→</span>
                     </a>
-
                 @else
-
-                    <a href="{{ route('login') }}" class="button primary">
-                        Login →
+                    <a href="{{ route('register') }}" class="button primary">
+                        Create an account <span aria-hidden="true">→</span>
                     </a>
-
-                    <a href="{{ route('register') }}" class="button secondary">
-                        Create Account
+                    <a href="{{ route('login') }}" class="button secondary">
+                        Log in to your account
                     </a>
-
                 @endauth
-
             </div>
-
-
-            <!-- =========================
-                 FEATURES
-            ========================== -->
-
-            <div class="features">
-
-
-                <!-- Student Management -->
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        👨‍🎓
-                    </div>
-
-                    <h2>
-                        Student Management
-                    </h2>
-
-                    <p>
-                        Add, view, edit, search, filter, and delete
-                        student records efficiently from one place.
-                    </p>
-
-                </div>
-
-
-                <!-- Course Management -->
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        📚
-                    </div>
-
-                    <h2>
-                        Course Management
-                    </h2>
-
-                    <p>
-                        View available courses, student counts,
-                        and students enrolled in each course.
-                    </p>
-
-                </div>
-
-
-                <!-- Secure Access -->
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        🔐
-                    </div>
-
-                    <h2>
-                        Secure Access
-                    </h2>
-
-                    <p>
-                        Authentication helps protect student management
-                        features and restrict access to authorised users.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- =========================
-                 SYSTEM INFORMATION
-            ========================== -->
-
-            <div class="system-info">
-
-                <div class="info-item">
-                    <strong>Laravel</strong>
-                    <span>Framework</span>
-                </div>
-
-                <div class="divider"></div>
-
-                <div class="info-item">
-                    <strong>Blade</strong>
-                    <span>Views</span>
-                </div>
-
-                <div class="divider"></div>
-
-                <div class="info-item">
-                    <strong>MySQL</strong>
-                    <span>Database</span>
-                </div>
-
-                <div class="divider"></div>
-
-                <div class="info-item">
-                    <strong>Responsive</strong>
-                    <span>Design</span>
-                </div>
-
-            </div>
-
-
-            <div class="footer">
-
-                Student Management System · Built with Laravel
-
-            </div>
-
         </div>
 
-    </section>
+        <section class="feature-grid" aria-label="Key features">
+            <article class="feature">
+                <div class="feature-icon" aria-hidden="true">🎓</div>
+                <h2>Student Records</h2>
+                <p>
+                    Create, view, update, search, filter, and manage student
+                    information through a clear, organised interface.
+                </p>
+            </article>
 
+            <article class="feature">
+                <div class="feature-icon" aria-hidden="true">📚</div>
+                <h2>Course Overview</h2>
+                <p>
+                    Explore available courses and review enrolment information
+                    to make academic records easier to navigate.
+                </p>
+            </article>
+
+            <article class="feature">
+                <div class="feature-icon" aria-hidden="true">🔐</div>
+                <h2>Account Security</h2>
+                <p>
+                    Authentication and protected routes help ensure that
+                    management features are available to authorised users.
+                </p>
+            </article>
+        </section>
+
+        <section class="system-info" aria-label="Technology information">
+            <div class="info-item">
+                <strong>Laravel</strong>
+                <span>Framework</span>
+            </div>
+
+            <span class="info-separator" aria-hidden="true"></span>
+
+            <div class="info-item">
+                <strong>Blade</strong>
+                <span>Templating</span>
+            </div>
+
+            <span class="info-separator" aria-hidden="true"></span>
+
+            <div class="info-item">
+                <strong>MySQL</strong>
+                <span>Database</span>
+            </div>
+
+            <span class="info-separator" aria-hidden="true"></span>
+
+            <div class="info-item">
+                <strong>Responsive</strong>
+                <span>Layout</span>
+            </div>
+        </section>
+
+        <footer class="footer">
+            Student Record Management System
+            <span aria-hidden="true">·</span>
+            Built with Laravel
+        </footer>
+    </main>
 </body>
-
 </html>
