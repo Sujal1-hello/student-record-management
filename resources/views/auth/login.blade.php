@@ -2,14 +2,14 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <div class="mb-6">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
-            Welcome Back
-        </h2>
-        <p class="text-base text-gray-600 dark:text-gray-400">
-            Please log in to your account.
-        </p>
-    </div>
+  <div class="mb-8">
+    <h2 class="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
+        Welcome Back
+    </h2>
+    <p class="mt-2 text-base text-gray-600 dark:text-gray-400">
+        Please log in to your account.
+    </p>
+</div>
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
