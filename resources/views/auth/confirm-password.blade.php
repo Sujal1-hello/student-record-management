@@ -33,10 +33,27 @@
         <div>
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+           ```blade
+<div class="mt-2">
+    <x-text-input
+        id="password"
+        class="block w-full rounded-xl border-gray-300 py-3
+               shadow-sm transition duration-200
+               focus:border-indigo-500 focus:ring-indigo-500
+               dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+        type="password"
+        name="password"
+        required
+        autofocus
+        autocomplete="current-password"
+        placeholder="Enter your password"
+    />
+
+    <x-input-error
+        :messages="$errors->get('password')"
+        class="mt-2"
+    />
+</div>
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
