@@ -58,10 +58,20 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
-                {{ __('Confirm') }}
-            </x-primary-button>
-        </div>
+        ```blade
+<div class="mt-6">
+    <x-primary-button
+        class="flex w-full justify-center rounded-xl bg-indigo-600
+               px-4 py-3 font-semibold text-white
+               transition duration-200 ease-in-out
+               hover:bg-indigo-700
+               focus:outline-none focus:ring-2
+               focus:ring-indigo-500 focus:ring-offset-2
+               active:scale-[0.99]"
+    >
+        {{ __('Confirm Password') }}
+    </x-primary-button>
+</div>
+```
     </form>
 </x-guest-layout>
