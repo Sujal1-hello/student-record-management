@@ -56,7 +56,7 @@
             @endif
 
             <x-primary-button
-                class="ms-3 rounded-lg px-7 py-3 shadow-sm transition duration-300 hover:shadow-md focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                class="ms-3 rounded-lg px-7 py-3 font-semibold shadow-sm transition duration-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
