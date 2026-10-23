@@ -3,11 +3,12 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
   <div class="mb-8">
-    <h2 class="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
-        Welcome Back
+    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Welcome Back!
     </h2>
-    <p class="mt-2 text-base text-gray-600 dark:text-gray-400">
-        Please log in to your account.
+
+    <p class="mt-2 text-sm leading-6 text-gray-600 dark:text-gray-400">
+        Sign in to access your Student Record Management System.
     </p>
 </div>
 
